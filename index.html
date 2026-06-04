@@ -10,6 +10,7 @@
 <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
 tailwind.config={theme:{extend:{colors:{
@@ -93,7 +94,39 @@ textarea{resize:vertical;min-height:96px;line-height:1.6;}
 <body>
 <div id="root"></div>
 <script type="text/babel">
-const {useState,useEffect,useRef,useMemo}=React;
+const {useState,useEffect,useRef,useMemo,useCallback}=React;
+
+// ── SUPABASE ──────────────────────────────────────────────────────────────────
+const SUPA_URL='https://vaywkjksblafjgduecip.supabase.co';
+const SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZheXdramtzYmxhZmpnZHVlY2lwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYzMjQxNTAsImV4cCI6MjA3MTkwMDE1MH0.Hta6vxkopZwI0QnzYEeIatoFg11J4M8qIg8WD1KZ42w';
+const db=supabase.createClient(SUPA_URL,SUPA_KEY);
+
+// Cloud CRUD helpers — all return {data, error}
+async function cloudUpsertProposal(p){
+  return db.from('propkit_proposals').upsert({id:p.id,user_id:(await db.auth.getUser()).data.user?.id,title:p.title,data:p},{onConflict:'id'});
+}
+async function cloudUpsertInvoice(inv){
+  return db.from('propkit_invoices').upsert({id:inv.id,user_id:(await db.auth.getUser()).data.user?.id,title:inv.title,data:inv},{onConflict:'id'});
+}
+async function cloudUpsertProfile(s,userId){
+  return db.from('propkit_profiles').upsert({id:userId,business_name:s.businessName||'',logo_url:s.logo||'',tagline:s.tagline||'',contact:{email:s.email||'',phone:s.phone||'',website:s.website||'',address:s.address||''},brand_color:s.accentColor||'#F5A623'},{onConflict:'id'});
+}
+async function cloudDeleteProposal(id){return db.from('propkit_proposals').delete().eq('id',id);}
+async function cloudDeleteInvoice(id){return db.from('propkit_invoices').delete().eq('id',id);}
+async function cloudFetchAll(){
+  const [pr,inv,prof]=await Promise.all([
+    db.from('propkit_proposals').select('data').order('created_at'),
+    db.from('propkit_invoices').select('data').order('created_at'),
+    db.from('propkit_profiles').select('*').maybeSingle(),
+  ]);
+  return {proposals:(pr.data||[]).map(r=>r.data),invoices:(inv.data||[]).map(r=>r.data),profile:prof.data};
+}
+// Map a cloud profile row back to the settings shape
+function profileToSettings(row){
+  if(!row)return null;
+  return {businessName:row.business_name||'',logo:row.logo_url||'',tagline:row.tagline||'',email:row.contact?.email||'',phone:row.contact?.phone||'',website:row.contact?.website||'',address:row.contact?.address||'',accentColor:row.brand_color||'#F5A623'};
+}
+
 
 // ── STORAGE ──────────────────────────────────────────────────────────────────
 const STORE_KEY='propkit_v2';
@@ -308,7 +341,9 @@ function BrandMark({profile,light=false,size=40}){
 }
 
 // ── NAV ───────────────────────────────────────────────────────────────────────
-function Sidebar({settings}){
+function CloudIcon(p){return(<svg viewBox="0 0 24 24" width={p.s||14} height={p.s||14} fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>);}
+
+function Sidebar({settings,authUser,onSignIn,onSignOut}){
   const brand=settings.accentColor||'#F5A623';
   const links=[{path:'/dashboard',label:'Dashboard',icon:<I.doc/>},{path:'/settings',label:'Settings',icon:<I.settings/>}];
   const isActive=p=>window.location.hash.includes(p)||(!window.location.hash&&p==='/dashboard');
@@ -321,10 +356,29 @@ function Sidebar({settings}){
       <ul style={{listStyle:'none',margin:0,padding:'12px 0',flex:1}}>
         {links.map(l=>{const a=isActive(l.path);return(<li key={l.path}><a href={'#'+l.path} aria-current={a?'page':undefined} style={{display:'flex',alignItems:'center',gap:10,padding:'10px 20px',color:a?brand:'rgba(255,255,255,0.7)',textDecoration:'none',fontSize:14,fontWeight:a?600:400,background:a?'rgba(245,166,35,0.08)':'transparent',borderLeft:a?'2px solid '+brand:'2px solid transparent'}}>{l.icon}{l.label}</a></li>);})}
       </ul>
+      <div style={{padding:'12px 16px',borderTop:'1px solid rgba(255,255,255,0.08)'}}>
+        {authUser?(
+          <div>
+            <div style={{fontSize:11,color:'rgba(255,255,255,0.45)',marginBottom:6,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}} title={authUser.email}><CloudIcon s={11}/> {authUser.email}</div>
+            <button onClick={onSignOut} className="btn-ghost" style={{width:'100%',fontSize:12,color:'rgba(255,255,255,0.6)',textAlign:'left',padding:'6px 8px',minHeight:32}}>Sign out</button>
+          </div>
+        ):(
+          <button onClick={onSignIn} className="btn-ghost" style={{width:'100%',fontSize:12,color:'rgba(255,255,255,0.55)',textAlign:'left',padding:'6px 8px',minHeight:32,display:'flex',alignItems:'center',gap:6}}>
+            <CloudIcon s={13}/> Sign in to sync
+          </button>
+        )}
+      </div>
     </nav>
     <nav className="no-print mobile-topnav" aria-label="Main navigation">
       <div style={{display:'flex',alignItems:'center',gap:8}}><LogoMark size={24} light={true}/><span style={{fontWeight:700,fontSize:16,color:'#fff'}}>PropKit</span></div>
-      <div style={{display:'flex',gap:4}}>{links.map(l=>{const a=isActive(l.path);return <a key={l.path} href={'#'+l.path} aria-current={a?'page':undefined}>{l.icon}{l.label}</a>;})}</div>
+      <div style={{display:'flex',gap:4,alignItems:'center'}}>
+        {links.map(l=>{const a=isActive(l.path);return <a key={l.path} href={'#'+l.path} aria-current={a?'page':undefined}>{l.icon}{l.label}</a>;})}
+        {authUser?(
+          <button onClick={onSignOut} aria-label="Sign out" style={{background:'none',border:'none',cursor:'pointer',color:'rgba(255,255,255,0.6)',padding:'8px 6px',display:'flex',alignItems:'center',minHeight:44,minWidth:44,justifyContent:'center'}}><CloudIcon s={16}/></button>
+        ):(
+          <button onClick={onSignIn} aria-label="Sign in to sync" style={{background:'none',border:'none',cursor:'pointer',color:'rgba(255,255,255,0.45)',padding:'8px 6px',display:'flex',alignItems:'center',minHeight:44,minWidth:44,justifyContent:'center'}}><CloudIcon s={16}/></button>
+        )}
+      </div>
     </nav>
   </>);
 }
@@ -340,7 +394,7 @@ function ProfileBanner({settings}){
 }
 
 // ── DASHBOARD ────────────────────────────────────────────────────────────────
-function Dashboard({store,onUpdate}){
+function Dashboard({store,onUpdate,authUser}){
   const {proposals,invoices,settings}=store;
   const currency=settings.currency||'USD';
   const [picker,setPicker]=useState(false);
@@ -352,8 +406,8 @@ function Dashboard({store,onUpdate}){
   function create(key){
     const p=TEMPLATES[key]();onUpdate({...store,proposals:[...proposals,p]});setPicker(false);navigate('/proposal/'+p.id);
   }
-  function del(id){if(confirm('Delete this proposal?'))onUpdate({...store,proposals:proposals.filter(p=>p.id!==id)});}
-  function delInv(id){if(confirm('Delete this invoice?'))onUpdate({...store,invoices:invoices.filter(i=>i.id!==id)});}
+  function del(id){if(confirm('Delete this proposal?'))onUpdate({...store,proposals:proposals.filter(p=>p.id!==id)},{deletedProposalId:id});}
+  function delInv(id){if(confirm('Delete this invoice?'))onUpdate({...store,invoices:invoices.filter(i=>i.id!==id)},{deletedInvoiceId:id});}
 
   return(<main className="dash-main" aria-label="Dashboard">
     <div style={{maxWidth:980,margin:'0 auto'}}>
@@ -877,21 +931,182 @@ function Settings({store,onUpdate}){
   </main>);
 }
 
+// ── AUTH MODAL ───────────────────────────────────────────────────────────────
+function AuthModal({onClose}){
+  const [step,setStep]=useState('email');// 'email' | 'code' | 'sending' | 'done'
+  const [email,setEmail]=useState('');
+  const [code,setCode]=useState('');
+  const [err,setErr]=useState('');
+  const [busy,setBusy]=useState(false);
+
+  async function sendOtp(e){
+    e.preventDefault();setErr('');setBusy(true);
+    const {error}=await db.auth.signInWithOtp({email:email.trim(),options:{emailRedirectTo:'https://khaledhaz.github.io/propkit/'}});
+    setBusy(false);
+    if(error){setErr(error.message);return;}
+    setStep('code');
+  }
+  async function verifyCode(e){
+    e.preventDefault();setErr('');setBusy(true);
+    const {error}=await db.auth.verifyOtp({email:email.trim(),token:code.trim(),type:'email'});
+    setBusy(false);
+    if(error){setErr(error.message);return;}
+    onClose();
+  }
+  return(
+    <div role="dialog" aria-modal="true" aria-label="Sign in to sync" onClick={onClose}
+      style={{position:'fixed',inset:0,background:'rgba(15,27,45,0.5)',zIndex:200,display:'flex',alignItems:'center',justifyContent:'center',padding:16}}>
+      <div onClick={e=>e.stopPropagation()} className="card" style={{maxWidth:400,width:'100%',padding:28}}>
+        <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:6}}>
+          <h2 style={{fontSize:18,fontWeight:600,margin:0}}>Sign in to sync</h2>
+          <button className="btn-ghost" onClick={onClose} aria-label="Close" style={{fontSize:20,padding:'4px 10px'}}>×</button>
+        </div>
+        <p style={{fontSize:13,color:'#566370',marginTop:0,marginBottom:20}}>
+          {step==='email'?'We\'ll email you a magic link + a 6-digit code. No password needed.':'Enter the 6-digit code from your email (or click the link in it).'}
+        </p>
+        {step==='email'?(
+          <form onSubmit={sendOtp}>
+            <label htmlFor="auth-email">Email address</label>
+            <input id="auth-email" type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="you@example.com" required autoFocus style={{marginBottom:12}}/>
+            {err&&<p role="alert" style={{color:'#991B1B',fontSize:13,margin:'0 0 10px'}}>{err}</p>}
+            <button type="submit" className="btn-primary" style={{width:'100%'}} disabled={busy||!email.trim()}>{busy?'Sending…':'Send magic link'}</button>
+          </form>
+        ):(
+          <form onSubmit={verifyCode}>
+            <label htmlFor="auth-code">6-digit code</label>
+            <input id="auth-code" type="text" inputMode="numeric" pattern="[0-9]{6}" maxLength={6} value={code} onChange={e=>setCode(e.target.value)} placeholder="123456" required autoFocus style={{marginBottom:12,letterSpacing:'0.25em',fontFamily:"'JetBrains Mono',monospace",fontSize:20,textAlign:'center'}}/>
+            {err&&<p role="alert" style={{color:'#991B1B',fontSize:13,margin:'0 0 10px'}}>{err}</p>}
+            <button type="submit" className="btn-primary" style={{width:'100%'}} disabled={busy||code.length!==6}>{busy?'Verifying…':'Verify code'}</button>
+            <button type="button" className="btn-ghost" onClick={()=>{setStep('email');setCode('');setErr('');}} style={{width:'100%',marginTop:6,fontSize:13}}>Back</button>
+          </form>
+        )}
+        <p style={{fontSize:12,color:'#A9B4BF',marginTop:16,marginBottom:0,textAlign:'center'}}>Your data stays on this device if you skip this.</p>
+      </div>
+    </div>
+  );
+}
+
+// ── SYNC BANNER (offline notice) ──────────────────────────────────────────────
+function SyncBanner({msg}){
+  if(!msg)return null;
+  return(
+    <div role="status" aria-live="polite" className="no-print"
+      style={{position:'fixed',bottom:16,left:'50%',transform:'translateX(-50%)',zIndex:300,background:'#0F1B2D',color:'#fff',borderRadius:8,padding:'10px 20px',fontSize:13,boxShadow:'0 4px 12px rgba(15,27,45,0.25)',whiteSpace:'nowrap',maxWidth:'calc(100vw - 32px)',overflow:'hidden',textOverflow:'ellipsis'}}>
+      {msg}
+    </div>
+  );
+}
+
 // ── APP ROOT ──────────────────────────────────────────────────────────────────
 function App(){
   const [store,setStore]=useState(()=>loadStore()||{proposals:[],invoices:[],settings:{...DEFAULT_SETTINGS}});
   const [route,setRoute]=useState(getRoute);
+  const [authUser,setAuthUser]=useState(null);// null = not yet resolved
+  const [authReady,setAuthReady]=useState(false);
+  const [showAuth,setShowAuth]=useState(false);
+  const [syncMsg,setSyncMsg]=useState('');
+  const syncTimer=useRef(null);
+
+  function toast(msg,ms=3000){setSyncMsg(msg);clearTimeout(syncTimer.current);syncTimer.current=setTimeout(()=>setSyncMsg(''),ms);}
+
+  // ── Restore session on load (handles redirect-back hash from magic link) ──
+  useEffect(()=>{
+    db.auth.getSession().then(({data:{session}})=>{
+      setAuthUser(session?.user||null);
+      setAuthReady(true);
+    });
+    const {data:{subscription}}=db.auth.onAuthStateChange((_event,session)=>{
+      setAuthUser(session?.user||null);
+    });
+    return()=>subscription.unsubscribe();
+  },[]);
+
+  // ── On sign-in: migrate local → cloud if cloud is empty, then load cloud ──
+  useEffect(()=>{
+    if(!authReady||!authUser)return;
+    (async()=>{
+      try{
+        const {proposals,invoices,profile}=await cloudFetchAll();
+        const hasCloudData=proposals.length>0||invoices.length>0||profile;
+        if(!hasCloudData){
+          // First sign-in: push local data up
+          const local=loadStore()||{proposals:[],invoices:[],settings:{...DEFAULT_SETTINGS}};
+          const pushOps=[
+            ...local.proposals.map(p=>cloudUpsertProposal(p)),
+            ...local.invoices.map(inv=>cloudUpsertInvoice(inv)),
+            cloudUpsertProfile(local.settings,authUser.id),
+          ];
+          await Promise.all(pushOps);
+          toast('Local data synced to cloud.');
+        } else {
+          // Load cloud data as source of truth
+          const settingsFromCloud={...DEFAULT_SETTINGS,...(profileToSettings(profile)||{})};
+          const merged={proposals,invoices,settings:{...store.settings,...settingsFromCloud}};
+          setStore(merged);
+          saveStore(merged);
+          toast('Loaded from cloud.');
+        }
+      }catch(e){
+        toast('Cloud sync error — using local data.');
+      }
+    })();
+  },[authUser,authReady]);
+
+  // ── Write-through: save to localStorage + cloud when signed in ──
+  const updateStore=useCallback(async(next,deletedProposalId,deletedInvoiceId)=>{
+    setStore(next);
+    saveStore(next);
+    if(!authUser)return;
+    try{
+      // Figure out what changed vs current store by comparing ids
+      const prevStore=store;// closure over current store at call time
+      const promises=[];
+      if(deletedProposalId)promises.push(cloudDeleteProposal(deletedProposalId));
+      if(deletedInvoiceId)promises.push(cloudDeleteInvoice(deletedInvoiceId));
+      // Upsert proposals that are new or changed
+      next.proposals.forEach(p=>{
+        const prev=prevStore.proposals.find(x=>x.id===p.id);
+        if(!prev||JSON.stringify(prev)!==JSON.stringify(p))promises.push(cloudUpsertProposal(p));
+      });
+      // Upsert invoices that are new or changed
+      next.invoices.forEach(inv=>{
+        const prev=prevStore.invoices.find(x=>x.id===inv.id);
+        if(!prev||JSON.stringify(prev)!==JSON.stringify(inv))promises.push(cloudUpsertInvoice(inv));
+      });
+      // Upsert profile if changed
+      if(JSON.stringify(next.settings)!==JSON.stringify(prevStore.settings))
+        promises.push(cloudUpsertProfile(next.settings,authUser.id));
+      if(promises.length)await Promise.all(promises);
+    }catch(e){
+      toast('Offline — saved locally.');
+    }
+  },[authUser,store]);
+
+  // ── Standard localStorage-only save (keep existing autosave in builders working) ──
   useEffect(()=>{saveStore(store);},[store]);
   useEffect(()=>{document.documentElement.style.setProperty('--brand',store.settings.accentColor||'#F5A623');},[store.settings.accentColor]);
   useEffect(()=>{function onHash(){setRoute(getRoute());}window.addEventListener('hashchange',onHash);return()=>window.removeEventListener('hashchange',onHash);},[]);
+
   if(route.view==='client')return <ClientView data={route.data}/>;
+
+  function onUpdate(next,opts={}){updateStore(next,opts?.deletedProposalId,opts?.deletedInvoiceId);}
+  function onUpdateWithDelete(next,opts){updateStore(next,opts?.deletedProposalId,opts?.deletedInvoiceId);}
+
   const main=()=>{switch(route.view){
-    case 'proposal':return <ProposalBuilder key={route.id} id={route.id} store={store} onUpdate={setStore}/>;
-    case 'invoice':return <InvoiceView key={route.id} id={route.id} store={store} onUpdate={setStore}/>;
-    case 'settings':return <Settings store={store} onUpdate={setStore}/>;
-    default:return <Dashboard store={store} onUpdate={setStore}/>;
+    case 'proposal':return <ProposalBuilder key={route.id} id={route.id} store={store} onUpdate={onUpdate} authUser={authUser}/>;
+    case 'invoice':return <InvoiceView key={route.id} id={route.id} store={store} onUpdate={onUpdate} authUser={authUser}/>;
+    case 'settings':return <Settings store={store} onUpdate={onUpdate} authUser={authUser}/>;
+    default:return <Dashboard store={store} onUpdate={onUpdateWithDelete} authUser={authUser}/>;
   }};
-  return(<div className="app-shell"><Sidebar settings={store.settings}/><div className="app-main">{main()}</div></div>);
+
+  return(<>
+    <div className="app-shell">
+      <Sidebar settings={store.settings} authUser={authUser} onSignIn={()=>setShowAuth(true)} onSignOut={()=>db.auth.signOut().then(()=>toast('Signed out.'))}/>
+      <div className="app-main">{main()}</div>
+    </div>
+    {showAuth&&<AuthModal onClose={()=>setShowAuth(false)}/>}
+    <SyncBanner msg={syncMsg}/>
+  </>);
 }
 ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
 </script>
