@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>PropKit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        navy: {'900':'#0F1B2D','800':'#162338','700':'#1D2E47','600':'#243958','500':'#2E4A70','400':'#3D608F','300':'#6B8BAF','200':'#A8BDD4','100':'#D4E1ED','50':'#EEF4F8'},
+        amber: {'700':'#AE720A','600':'#D48E0F','500':'#F5A623','400':'#F7B84A','300':'#FAD08A','100':'#FEF3DC'},
+        neutral: {'0':'#FFFFFF','25':'#FAFBFC','50':'#F4F6F8','100':'#E8ECF0','200':'#CDD4DB','300':'#A9B4BF','400':'#7C8A96','500':'#566370','600':'#3D4E5A','700':'#2A3840','800':'#1A252D','900':'#0D1519'},
+        success: {'700':'#1A6B3A','500':'#27A858','100':'#D4F5E2'},
+        error: {'700':'#991B1B','500':'#DC2626','100':'#FEE2E2'},
+        info: {'700':'#1547A8','100':'#DBEAFE'},
+        warning: {'700':'#8A5A00','100':'#FEF0CC'},
+      },
+      fontFamily: {
+        ui: ['Inter','-apple-system','BlinkMacSystemFont','sans-serif'],
+        doc: ['"DM Serif Display"','Georgia','serif'],
+        mono: ['"JetBrains Mono"','"Fira Mono"','monospace'],
+      },
+      boxShadow: {
+        xs:'0 1px 2px 0 rgba(15,27,45,0.06)',
+        sm:'0 1px 3px 0 rgba(15,27,45,0.10),0 1px 2px -1px rgba(15,27,45,0.06)',
+        md:'0 4px 6px -1px rgba(15,27,45,0.10),0 2px 4px -2px rgba(15,27,45,0.06)',
+        lg:'0 10px 15px -3px rgba(15,27,45,0.12),0 4px 6px -4px rgba(15,27,45,0.05)',
+        xl:'0 20px 25px -5px rgba(15,27,45,0.15),0 8px 10px -6px rgba(15,27,45,0.05)',
+        focus:'0 0 0 3px rgba(245,166,35,0.40)',
+      },
+      borderRadius: {
+        sm:'4px', md:'8px', lg:'12px', xl:'16px', '2xl':'24px',
+      },
+    }
+  }
+}
+</script>
+<style>
+*{box-sizing:border-box;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:#F4F6F8;color:#0F1B2D;margin:0;}
+:focus-visible{outline:2px solid #F5A623;outline-offset:2px;box-shadow:0 0 0 3px rgba(245,166,35,0.40);}
+.btn-primary{background:#0F1B2D;color:#fff;border:none;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;transition:background 150ms;}
+.btn-primary:hover{background:#162338;}
+.btn-primary:active{background:#1D2E47;}
+.btn-primary:disabled{background:#CDD4DB;color:#7C8A96;cursor:not-allowed;}
+.btn-accent{background:#F5A623;color:#0F1B2D;border:none;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;transition:background 150ms;}
+.btn-accent:hover{background:#D48E0F;}
+.btn-secondary{background:transparent;color:#0F1B2D;border:1.5px solid #CDD4DB;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;transition:all 150ms;}
+.btn-secondary:hover{background:#EEF4F8;border-color:#A8BDD4;}
+.btn-ghost{background:transparent;color:#0F1B2D;border:none;border-radius:8px;padding:8px 12px;font-size:14px;cursor:pointer;transition:background 150ms;}
+.btn-ghost:hover{background:#EEF4F8;}
+.btn-danger{background:#991B1B;color:#fff;border:none;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;}
+.btn-danger:hover{background:#7A1515;}
+input,textarea,select{font-family:'Inter',-apple-system,sans-serif;font-size:14px;color:#0F1B2D;background:#fff;border:1.5px solid #CDD4DB;border-radius:8px;padding:10px 16px;box-shadow:0 1px 2px 0 rgba(15,27,45,0.06);width:100%;transition:border-color 150ms,box-shadow 150ms;}
+input:focus,textarea:focus,select:focus{outline:none;border-color:#F5A623;box-shadow:0 0 0 3px rgba(245,166,35,0.40);}
+label{font-size:12px;font-weight:600;color:#3D4E5A;display:block;margin-bottom:6px;}
+textarea{resize:vertical;min-height:96px;}
+.card{background:#fff;border:1px solid #E8ECF0;border-radius:12px;box-shadow:0 1px 3px 0 rgba(15,27,45,0.10),0 1px 2px -1px rgba(15,27,45,0.06);}
+.status-draft{background:#F4F6F8;color:#3D4E5A;border:1px solid #CDD4DB;border-radius:4px;padding:2px 8px;font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:4px;}
+.status-sent{background:#DBEAFE;color:#1547A8;border:1px solid rgba(21,71,168,0.3);border-radius:4px;padding:2px 8px;font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:4px;}
+.status-accepted{background:#D4F5E2;color:#1A6B3A;border:1px solid rgba(26,107,58,0.3);border-radius:4px;padding:2px 8px;font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:4px;}
+.status-declined{background:#FEE2E2;color:#991B1B;border:1px solid rgba(153,27,27,0.3);border-radius:4px;padding:2px 8px;font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:4px;}
+.status-paid{background:#D4F5E2;color:#1A6B3A;border:1px solid rgba(26,107,58,0.3);border-radius:4px;padding:2px 8px;font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:4px;}
+.status-unpaid{background:#FEF0CC;color:#8A5A00;border:1px solid rgba(138,90,0,0.3);border-radius:4px;padding:2px 8px;font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:4px;}
+@media print{
+  .no-print{display:none!important;}
+  body{background:#fff;}
+  .print-doc{box-shadow:none!important;border:none!important;margin:0!important;padding:40px!important;max-width:100%!important;}
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const {useState,useEffect,useCallback,useRef,useMemo}=React;
+
+// ── STORAGE ──────────────────────────────────────────────────────────────────
+const STORE_KEY='propkit_v1';
+const DEFAULT_SETTINGS={businessName:'Your Studio',currency:'USD',accentColor:'#F5A623'};
+
+function loadStore(){
+  try{
+    const raw=localStorage.getItem(STORE_KEY);
+    if(raw)return JSON.parse(raw);
+  }catch(e){}
+  return null;
+}
+
+function saveStore(data){
+  try{localStorage.setItem(STORE_KEY,JSON.stringify(data));}catch(e){}
+}
+
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
+
+function fmt(amount,currency='USD'){
+  return new Intl.NumberFormat('en-US',{style:'currency',currency}).format(amount||0);
+}
+
+function calcProposal(items,taxPct){
+  const subtotal=items.reduce((s,i)=>s+(parseFloat(i.qty)||0)*(parseFloat(i.rate)||0),0);
+  const tax=taxPct?subtotal*(parseFloat(taxPct)/100):0;
+  return{subtotal,tax,total:subtotal+tax};
+}
+
+const SEED_PROPOSAL={
+  id:'seed1',
+  title:'Brand Identity Package',
+  clientName:'Meridian Coffee Co.',
+  intro:'Thank you for considering our studio for your brand identity project. This proposal outlines the scope, deliverables, and investment for a complete brand system that reflects your values and connects with your audience.',
+  scope:'We will develop a comprehensive brand identity system including logo design, color palette, typography selection, and brand guidelines. The process involves three rounds of concepts followed by refinements based on your feedback.',
+  deliverables:['Primary logo (SVG + PNG, all colour variants)','Secondary mark and icon versions','Brand color palette with hex, RGB, and CMYK values','Typography specification sheet','Brand guidelines PDF (20–30 pages)','Social media profile assets'],
+  items:[
+    {id:'i1',description:'Brand Strategy & Discovery',qty:1,rate:1200},
+    {id:'i2',description:'Logo Design (3 concepts, 2 revisions)',qty:1,rate:2800},
+    {id:'i3',description:'Brand Guidelines Document',qty:1,rate:900},
+    {id:'i4',description:'Asset Production & Delivery',qty:1,rate:600},
+  ],
+  taxPct:10,
+  status:'sent',
+  date: new Date().toISOString().slice(0,10),
+  notes:'Payment terms: 50% deposit due before work begins; 50% upon final delivery. Valid for 30 days.',
+};
+
+const SEED_INVOICE={
+  id:'sinv1',
+  proposalId:'seed1',
+  title:'Invoice #001 — Brand Identity Package',
+  clientName:'Meridian Coffee Co.',
+  items:[...SEED_PROPOSAL.items],
+  taxPct:10,
+  status:'unpaid',
+  date:new Date().toISOString().slice(0,10),
+  dueDate:new Date(Date.now()+30*864e5).toISOString().slice(0,10),
+  notes:'Bank transfer or PayPal accepted. Reference: INV-001.',
+};
+
+function seedStore(){
+  return{
+    proposals:[SEED_PROPOSAL],
+    invoices:[SEED_INVOICE],
+    settings:DEFAULT_SETTINGS,
+  };
+}
+
+// ── TEMPLATES ────────────────────────────────────────────────────────────────
+const TEMPLATES={
+  webdev:{
+    title:'Web Development Project',
+    clientName:'',
+    intro:'This proposal outlines a complete web development engagement — from architecture through launch — built around your goals and your users.',
+    scope:'We will design and develop a responsive website using modern web technologies. The project includes information architecture, UX wireframes, visual design, front-end development, CMS integration, and launch support.',
+    deliverables:['Sitemap and IA document','Wireframes (up to 8 pages)','Visual design mockups','Responsive front-end build','CMS integration and training','30-day post-launch support'],
+    items:[
+      {id:uid(),description:'Discovery & Architecture',qty:1,rate:1500},
+      {id:uid(),description:'UX Design & Wireframes',qty:1,rate:2200},
+      {id:uid(),description:'Visual Design',qty:1,rate:2800},
+      {id:uid(),description:'Front-End Development',qty:1,rate:4500},
+      {id:uid(),description:'CMS Integration',qty:1,rate:1200},
+      {id:uid(),description:'QA & Launch',qty:1,rate:800},
+    ],
+    taxPct:0,
+    notes:'Payment terms: 40% upfront, 30% at design sign-off, 30% at launch.',
+  },
+  branddesign:{
+    title:'Brand Design System',
+    clientName:'',
+    intro:"Your brand is more than a logo — it's the sum of every impression you make. This proposal covers a complete brand design system built to scale with your business.",
+    scope:'Full brand identity development: strategy, visual identity, and a comprehensive brand guidelines document that your team can use independently.',
+    deliverables:['Brand positioning brief','Logo suite (primary, secondary, icon)','Color system','Typography selection','Brand guidelines PDF','Stationery and digital asset templates'],
+    items:[
+      {id:uid(),description:'Brand Strategy Workshop',qty:1,rate:1800},
+      {id:uid(),description:'Logo Design',qty:1,rate:3200},
+      {id:uid(),description:'Brand System Design',qty:1,rate:2400},
+      {id:uid(),description:'Guidelines & Asset Production',qty:1,rate:1200},
+    ],
+    taxPct:0,
+    notes:'50% deposit required to begin. Revisions: two rounds per deliverable.',
+  },
+  copywriting:{
+    title:'Copywriting Engagement',
+    clientName:'',
+    intro:"Words are doing work before you even start the meeting. This proposal covers a focused copywriting engagement — strategy-led, brand-aligned, and written to convert.",
+    scope:'Research, strategy, and copy production for your agreed deliverables. Includes one discovery session, a messaging framework, and two revision rounds per piece.',
+    deliverables:['Messaging framework document','Website copy (up to 6 pages)','Brand voice guide','One revision round per deliverable'],
+    items:[
+      {id:uid(),description:'Discovery & Messaging Strategy',qty:1,rate:900},
+      {id:uid(),description:'Website Copy (per page)',qty:6,rate:350},
+      {id:uid(),description:'Brand Voice Guide',qty:1,rate:700},
+    ],
+    taxPct:0,
+    notes:'Copy is delivered as a Google Doc. Final files transferred upon full payment.',
+  },
+  photography:{
+    title:'Photography Project',
+    clientName:'',
+    intro:'This proposal covers a photography engagement tailored to your brief — from pre-production planning through final image delivery.',
+    scope:'Full-day shoot, post-production editing, and final delivery of high-resolution images licensed for your stated usage.',
+    deliverables:['Pre-production mood board and shot list','Full-day on-location shoot','Up to 60 edited final images (high-res)','Web-optimised versions','Commercial usage licence'],
+    items:[
+      {id:uid(),description:'Creative Direction & Pre-Production',qty:1,rate:600},
+      {id:uid(),description:'Photography (full-day rate)',qty:1,rate:2200},
+      {id:uid(),description:'Post-Production & Retouching',qty:60,rate:18},
+      {id:uid(),description:'Commercial Licence',qty:1,rate:500},
+    ],
+    taxPct:0,
+    notes:'Travel beyond 30km billed at cost. Cancellation within 72 hours: 50% fee applies.',
+  },
+};
+
+// ── ROUTING ──────────────────────────────────────────────────────────────────
+function getRoute(){
+  const h=window.location.hash||'#/dashboard';
+  const path=h.slice(1);
+  if(path.startsWith('/proposal/'))return{view:'proposal',id:path.split('/')[2]};
+  if(path.startsWith('/invoice/'))return{view:'invoice',id:path.split('/')[2]};
+  if(path.startsWith('/settings'))return{view:'settings'};
+  if(path.startsWith('/view/'))return{view:'client',data:path.slice(6)};
+  return{view:'dashboard'};
+}
+
+function navigate(path){window.location.hash='#'+path;}
+
+// ── ICONS ─────────────────────────────────────────────────────────────────────
+const Icon={
+  doc:()=><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>,
+  invoice:()=><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="4" rx="1"/><path d="M2 7v13a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7"/><line x1="12" y1="12" x2="12" y2="18"/><line x1="9" y1="15" x2="15" y2="15"/></svg>,
+  settings:()=><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>,
+  plus:()=><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>,
+  trash:()=><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>,
+  copy:()=><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>,
+  print:()=><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>,
+  back:()=><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>,
+  check:()=><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>,
+  circle:()=><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10" strokeDasharray="4 2"/></svg>,
+  send:()=><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>,
+  x:()=><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>,
+  download:()=><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>,
+  upload:()=><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>,
+};
+
+// ── LOGOMARK ──────────────────────────────────────────────────────────────────
+function LogoMark({size=32,light=false}){
+  const c=light?'#FFFFFF':'#0F1B2D';
+  const s=size/48;
+  return(
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width={size} height={size} fill="none" aria-hidden="true">
+      <path d="M8 6 C8 4.895 8.895 4 10 4 L32 4 L44 16 L44 42 C44 43.105 43.105 44 42 44 L10 44 C8.895 44 8 43.105 8 42 Z" stroke={c} strokeWidth="2.5" strokeLinejoin="round" fill="none"/>
+      <path d="M32 4 L32 16 L44 16" stroke={c} strokeWidth="2.5" strokeLinejoin="round" fill="none"/>
+      <path d="M32 4 L32 16 L44 16 Z" fill="#F5A623" opacity={light?"0.35":"0.18"}/>
+      {size>=32&&<><line x1="15" y1="22" x2="37" y2="22" stroke={c} strokeWidth="2" strokeLinecap="round"/>
+      <line x1="15" y1="29" x2="37" y2="29" stroke={c} strokeWidth="2" strokeLinecap="round"/>
+      <line x1="15" y1="36" x2="28" y2="36" stroke="#F5A623" strokeWidth="2" strokeLinecap="round"/></>}
+    </svg>
+  );
+}
+
+// ── STATUS BADGE ──────────────────────────────────────────────────────────────
+function StatusBadge({status}){
+  const map={
+    draft:{cls:'status-draft',icon:<Icon.circle/>,label:'DRAFT'},
+    sent:{cls:'status-sent',icon:<Icon.send/>,label:'SENT'},
+    accepted:{cls:'status-accepted',icon:<Icon.check/>,label:'ACCEPTED'},
+    declined:{cls:'status-declined',icon:<Icon.x/>,label:'DECLINED'},
+    paid:{cls:'status-paid',icon:<Icon.check/>,label:'PAID'},
+    unpaid:{cls:'status-unpaid',icon:<Icon.circle/>,label:'UNPAID'},
+  };
+  const m=map[status]||map.draft;
+  return <span className={m.cls} role="status">{m.icon}{m.label}</span>;
+}
+
+// ── NAV ───────────────────────────────────────────────────────────────────────
+function Sidebar({route,settings}){
+  const links=[
+    {path:'/dashboard',label:'Dashboard',icon:<Icon.doc/>},
+    {path:'/settings',label:'Settings',icon:<Icon.settings/>},
+  ];
+  return(
+    <nav className="no-print" style={{background:'#0F1B2D',width:220,minHeight:'100vh',padding:'0',display:'flex',flexDirection:'column',flexShrink:0}} aria-label="Main navigation">
+      <div style={{padding:'24px 20px 20px',borderBottom:'1px solid rgba(255,255,255,0.08)'}}>
+        <div style={{display:'flex',alignItems:'center',gap:10}}>
+          <LogoMark size={32} light={true}/>
+          <span style={{fontWeight:600,fontSize:18,color:'#fff',letterSpacing:'-0.02em'}}><span style={{fontWeight:600}}>Prop</span><span style={{fontWeight:500}}>Kit</span></span>
+        </div>
+        {settings.businessName&&<div style={{fontSize:12,color:'rgba(255,255,255,0.45)',marginTop:6,paddingLeft:42}}>{settings.businessName}</div>}
+      </div>
+      <ul style={{listStyle:'none',margin:0,padding:'12px 0',flex:1}} role="list">
+        {links.map(l=>{
+          const active=window.location.hash.includes(l.path)||(!window.location.hash&&l.path==='/dashboard');
+          return(
+            <li key={l.path}>
+              <a href={'#'+l.path} style={{display:'flex',alignItems:'center',gap:10,padding:'10px 20px',color:active?'#F5A623':'rgba(255,255,255,0.7)',textDecoration:'none',fontSize:14,fontWeight:active?600:400,background:active?'rgba(245,166,35,0.08)':'transparent',borderLeft:active?'2px solid #F5A623':'2px solid transparent',transition:'all 150ms'}}
+                aria-current={active?'page':undefined}>
+                {l.icon}{l.label}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+  );
+}
+
+// ── DASHBOARD ────────────────────────────────────────────────────────────────
+function Dashboard({store,onUpdate}){
+  const {proposals,invoices,settings}=store;
+  const currency=settings.currency||'USD';
+  const totalPipeline=proposals.filter(p=>p.status!=='declined').reduce((s,p)=>{
+    const{total}=calcProposal(p.items||[],p.taxPct);return s+total;},0);
+  const accepted=proposals.filter(p=>p.status==='accepted').length;
+  const pending=proposals.filter(p=>p.status==='sent').length;
+  const unpaid=invoices.filter(i=>i.status==='unpaid').length;
+
+  function newProposal(){
+    const p={id:uid(),title:'Untitled Proposal',clientName:'',intro:'',scope:'',deliverables:[],items:[{id:uid(),description:'',qty:1,rate:0}],taxPct:0,status:'draft',date:new Date().toISOString().slice(0,10),notes:''};
+    const updated={...store,proposals:[...proposals,p]};
+    onUpdate(updated);
+    navigate('/proposal/'+p.id);
+  }
+
+  function deleteProposal(id){
+    if(!confirm('Delete this proposal?'))return;
+    onUpdate({...store,proposals:proposals.filter(p=>p.id!==id)});
+  }
+  function deleteInvoice(id){
+    if(!confirm('Delete this invoice?'))return;
+    onUpdate({...store,invoices:invoices.filter(i=>i.id!==id)});
+  }
+
+  return(
+    <main style={{flex:1,padding:'32px',overflowY:'auto'}} aria-label="Dashboard">
+      <div style={{maxWidth:960,margin:'0 auto'}}>
+        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:24}}>
+          <h1 style={{fontSize:28,fontWeight:600,color:'#0F1B2D',letterSpacing:'-0.02em',margin:0}}>Dashboard</h1>
+          <button className="btn-accent" onClick={newProposal} style={{display:'flex',alignItems:'center',gap:6}}>
+            <Icon.plus/> New Proposal
+          </button>
+        </div>
+
+        {/* Stats */}
+        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(180px,1fr))',gap:16,marginBottom:32}}>
+          {[
+            {label:'Pipeline',value:fmt(totalPipeline,currency),sub:'total value'},
+            {label:'Proposals',value:proposals.length,sub:`${accepted} accepted · ${pending} pending`},
+            {label:'Unpaid',value:unpaid,sub:'invoice'+(unpaid!==1?'s':'')},
+            {label:'Accepted',value:accepted,sub:'proposal'+(accepted!==1?'s':'')},
+          ].map(s=>(
+            <div key={s.label} className="card" style={{padding:'20px 24px'}}>
+              <div style={{fontSize:12,fontWeight:600,color:'#566370',letterSpacing:'0.04em',textTransform:'uppercase',marginBottom:6}}>{s.label}</div>
+              <div style={{fontSize:26,fontWeight:700,color:'#0F1B2D',letterSpacing:'-0.02em',fontFamily:"'JetBrains Mono',monospace"}}>{s.value}</div>
+              <div style={{fontSize:12,color:'#7C8A96',marginTop:4}}>{s.sub}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Proposals */}
+        <section aria-labelledby="prop-heading" style={{marginBottom:32}}>
+          <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:16}}>
+            <h2 id="prop-heading" style={{fontSize:18,fontWeight:600,margin:0}}>Proposals</h2>
+            <button className="btn-secondary" onClick={newProposal} style={{display:'flex',alignItems:'center',gap:6,padding:'7px 14px',fontSize:13}}>
+              <Icon.plus/> New
+            </button>
+          </div>
+          <div className="card" style={{padding:0,overflow:'hidden'}}>
+            {proposals.length===0?(
+              <div style={{textAlign:'center',padding:'64px 24px',color:'#566370'}}>
+                <div style={{fontSize:40,marginBottom:12,opacity:0.3}}>📄</div>
+                <div style={{fontSize:18,fontWeight:600,color:'#0F1B2D',marginBottom:6}}>No proposals yet</div>
+                <div style={{fontSize:14,color:'#566370',marginBottom:20}}>Create your first proposal and send it to a client.</div>
+                <button className="btn-accent" onClick={newProposal}>New Proposal</button>
+              </div>
+            ):(
+              <table style={{width:'100%',borderCollapse:'collapse'}} role="table" aria-label="Proposals list">
+                <thead>
+                  <tr style={{background:'#FAFBFC',borderBottom:'1px solid #E8ECF0'}}>
+                    {['Client','Title','Amount','Status',''].map(h=>(
+                      <th key={h} scope="col" style={{padding:'10px 16px',fontSize:11,fontWeight:600,color:'#566370',letterSpacing:'0.06em',textTransform:'uppercase',textAlign:h===''||h==='Amount'?'right':'left'}}>{h}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {proposals.map((p,i)=>{
+                    const {total}=calcProposal(p.items||[],p.taxPct);
+                    return(
+                      <tr key={p.id} style={{borderBottom:'1px solid #E8ECF0',background:i%2===0?'#fff':'#FAFBFC',cursor:'pointer'}}
+                        onClick={()=>navigate('/proposal/'+p.id)}
+                        onKeyDown={e=>{if(e.key==='Enter'||e.key===' ')navigate('/proposal/'+p.id);}}
+                        tabIndex={0} role="row" aria-label={`${p.clientName} - ${p.title}`}>
+                        <td style={{padding:'14px 16px',fontSize:14,fontWeight:500,color:'#0F1B2D'}}>{p.clientName||<span style={{color:'#A9B4BF'}}>No client</span>}</td>
+                        <td style={{padding:'14px 16px',fontSize:14,color:'#3D4E5A'}}>{p.title}</td>
+                        <td style={{padding:'14px 16px',fontSize:14,fontFamily:"'JetBrains Mono',monospace",color:'#0F1B2D',textAlign:'right'}}>{fmt(total,currency)}</td>
+                        <td style={{padding:'14px 16px'}}><StatusBadge status={p.status}/></td>
+                        <td style={{padding:'14px 16px',textAlign:'right'}}>
+                          <button className="btn-ghost" onClick={e=>{e.stopPropagation();deleteProposal(p.id);}} aria-label={`Delete proposal ${p.title}`} style={{padding:'6px',color:'#991B1B'}}>
+                            <Icon.trash/>
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            )}
+          </div>
+        </section>
+
+        {/* Invoices */}
+        <section aria-labelledby="inv-heading">
+          <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:16}}>
+            <h2 id="inv-heading" style={{fontSize:18,fontWeight:600,margin:0}}>Invoices</h2>
+          </div>
+          <div className="card" style={{padding:0,overflow:'hidden'}}>
+            {invoices.length===0?(
+              <div style={{textAlign:'center',padding:'64px 24px'}}>
+                <div style={{fontSize:40,marginBottom:12,opacity:0.3}}>🧾</div>
+                <div style={{fontSize:18,fontWeight:600,color:'#0F1B2D',marginBottom:6}}>No invoices yet</div>
+                <div style={{fontSize:14,color:'#566370'}}>Generate an invoice from an accepted proposal.</div>
+              </div>
+            ):(
+              <table style={{width:'100%',borderCollapse:'collapse'}} role="table" aria-label="Invoices list">
+                <thead>
+                  <tr style={{background:'#FAFBFC',borderBottom:'1px solid #E8ECF0'}}>
+                    {['Client','Title','Amount','Due','Status',''].map(h=>(
+                      <th key={h} scope="col" style={{padding:'10px 16px',fontSize:11,fontWeight:600,color:'#566370',letterSpacing:'0.06em',textTransform:'uppercase',textAlign:h===''||h==='Amount'?'right':'left'}}>{h}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {invoices.map((inv,i)=>{
+                    const {total}=calcProposal(inv.items||[],inv.taxPct);
+                    return(
+                      <tr key={inv.id} style={{borderBottom:'1px solid #E8ECF0',background:i%2===0?'#fff':'#FAFBFC',cursor:'pointer'}}
+                        onClick={()=>navigate('/invoice/'+inv.id)}
+                        onKeyDown={e=>{if(e.key==='Enter'||e.key===' ')navigate('/invoice/'+inv.id);}}
+                        tabIndex={0} role="row">
+                        <td style={{padding:'14px 16px',fontSize:14,fontWeight:500,color:'#0F1B2D'}}>{inv.clientName||'—'}</td>
+                        <td style={{padding:'14px 16px',fontSize:14,color:'#3D4E5A'}}>{inv.title}</td>
+                        <td style={{padding:'14px 16px',fontSize:14,fontFamily:"'JetBrains Mono',monospace",color:'#0F1B2D',textAlign:'right'}}>{fmt(total,currency)}</td>
+                        <td style={{padding:'14px 16px',fontSize:13,color:'#566370'}}>{inv.dueDate||'—'}</td>
+                        <td style={{padding:'14px 16px'}}><StatusBadge status={inv.status}/></td>
+                        <td style={{padding:'14px 16px',textAlign:'right'}}>
+                          <button className="btn-ghost" onClick={e=>{e.stopPropagation();deleteInvoice(inv.id);}} aria-label={`Delete invoice ${inv.title}`} style={{padding:'6px',color:'#991B1B'}}>
+                            <Icon.trash/>
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            )}
+          </div>
+        </section>
+      </div>
+    </main>
+  );
+}
+
+// ── PROPOSAL BUILDER ──────────────────────────────────────────────────────────
+function ProposalBuilder({id,store,onUpdate}){
+  const existing=store.proposals.find(p=>p.id===id);
+  const [p,setP]=useState(existing||{id,title:'',clientName:'',intro:'',scope:'',deliverables:[],items:[{id:uid(),description:'',qty:1,rate:0}],taxPct:0,status:'draft',date:new Date().toISOString().slice(0,10),notes:''});
+  const [saved,setSaved]=useState(false);
+  const [copied,setCopied]=useState(false);
+  const [tab,setTab]=useState('edit');
+  const currency=store.settings.currency||'USD';
+
+  function save(next=p){
+    const proposals=store.proposals.find(x=>x.id===id)?store.proposals.map(x=>x.id===id?next:x):[...store.proposals,next];
+    onUpdate({...store,proposals});
+    setSaved(true);setTimeout(()=>setSaved(false),2000);
+  }
+
+  function loadTemplate(key){
+    if(!key)return;
+    const t=TEMPLATES[key];
+    const next={...p,...t,id,status:p.status,date:p.date};
+    setP(next);save(next);
+  }
+
+  function addItem(){setP(x=>({...x,items:[...x.items,{id:uid(),description:'',qty:1,rate:0}]}));}
+  function removeItem(iid){setP(x=>({...x,items:x.items.filter(i=>i.id!==iid)}));}
+  function updateItem(iid,field,val){setP(x=>({...x,items:x.items.map(i=>i.id===iid?{...i,[field]:val}:i)}));}
+  function addDeliverable(){setP(x=>({...x,deliverables:[...x.deliverables,'']}));}
+  function updateDeliverable(idx,val){setP(x=>({...x,deliverables:x.deliverables.map((d,i)=>i===idx?val:d)}));}
+  function removeDeliverable(idx){setP(x=>({...x,deliverables:x.deliverables.filter((_,i)=>i!==idx)}));}
+
+  const {subtotal,tax,total}=calcProposal(p.items,p.taxPct);
+
+  function generateInvoice(){
+    const inv={id:uid(),proposalId:p.id,title:'Invoice — '+p.title,clientName:p.clientName,items:p.items.map(i=>({...i})),taxPct:p.taxPct,status:'unpaid',date:new Date().toISOString().slice(0,10),dueDate:new Date(Date.now()+30*864e5).toISOString().slice(0,10),notes:p.notes};
+    onUpdate({...store,proposals:store.proposals.map(x=>x.id===id?p:x),invoices:[...store.invoices,inv]});
+    navigate('/invoice/'+inv.id);
+  }
+
+  function copyClientLink(){
+    const data=btoa(JSON.stringify(p));
+    const url=window.location.origin+window.location.pathname+'#/view/'+data;
+    navigator.clipboard.writeText(url).then(()=>{setCopied(true);setTimeout(()=>setCopied(false),2500);}).catch(()=>{
+      const el=document.createElement('textarea');el.value=url;document.body.appendChild(el);el.select();document.execCommand('copy');el.remove();setCopied(true);setTimeout(()=>setCopied(false),2500);
+    });
+  }
+
+  const fieldStyle={marginBottom:16};
+
+  return(
+    <main style={{flex:1,overflowY:'auto',padding:'32px'}} aria-label="Proposal builder">
+      <div style={{maxWidth:1100,margin:'0 auto'}}>
+        <div style={{display:'flex',alignItems:'center',gap:12,marginBottom:24}}>
+          <button className="btn-ghost" onClick={()=>navigate('/dashboard')} aria-label="Back to dashboard" style={{padding:'8px',display:'flex'}}>
+            <Icon.back/>
+          </button>
+          <h1 style={{fontSize:22,fontWeight:600,margin:0,flex:1,color:'#0F1B2D'}}>{p.title||'Untitled Proposal'}</h1>
+          <div style={{display:'flex',gap:8,flexWrap:'wrap'}}>
+            <select value="" onChange={e=>loadTemplate(e.target.value)} style={{width:'auto',padding:'8px 12px',fontSize:13}} aria-label="Load template">
+              <option value="">Load template…</option>
+              <option value="webdev">Web Development</option>
+              <option value="branddesign">Brand Design</option>
+              <option value="copywriting">Copywriting</option>
+              <option value="photography">Photography</option>
+            </select>
+            <button className="btn-secondary" onClick={copyClientLink} style={{display:'flex',alignItems:'center',gap:6,padding:'8px 14px',fontSize:13}}>
+              <Icon.copy/>{copied?'Copied!':'Copy client link'}
+            </button>
+            <button className="btn-secondary" onClick={generateInvoice} style={{display:'flex',alignItems:'center',gap:6,padding:'8px 14px',fontSize:13}}>
+              <Icon.invoice/>Create Invoice
+            </button>
+            <button className="btn-primary" onClick={()=>save()} style={{display:'flex',alignItems:'center',gap:6,padding:'8px 16px',fontSize:13}}>
+              {saved?<><Icon.check/> Saved</>:'Save'}
+            </button>
+          </div>
+        </div>
+
+        {/* Tab switcher */}
+        <div style={{display:'flex',gap:0,marginBottom:24,borderBottom:'2px solid #E8ECF0'}} role="tablist">
+          {['edit','preview'].map(t=>(
+            <button key={t} role="tab" aria-selected={tab===t} onClick={()=>setTab(t)}
+              style={{padding:'10px 20px',fontSize:14,fontWeight:600,background:'none',border:'none',cursor:'pointer',color:tab===t?'#0F1B2D':'#566370',borderBottom:tab===t?'2px solid #0F1B2D':'2px solid transparent',marginBottom:'-2px',textTransform:'capitalize'}}>
+              {t==='edit'?'Edit':'Preview'}
+            </button>
+          ))}
+        </div>
+
+        {tab==='edit'?(
+          <div style={{display:'grid',gridTemplateColumns:'1fr',gap:20}}>
+            <div className="card" style={{padding:24}}>
+              <h2 style={{fontSize:16,fontWeight:600,marginBottom:16,marginTop:0}}>Cover</h2>
+              <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:16}}>
+                <div style={fieldStyle}>
+                  <label htmlFor="p-title">Proposal Title</label>
+                  <input id="p-title" value={p.title} onChange={e=>setP(x=>({...x,title:e.target.value}))} placeholder="e.g. Brand Identity Package"/>
+                </div>
+                <div style={fieldStyle}>
+                  <label htmlFor="p-client">Client Name</label>
+                  <input id="p-client" value={p.clientName} onChange={e=>setP(x=>({...x,clientName:e.target.value}))} placeholder="e.g. Acme Corp"/>
+                </div>
+                <div style={{...fieldStyle,gridColumn:'1/-1'}}>
+                  <label htmlFor="p-intro">Introduction</label>
+                  <textarea id="p-intro" value={p.intro} onChange={e=>setP(x=>({...x,intro:e.target.value}))} placeholder="Opening paragraph…" style={{minHeight:80}}/>
+                </div>
+                <div style={{...fieldStyle,gridColumn:'1/-1'}}>
+                  <label htmlFor="p-scope">Scope of Work</label>
+                  <textarea id="p-scope" value={p.scope} onChange={e=>setP(x=>({...x,scope:e.target.value}))} placeholder="Describe the project scope…"/>
+                </div>
+              </div>
+              <div style={fieldStyle}>
+                <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:8}}>
+                  <label style={{margin:0}}>Deliverables</label>
+                  <button className="btn-ghost" onClick={addDeliverable} style={{padding:'4px 8px',fontSize:12,display:'flex',alignItems:'center',gap:4}}>
+                    <Icon.plus/> Add
+                  </button>
+                </div>
+                {p.deliverables.map((d,i)=>(
+                  <div key={i} style={{display:'flex',gap:8,marginBottom:8}}>
+                    <input value={d} onChange={e=>updateDeliverable(i,e.target.value)} placeholder={`Deliverable ${i+1}`} aria-label={`Deliverable ${i+1}`}/>
+                    <button className="btn-ghost" onClick={()=>removeDeliverable(i)} aria-label={`Remove deliverable ${i+1}`} style={{padding:'8px',flexShrink:0,color:'#991B1B'}}>
+                      <Icon.trash/>
+                    </button>
+                  </div>
+                ))}
+                {p.deliverables.length===0&&<div style={{fontSize:13,color:'#A9B4BF',fontStyle:'italic'}}>No deliverables added yet.</div>}
+              </div>
+              <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:16}}>
+                <div style={fieldStyle}>
+                  <label htmlFor="p-date">Date</label>
+                  <input id="p-date" type="date" value={p.date} onChange={e=>setP(x=>({...x,date:e.target.value}))}/>
+                </div>
+                <div style={fieldStyle}>
+                  <label htmlFor="p-status">Status</label>
+                  <select id="p-status" value={p.status} onChange={e=>setP(x=>({...x,status:e.target.value}))}>
+                    <option value="draft">Draft</option>
+                    <option value="sent">Sent</option>
+                    <option value="accepted">Accepted</option>
+                    <option value="declined">Declined</option>
+                  </select>
+                </div>
+                <div style={{...fieldStyle,gridColumn:'1/-1'}}>
+                  <label htmlFor="p-notes">Notes / Payment Terms</label>
+                  <textarea id="p-notes" value={p.notes} onChange={e=>setP(x=>({...x,notes:e.target.value}))} style={{minHeight:64}}/>
+                </div>
+              </div>
+            </div>
+
+            {/* Pricing Table */}
+            <div className="card" style={{padding:24}}>
+              <h2 style={{fontSize:16,fontWeight:600,marginBottom:16,marginTop:0}}>Pricing</h2>
+              <table style={{width:'100%',borderCollapse:'collapse',marginBottom:16}} aria-label="Line items">
+                <thead>
+                  <tr style={{borderBottom:'1.5px solid #0F1B2D'}}>
+                    {['Description','Qty','Rate','Total',''].map(h=>(
+                      <th key={h} scope="col" style={{padding:'6px 8px',fontSize:11,fontWeight:600,letterSpacing:'0.06em',color:'#566370',textAlign:h==='Total'||h===''?'right':'left',textTransform:'uppercase'}}>{h}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {p.items.map((item,idx)=>(
+                    <tr key={item.id} style={{borderBottom:'1px solid #E8ECF0'}}>
+                      <td style={{padding:'8px'}}>
+                        <input value={item.description} onChange={e=>updateItem(item.id,'description',e.target.value)} placeholder="Description" aria-label={`Item ${idx+1} description`} style={{fontSize:13}}/>
+                      </td>
+                      <td style={{padding:'8px',width:70}}>
+                        <input type="number" min="0" value={item.qty} onChange={e=>updateItem(item.id,'qty',e.target.value)} aria-label={`Item ${idx+1} quantity`} style={{fontSize:13,textAlign:'right'}}/>
+                      </td>
+                      <td style={{padding:'8px',width:110}}>
+                        <input type="number" min="0" value={item.rate} onChange={e=>updateItem(item.id,'rate',e.target.value)} aria-label={`Item ${idx+1} rate`} style={{fontSize:13,textAlign:'right'}}/>
+                      </td>
+                      <td style={{padding:'8px',width:110,textAlign:'right',fontFamily:"'JetBrains Mono',monospace",fontSize:13,color:'#0F1B2D',fontWeight:500}}>
+                        {fmt((parseFloat(item.qty)||0)*(parseFloat(item.rate)||0),currency)}
+                      </td>
+                      <td style={{padding:'8px',width:36,textAlign:'right'}}>
+                        <button className="btn-ghost" onClick={()=>removeItem(item.id)} aria-label={`Remove item ${idx+1}`} style={{padding:'4px',color:'#991B1B'}}>
+                          <Icon.trash/>
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <button className="btn-secondary" onClick={addItem} style={{display:'flex',alignItems:'center',gap:6,padding:'7px 14px',fontSize:13,marginBottom:16}}>
+                <Icon.plus/> Add line item
+              </button>
+              <div style={{display:'flex',flexDirection:'column',alignItems:'flex-end',gap:6}}>
+                <div style={{display:'flex',gap:32,fontSize:14}}>
+                  <span style={{color:'#566370'}}>Subtotal</span>
+                  <span style={{fontFamily:"'JetBrains Mono',monospace",fontWeight:500}}>{fmt(subtotal,currency)}</span>
+                </div>
+                <div style={{display:'flex',gap:16,alignItems:'center'}}>
+                  <label htmlFor="p-tax" style={{margin:0,fontSize:14,color:'#566370'}}>Tax %</label>
+                  <input id="p-tax" type="number" min="0" max="100" value={p.taxPct} onChange={e=>setP(x=>({...x,taxPct:e.target.value}))} style={{width:70,textAlign:'right',padding:'6px 10px'}}/>
+                  <span style={{fontFamily:"'JetBrains Mono',monospace",fontWeight:500,fontSize:14}}>{fmt(tax,currency)}</span>
+                </div>
+                <div style={{background:'#0F1B2D',color:'#fff',padding:'10px 20px',borderRadius:8,display:'flex',gap:32,alignItems:'center',marginTop:4}}>
+                  <span style={{fontSize:14,fontWeight:600}}>Total</span>
+                  <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:20,fontWeight:500}}>{fmt(total,currency)}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        ):(
+          <ProposalPreview proposal={p} settings={store.settings}/>
+        )}
+      </div>
+    </main>
+  );
+}
+
+// ── PROPOSAL PREVIEW (branded doc) ───────────────────────────────────────────
+function ProposalPreview({proposal:p,settings,readOnly=false}){
+  const currency=settings?.currency||'USD';
+  const {subtotal,tax,total}=calcProposal(p.items||[],p.taxPct);
+  const initials=(settings?.businessName||'PK').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+  return(
+    <div style={{background:'#F4F6F8',padding:'40px 24px',minHeight:'100vh'}} className={readOnly?'':'print-doc-wrap'}>
+      <article style={{background:'#fff',maxWidth:800,margin:'0 auto',boxShadow:'0 20px 25px -5px rgba(15,27,45,0.15)',borderRadius:4,overflow:'hidden'}} aria-label="Proposal document" className="print-doc">
+        {/* Header */}
+        <div style={{padding:'80px 80px 0',background:'#fff'}}>
+          <div style={{display:'flex',alignItems:'center',gap:12,marginBottom:32}}>
+            <div style={{width:40,height:40,borderRadius:'50%',background:'#0F1B2D',display:'flex',alignItems:'center',justifyContent:'center',color:'#fff',fontWeight:600,fontSize:14,flexShrink:0}}>{initials}</div>
+            <span style={{fontWeight:600,fontSize:16,color:'#0F1B2D'}}>{settings?.businessName||'Your Studio'}</span>
+          </div>
+          <h1 style={{fontFamily:'"DM Serif Display",Georgia,serif',fontSize:48,fontWeight:400,color:'#0F1B2D',margin:'0 0 8px',lineHeight:1.1}}>{p.title||'Proposal'}</h1>
+          {p.clientName&&<div style={{fontSize:15,color:'#566370',marginBottom:32}}>Prepared for {p.clientName}</div>}
+          <hr style={{border:'none',borderTop:'1px solid #E8ECF0',margin:'0 0 32px'}}/>
+          <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:24,marginBottom:32}}>
+            <div>
+              <div style={{fontSize:12,fontWeight:600,color:'#7C8A96',letterSpacing:'0.04em',textTransform:'uppercase',marginBottom:4}}>Prepared by</div>
+              <div style={{fontSize:15,color:'#0F1B2D'}}>{settings?.businessName||'Your Studio'}</div>
+            </div>
+            <div>
+              <div style={{fontSize:12,fontWeight:600,color:'#7C8A96',letterSpacing:'0.04em',textTransform:'uppercase',marginBottom:4}}>Prepared for</div>
+              <div style={{fontSize:15,color:'#0F1B2D'}}>{p.clientName||'—'}</div>
+            </div>
+            <div>
+              <div style={{fontSize:12,fontWeight:600,color:'#7C8A96',letterSpacing:'0.04em',textTransform:'uppercase',marginBottom:4}}>Date</div>
+              <div style={{fontSize:15,color:'#0F1B2D'}}>{p.date||new Date().toISOString().slice(0,10)}</div>
+            </div>
+            <div>
+              <div style={{fontSize:12,fontWeight:600,color:'#7C8A96',letterSpacing:'0.04em',textTransform:'uppercase',marginBottom:4}}>Status</div>
+              <div><StatusBadge status={p.status||'draft'}/></div>
+            </div>
+          </div>
+          <hr style={{border:'none',borderTop:'1px solid #E8ECF0',margin:'0 0 0'}}/>
+        </div>
+
+        {/* Body */}
+        <div style={{padding:'0 80px 80px'}}>
+          {p.intro&&(
+            <>
+              <h2 style={{fontFamily:'"DM Serif Display",Georgia,serif',fontSize:32,fontWeight:400,color:'#0F1B2D',margin:'48px 0 16px'}}>Introduction</h2>
+              <p style={{fontSize:15,color:'#3D4E5A',lineHeight:1.7,margin:0}}>{p.intro}</p>
+            </>
+          )}
+          {p.scope&&(
+            <>
+              <h2 style={{fontFamily:'"DM Serif Display",Georgia,serif',fontSize:32,fontWeight:400,color:'#0F1B2D',margin:'48px 0 16px'}}>Scope of Work</h2>
+              <p style={{fontSize:15,color:'#3D4E5A',lineHeight:1.7,margin:0}}>{p.scope}</p>
+            </>
+          )}
+          {p.deliverables?.length>0&&(
+            <>
+              <h2 style={{fontFamily:'"DM Serif Display",Georgia,serif',fontSize:32,fontWeight:400,color:'#0F1B2D',margin:'48px 0 16px'}}>Deliverables</h2>
+              <ul style={{listStyle:'none',padding:0,margin:0}}>
+                {p.deliverables.filter(Boolean).map((d,i)=>(
+                  <li key={i} style={{display:'flex',alignItems:'flex-start',gap:10,marginBottom:10,fontSize:15,color:'#3D4E5A',lineHeight:1.6}}>
+                    <span style={{width:6,height:6,borderRadius:'50%',background:'#F5A623',marginTop:7,flexShrink:0,display:'block'}}></span>
+                    {d}
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+
+          {/* Pricing table */}
+          <h2 style={{fontFamily:'"DM Serif Display",Georgia,serif',fontSize:32,fontWeight:400,color:'#0F1B2D',margin:'48px 0 16px'}}>Investment</h2>
+          <table style={{width:'100%',borderCollapse:'collapse'}} aria-label="Pricing breakdown">
+            <thead>
+              <tr style={{borderBottom:'1.5px solid #0F1B2D'}}>
+                {['Description','Qty','Rate','Amount'].map(h=>(
+                  <th key={h} scope="col" style={{padding:'8px 0',fontSize:11,fontWeight:600,letterSpacing:'0.06em',color:'#7C8A96',textAlign:h==='Amount'?'right':'left',textTransform:'uppercase'}}>{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {(p.items||[]).map((item,i)=>(
+                <tr key={item.id||i} style={{borderBottom:'1px solid #E8ECF0'}}>
+                  <td style={{padding:'14px 0',fontSize:14,color:'#0F1B2D'}}>{item.description}</td>
+                  <td style={{padding:'14px 0',fontSize:14,fontFamily:"'JetBrains Mono',monospace",color:'#566370'}}>{item.qty}</td>
+                  <td style={{padding:'14px 0',fontSize:14,fontFamily:"'JetBrains Mono',monospace",color:'#566370'}}>{fmt(parseFloat(item.rate)||0,currency)}</td>
+                  <td style={{padding:'14px 0',fontSize:14,fontFamily:"'JetBrains Mono',monospace",color:'#0F1B2D',textAlign:'right',fontWeight:500}}>{fmt((parseFloat(item.qty)||0)*(parseFloat(item.rate)||0),currency)}</td>
+                </tr>
+              ))}
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colSpan={3} style={{padding:'12px 0 6px',fontSize:13,fontWeight:600,textAlign:'right',paddingRight:16,color:'#566370'}}>Subtotal</td>
+                <td style={{padding:'12px 0 6px',fontFamily:"'JetBrains Mono',monospace",textAlign:'right',fontSize:14,fontWeight:600}}>{fmt(subtotal,currency)}</td>
+              </tr>
+              {parseFloat(p.taxPct)>0&&<tr>
+                <td colSpan={3} style={{padding:'4px 0',fontSize:13,fontWeight:600,textAlign:'right',paddingRight:16,color:'#566370'}}>Tax ({p.taxPct}%)</td>
+                <td style={{padding:'4px 0',fontFamily:"'JetBrains Mono',monospace",textAlign:'right',fontSize:14,fontWeight:600}}>{fmt(tax,currency)}</td>
+              </tr>}
+              <tr>
+                <td colSpan={4} style={{padding:0}}>
+                  <div style={{background:'#0F1B2D',display:'flex',justifyContent:'space-between',alignItems:'center',padding:'16px 20px',marginTop:8}}>
+                    <span style={{fontSize:15,fontWeight:600,color:'#fff'}}>Total</span>
+                    <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:28,fontWeight:500,color:'#fff'}}>{fmt(total,currency)}</span>
+                  </div>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+
+          {p.notes&&(
+            <div style={{marginTop:32,padding:24,background:'#EEF4F8',borderRadius:8,border:'1px solid #E8ECF0'}}>
+              <div style={{fontSize:12,fontWeight:600,color:'#566370',letterSpacing:'0.04em',textTransform:'uppercase',marginBottom:8}}>Notes & Terms</div>
+              <p style={{fontSize:14,color:'#3D4E5A',lineHeight:1.7,margin:0}}>{p.notes}</p>
+            </div>
+          )}
+
+          {/* Footer */}
+          <div style={{marginTop:48,paddingTop:20,borderTop:'1px solid #E8ECF0',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+            <span style={{fontSize:12,color:'#7C8A96'}}>{settings?.businessName||'Your Studio'}</span>
+            <a href="https://propkit.com?ref=powered-by" style={{textDecoration:'none',display:'flex',alignItems:'center',gap:6}} aria-label="Powered by PropKit">
+              <LogoMark size={16}/>
+              <span style={{fontSize:11,color:'#7C8A96'}}>Powered by </span>
+              <span style={{fontSize:11,fontWeight:600,color:'#0F1B2D'}}>PropKit</span>
+            </a>
+          </div>
+        </div>
+      </article>
+    </div>
+  );
+}
+
+// ── INVOICE VIEW ──────────────────────────────────────────────────────────────
+function InvoiceView({id,store,onUpdate}){
+  const existing=store.invoices.find(i=>i.id===id);
+  const [inv,setInv]=useState(existing);
+  if(!inv)return(
+    <main style={{flex:1,padding:32}} aria-label="Invoice not found">
+      <div style={{maxWidth:800,margin:'0 auto',textAlign:'center',paddingTop:64}}>
+        <div style={{fontSize:40,marginBottom:12}}>🔍</div>
+        <h1 style={{fontSize:22,fontWeight:600}}>Invoice not found</h1>
+        <button className="btn-primary" onClick={()=>navigate('/dashboard')} style={{marginTop:16}}>Back to dashboard</button>
+      </div>
+    </main>
+  );
+  const currency=store.settings?.currency||'USD';
+  const {subtotal,tax,total}=calcProposal(inv.items||[],inv.taxPct);
+  const initials=(store.settings?.businessName||'PK').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+
+  function saveInv(next=inv){
+    setInv(next);
+    onUpdate({...store,invoices:store.invoices.map(i=>i.id===id?next:i)});
+  }
+  function togglePaid(){
+    const next={...inv,status:inv.status==='paid'?'unpaid':'paid'};
+    saveInv(next);
+  }
+
+  return(
+    <main style={{flex:1,overflowY:'auto',padding:'32px'}} aria-label="Invoice">
+      <div style={{maxWidth:960,margin:'0 auto'}}>
+        <div style={{display:'flex',alignItems:'center',gap:12,marginBottom:24}} className="no-print">
+          <button className="btn-ghost" onClick={()=>navigate('/dashboard')} aria-label="Back" style={{padding:8,display:'flex'}}><Icon.back/></button>
+          <h1 style={{fontSize:22,fontWeight:600,margin:0,flex:1}}>{inv.title}</h1>
+          <button className="btn-secondary" onClick={togglePaid} style={{padding:'8px 14px',fontSize:13}}>
+            Mark as {inv.status==='paid'?'Unpaid':'Paid'}
+          </button>
+          <button className="btn-secondary" onClick={()=>window.print()} style={{display:'flex',alignItems:'center',gap:6,padding:'8px 14px',fontSize:13}}>
+            <Icon.print/> Print / PDF
+          </button>
+        </div>
+
+        <article style={{background:'#fff',boxShadow:'0 20px 25px -5px rgba(15,27,45,0.15)',overflow:'hidden'}} className="print-doc" aria-label="Invoice document">
+          <div style={{padding:'80px 80px 0'}}>
+            <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:32}}>
+              <div style={{display:'flex',alignItems:'center',gap:10}}>
+                <div style={{width:40,height:40,borderRadius:'50%',background:'#0F1B2D',display:'flex',alignItems:'center',justifyContent:'center',color:'#fff',fontWeight:600,fontSize:14}}>{initials}</div>
+                <span style={{fontWeight:600,fontSize:16}}>{store.settings?.businessName||'Your Studio'}</span>
+              </div>
+              <div style={{textAlign:'right'}}>
+                <div style={{fontFamily:'"DM Serif Display",Georgia,serif',fontSize:36,color:'#0F1B2D',lineHeight:1}}>Invoice</div>
+                <div style={{fontSize:13,color:'#566370',marginTop:6}}><StatusBadge status={inv.status}/></div>
+              </div>
+            </div>
+            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:24,marginBottom:32}}>
+              <div>
+                <div style={{fontSize:12,fontWeight:600,color:'#7C8A96',letterSpacing:'0.04em',textTransform:'uppercase',marginBottom:4}}>Bill to</div>
+                <div style={{fontSize:15,color:'#0F1B2D',fontWeight:500}}>{inv.clientName||'—'}</div>
+              </div>
+              <div>
+                <div style={{fontSize:12,fontWeight:600,color:'#7C8A96',letterSpacing:'0.04em',textTransform:'uppercase',marginBottom:4}}>Invoice date</div>
+                <div style={{fontSize:15,color:'#0F1B2D'}}>{inv.date}</div>
+              </div>
+              <div>
+                <div style={{fontSize:12,fontWeight:600,color:'#7C8A96',letterSpacing:'0.04em',textTransform:'uppercase',marginBottom:4}}>Due date</div>
+                <div style={{fontSize:15,fontWeight:600,color:'#0F1B2D',fontFamily:"'JetBrains Mono',monospace"}}>{inv.dueDate||'—'}</div>
+              </div>
+              <div>
+                <div style={{fontSize:12,fontWeight:600,color:'#7C8A96',letterSpacing:'0.04em',textTransform:'uppercase',marginBottom:4}}>Ref</div>
+                <div style={{fontSize:15,color:'#0F1B2D'}}>{inv.id.slice(0,8).toUpperCase()}</div>
+              </div>
+            </div>
+            <hr style={{border:'none',borderTop:'1px solid #E8ECF0',margin:'0 0 0'}}/>
+          </div>
+          <div style={{padding:'0 80px 80px'}}>
+            <table style={{width:'100%',borderCollapse:'collapse',marginTop:32}} aria-label="Invoice line items">
+              <thead>
+                <tr style={{borderBottom:'1.5px solid #0F1B2D'}}>
+                  {['Description','Qty','Rate','Amount'].map(h=>(
+                    <th key={h} scope="col" style={{padding:'8px 0',fontSize:11,fontWeight:600,letterSpacing:'0.06em',color:'#7C8A96',textAlign:h==='Amount'?'right':'left',textTransform:'uppercase'}}>{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {(inv.items||[]).map((item,i)=>(
+                  <tr key={item.id||i} style={{borderBottom:'1px solid #E8ECF0'}}>
+                    <td style={{padding:'14px 0',fontSize:14,color:'#0F1B2D'}}>{item.description}</td>
+                    <td style={{padding:'14px 0',fontSize:14,fontFamily:"'JetBrains Mono',monospace",color:'#566370'}}>{item.qty}</td>
+                    <td style={{padding:'14px 0',fontSize:14,fontFamily:"'JetBrains Mono',monospace",color:'#566370'}}>{fmt(parseFloat(item.rate)||0,currency)}</td>
+                    <td style={{padding:'14px 0',fontSize:14,fontFamily:"'JetBrains Mono',monospace",color:'#0F1B2D',textAlign:'right',fontWeight:500}}>{fmt((parseFloat(item.qty)||0)*(parseFloat(item.rate)||0),currency)}</td>
+                  </tr>
+                ))}
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colSpan={3} style={{padding:'12px 0 6px',fontSize:13,fontWeight:600,textAlign:'right',paddingRight:16,color:'#566370'}}>Subtotal</td>
+                  <td style={{padding:'12px 0 6px',fontFamily:"'JetBrains Mono',monospace",textAlign:'right',fontSize:14,fontWeight:600}}>{fmt(subtotal,currency)}</td>
+                </tr>
+                {parseFloat(inv.taxPct)>0&&<tr>
+                  <td colSpan={3} style={{padding:'4px 0',fontSize:13,fontWeight:600,textAlign:'right',paddingRight:16,color:'#566370'}}>Tax ({inv.taxPct}%)</td>
+                  <td style={{padding:'4px 0',fontFamily:"'JetBrains Mono',monospace",textAlign:'right',fontSize:14,fontWeight:600}}>{fmt(tax,currency)}</td>
+                </tr>}
+                <tr>
+                  <td colSpan={4} style={{padding:0}}>
+                    <div style={{background:'#0F1B2D',display:'flex',justifyContent:'space-between',alignItems:'center',padding:'20px 20px',marginTop:8}}>
+                      <span style={{fontSize:15,fontWeight:600,color:'#fff'}}>Total Due</span>
+                      <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:28,fontWeight:500,color:'#fff'}}>{fmt(total,currency)}</span>
+                    </div>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+            {inv.notes&&(
+              <div style={{marginTop:32,padding:24,background:'#FEF3DC',borderRadius:8,border:'1px solid #FAD08A'}}>
+                <div style={{fontSize:12,fontWeight:600,color:'#8A5A00',letterSpacing:'0.04em',textTransform:'uppercase',marginBottom:6}}>Payment</div>
+                <p style={{fontSize:14,color:'#0F1B2D',lineHeight:1.7,margin:0}}>{inv.notes}</p>
+              </div>
+            )}
+            <div style={{marginTop:48,paddingTop:20,borderTop:'1px solid #E8ECF0',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+              <span style={{fontSize:12,color:'#7C8A96'}}>{store.settings?.businessName||'Your Studio'}</span>
+              <a href="https://propkit.com?ref=powered-by" style={{textDecoration:'none',display:'flex',alignItems:'center',gap:6}} aria-label="Powered by PropKit">
+                <LogoMark size={16}/>
+                <span style={{fontSize:11,color:'#7C8A96'}}>Powered by </span>
+                <span style={{fontSize:11,fontWeight:600,color:'#0F1B2D'}}>PropKit</span>
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </main>
+  );
+}
+
+// ── CLIENT VIEW (read-only, no sidebar) ──────────────────────────────────────
+function ClientView({data}){
+  let proposal=null;
+  try{proposal=JSON.parse(atob(data));}catch(e){
+    return(
+      <div style={{minHeight:'100vh',display:'flex',alignItems:'center',justifyContent:'center',background:'#F4F6F8'}}>
+        <div style={{textAlign:'center'}}>
+          <h1 style={{fontSize:22,color:'#991B1B'}}>Invalid proposal link</h1>
+          <p style={{color:'#566370'}}>This link may be corrupted or expired.</p>
+        </div>
+      </div>
+    );
+  }
+  return <ProposalPreview proposal={proposal} settings={{businessName:proposal.businessName||''}} readOnly={true}/>;
+}
+
+// ── SETTINGS ──────────────────────────────────────────────────────────────────
+function Settings({store,onUpdate}){
+  const [s,setS]=useState({...DEFAULT_SETTINGS,...store.settings});
+  const [saved,setSaved]=useState(false);
+  const fileRef=useRef(null);
+
+  function save(){
+    onUpdate({...store,settings:s});
+    setSaved(true);setTimeout(()=>setSaved(false),2000);
+  }
+
+  function exportData(){
+    const blob=new Blob([JSON.stringify(store,null,2)],{type:'application/json'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');a.href=url;a.download='propkit-workspace.json';a.click();URL.revokeObjectURL(url);
+  }
+
+  function importData(e){
+    const file=e.target.files[0];if(!file)return;
+    const reader=new FileReader();
+    reader.onload=ev=>{
+      try{
+        const data=JSON.parse(ev.target.result);
+        if(data.proposals&&data.invoices&&data.settings){
+          onUpdate(data);alert('Workspace imported successfully.');
+        }else{alert('Invalid workspace file.');}
+      }catch{alert('Could not parse file.');}
+    };
+    reader.readAsText(file);
+  }
+
+  return(
+    <main style={{flex:1,padding:32,overflowY:'auto'}} aria-label="Settings">
+      <div style={{maxWidth:600,margin:'0 auto'}}>
+        <h1 style={{fontSize:28,fontWeight:600,marginBottom:24,color:'#0F1B2D'}}>Settings</h1>
+        <div className="card" style={{padding:24,marginBottom:24}}>
+          <h2 style={{fontSize:16,fontWeight:600,marginBottom:16,marginTop:0}}>Business</h2>
+          <div style={{marginBottom:16}}>
+            <label htmlFor="s-name">Business Name</label>
+            <input id="s-name" value={s.businessName} onChange={e=>setS(x=>({...x,businessName:e.target.value}))} placeholder="Your Studio"/>
+          </div>
+          <div style={{marginBottom:16}}>
+            <label htmlFor="s-currency">Currency</label>
+            <select id="s-currency" value={s.currency} onChange={e=>setS(x=>({...x,currency:e.target.value}))}>
+              <option value="USD">USD — US Dollar</option>
+              <option value="EUR">EUR — Euro</option>
+              <option value="GBP">GBP — British Pound</option>
+              <option value="CAD">CAD — Canadian Dollar</option>
+              <option value="AUD">AUD — Australian Dollar</option>
+              <option value="SAR">SAR — Saudi Riyal</option>
+              <option value="AED">AED — UAE Dirham</option>
+            </select>
+          </div>
+          <button className="btn-primary" onClick={save}>{saved?<><Icon.check/> Saved</>:'Save settings'}</button>
+        </div>
+        <div className="card" style={{padding:24}}>
+          <h2 style={{fontSize:16,fontWeight:600,marginBottom:16,marginTop:0}}>Workspace</h2>
+          <div style={{display:'flex',gap:12,flexWrap:'wrap'}}>
+            <button className="btn-secondary" onClick={exportData} style={{display:'flex',alignItems:'center',gap:6}}>
+              <Icon.download/> Export JSON
+            </button>
+            <button className="btn-secondary" onClick={()=>fileRef.current.click()} style={{display:'flex',alignItems:'center',gap:6}}>
+              <Icon.upload/> Import JSON
+            </button>
+          </div>
+          <input ref={fileRef} type="file" accept=".json" onChange={importData} style={{display:'none'}} aria-label="Import workspace file"/>
+          <p style={{fontSize:13,color:'#566370',marginTop:12,marginBottom:0}}>Export backs up all proposals, invoices, and settings. Import restores from a previously exported file.</p>
+        </div>
+      </div>
+    </main>
+  );
+}
+
+// ── APP ROOT ──────────────────────────────────────────────────────────────────
+function App(){
+  const [store,setStore]=useState(()=>{
+    const raw=loadStore();
+    return raw||seedStore();
+  });
+  const [route,setRoute]=useState(getRoute);
+
+  useEffect(()=>{
+    saveStore(store);
+  },[store]);
+
+  useEffect(()=>{
+    function onHash(){setRoute(getRoute());}
+    window.addEventListener('hashchange',onHash);
+    return()=>window.removeEventListener('hashchange',onHash);
+  },[]);
+
+  if(route.view==='client'){
+    return <ClientView data={route.data}/>;
+  }
+
+  const mainContent=()=>{
+    switch(route.view){
+      case 'proposal':return <ProposalBuilder id={route.id} store={store} onUpdate={setStore}/>;
+      case 'invoice':return <InvoiceView id={route.id} store={store} onUpdate={setStore}/>;
+      case 'settings':return <Settings store={store} onUpdate={setStore}/>;
+      default:return <Dashboard store={store} onUpdate={setStore}/>;
+    }
+  };
+
+  return(
+    <div style={{display:'flex',minHeight:'100vh'}}>
+      <Sidebar route={route} settings={store.settings}/>
+      {mainContent()}
+    </div>
+  );
+}
+
+const root=ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App/>);
+</script>
+</body>
+</html>
