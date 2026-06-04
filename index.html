@@ -12,136 +12,80 @@
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
-tailwind.config = {
-  theme: {
-    extend: {
-      colors: {
-        navy: {'900':'#0F1B2D','800':'#162338','700':'#1D2E47','600':'#243958','500':'#2E4A70','400':'#3D608F','300':'#6B8BAF','200':'#A8BDD4','100':'#D4E1ED','50':'#EEF4F8'},
-        amber: {'700':'#AE720A','600':'#D48E0F','500':'#F5A623','400':'#F7B84A','300':'#FAD08A','100':'#FEF3DC'},
-        neutral: {'0':'#FFFFFF','25':'#FAFBFC','50':'#F4F6F8','100':'#E8ECF0','200':'#CDD4DB','300':'#A9B4BF','400':'#7C8A96','500':'#566370','600':'#3D4E5A','700':'#2A3840','800':'#1A252D','900':'#0D1519'},
-        success: {'700':'#1A6B3A','500':'#27A858','100':'#D4F5E2'},
-        error: {'700':'#991B1B','500':'#DC2626','100':'#FEE2E2'},
-        info: {'700':'#1547A8','100':'#DBEAFE'},
-        warning: {'700':'#8A5A00','100':'#FEF0CC'},
-      },
-      fontFamily: {
-        ui: ['Inter','-apple-system','BlinkMacSystemFont','sans-serif'],
-        doc: ['"DM Serif Display"','Georgia','serif'],
-        mono: ['"JetBrains Mono"','"Fira Mono"','monospace'],
-      },
-      boxShadow: {
-        xs:'0 1px 2px 0 rgba(15,27,45,0.06)',
-        sm:'0 1px 3px 0 rgba(15,27,45,0.10),0 1px 2px -1px rgba(15,27,45,0.06)',
-        md:'0 4px 6px -1px rgba(15,27,45,0.10),0 2px 4px -2px rgba(15,27,45,0.06)',
-        lg:'0 10px 15px -3px rgba(15,27,45,0.12),0 4px 6px -4px rgba(15,27,45,0.05)',
-        xl:'0 20px 25px -5px rgba(15,27,45,0.15),0 8px 10px -6px rgba(15,27,45,0.05)',
-        focus:'0 0 0 3px rgba(245,166,35,0.40)',
-      },
-      borderRadius: {
-        sm:'4px', md:'8px', lg:'12px', xl:'16px', '2xl':'24px',
-      },
-    }
-  }
-}
+tailwind.config={theme:{extend:{colors:{
+  navy:{'900':'#0F1B2D','800':'#162338','700':'#1D2E47','600':'#243958','500':'#2E4A70','400':'#3D608F','300':'#6B8BAF','200':'#A8BDD4','100':'#D4E1ED','50':'#EEF4F8'},
+  amber:{'700':'#AE720A','600':'#D48E0F','500':'#F5A623','400':'#F7B84A','300':'#FAD08A','100':'#FEF3DC'},
+  neutral:{'0':'#FFFFFF','25':'#FAFBFC','50':'#F4F6F8','100':'#E8ECF0','200':'#CDD4DB','300':'#A9B4BF','400':'#7C8A96','500':'#566370','600':'#3D4E5A','700':'#2A3840','800':'#1A252D','900':'#0D1519'},
+  success:{'700':'#1A6B3A','500':'#27A858','100':'#D4F5E2'},error:{'700':'#991B1B','500':'#DC2626','100':'#FEE2E2'},info:{'700':'#1547A8','100':'#DBEAFE'},warning:{'700':'#8A5A00','100':'#FEF0CC'},
+}}}}
 </script>
 <style>
 *{box-sizing:border-box;}
 body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:#F4F6F8;color:#0F1B2D;margin:0;}
-:focus-visible{outline:2px solid #F5A623;outline-offset:2px;box-shadow:0 0 0 3px rgba(245,166,35,0.40);}
+:focus-visible{outline:2px solid var(--brand,#F5A623);outline-offset:2px;}
 .btn-primary{background:#0F1B2D;color:#fff;border:none;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;transition:background 150ms;min-height:44px;}
 .btn-primary:hover{background:#162338;}
-.btn-primary:active{background:#1D2E47;}
 .btn-primary:disabled{background:#CDD4DB;color:#7C8A96;cursor:not-allowed;}
-.btn-accent{background:#F5A623;color:#0F1B2D;border:none;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;transition:background 150ms;min-height:44px;}
-.btn-accent:hover{background:#D48E0F;}
+.btn-accent{background:var(--brand,#F5A623);color:#0F1B2D;border:none;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;transition:filter 150ms;min-height:44px;}
+.btn-accent:hover{filter:brightness(0.93);}
 .btn-secondary{background:transparent;color:#0F1B2D;border:1.5px solid #CDD4DB;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;transition:all 150ms;min-height:44px;}
 .btn-secondary:hover{background:#EEF4F8;border-color:#A8BDD4;}
 .btn-ghost{background:transparent;color:#0F1B2D;border:none;border-radius:8px;padding:8px 12px;font-size:14px;cursor:pointer;transition:background 150ms;min-height:44px;min-width:44px;}
 .btn-ghost:hover{background:#EEF4F8;}
 .btn-danger{background:#991B1B;color:#fff;border:none;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;min-height:44px;}
-.btn-danger:hover{background:#7A1515;}
 input,textarea,select{font-family:'Inter',-apple-system,sans-serif;font-size:14px;color:#0F1B2D;background:#fff;border:1.5px solid #CDD4DB;border-radius:8px;padding:10px 16px;box-shadow:0 1px 2px 0 rgba(15,27,45,0.06);width:100%;transition:border-color 150ms,box-shadow 150ms;}
-input:focus,textarea:focus,select:focus{outline:none;border-color:#F5A623;box-shadow:0 0 0 3px rgba(245,166,35,0.40);}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--brand,#F5A623);box-shadow:0 0 0 3px rgba(245,166,35,0.30);}
 label{font-size:12px;font-weight:600;color:#3D4E5A;display:block;margin-bottom:6px;}
-textarea{resize:vertical;min-height:96px;}
+textarea{resize:vertical;min-height:96px;line-height:1.6;}
 .card{background:#fff;border:1px solid #E8ECF0;border-radius:12px;box-shadow:0 1px 3px 0 rgba(15,27,45,0.10),0 1px 2px -1px rgba(15,27,45,0.06);}
-.status-draft{background:#F4F6F8;color:#3D4E5A;border:1px solid #CDD4DB;border-radius:4px;padding:2px 8px;font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:4px;}
-.status-sent{background:#DBEAFE;color:#1547A8;border:1px solid rgba(21,71,168,0.3);border-radius:4px;padding:2px 8px;font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:4px;}
-.status-accepted{background:#D4F5E2;color:#1A6B3A;border:1px solid rgba(26,107,58,0.3);border-radius:4px;padding:2px 8px;font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:4px;}
-.status-declined{background:#FEE2E2;color:#991B1B;border:1px solid rgba(153,27,27,0.3);border-radius:4px;padding:2px 8px;font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:4px;}
-.status-paid{background:#D4F5E2;color:#1A6B3A;border:1px solid rgba(26,107,58,0.3);border-radius:4px;padding:2px 8px;font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:4px;}
-.status-unpaid{background:#FEF0CC;color:#8A5A00;border:1px solid rgba(138,90,0,0.3);border-radius:4px;padding:2px 8px;font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:4px;}
-
-/* ── RESPONSIVE ──────────────────────────────────────────────────────────── */
-
-/* App shell: sidebar beside content on desktop */
+.status-draft{background:#F4F6F8;color:#3D4E5A;border:1px solid #CDD4DB;}
+.status-sent{background:#DBEAFE;color:#1547A8;border:1px solid rgba(21,71,168,0.3);}
+.status-accepted,.status-paid{background:#D4F5E2;color:#1A6B3A;border:1px solid rgba(26,107,58,0.3);}
+.status-declined{background:#FEE2E2;color:#991B1B;border:1px solid rgba(153,27,27,0.3);}
+.status-unpaid{background:#FEF0CC;color:#8A5A00;border:1px solid rgba(138,90,0,0.3);}
+.status-draft,.status-sent,.status-accepted,.status-declined,.status-paid,.status-unpaid{border-radius:4px;padding:2px 8px;font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:4px;}
 .app-shell{display:flex;min-height:100vh;}
 .app-main{flex:1;min-width:0;overflow-y:auto;}
-
-/* On mobile, the shell stacks: topnav on top, then content below */
-@media(max-width:767px){
-  .app-shell{flex-direction:column;}
-  .app-main{flex:1;}
-}
-
-/* Mobile top-nav (replaces sidebar on small screens) */
+@media(max-width:767px){.app-shell{flex-direction:column;}.app-main{flex:1;}}
 .mobile-topnav{display:none;background:#0F1B2D;padding:0 16px;height:56px;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
-.mobile-topnav-links{display:flex;gap:4px;}
 .mobile-topnav a{color:rgba(255,255,255,0.75);text-decoration:none;font-size:13px;font-weight:500;padding:8px 12px;border-radius:6px;display:flex;align-items:center;gap:6px;}
-.mobile-topnav a[aria-current="page"]{color:#F5A623;background:rgba(245,166,35,0.12);}
-
-/* Dashboard main padding */
+.mobile-topnav a[aria-current="page"]{color:var(--brand,#F5A623);background:rgba(245,166,35,0.12);}
 .dash-main{flex:1;padding:24px 16px;overflow-y:auto;}
 @media(min-width:640px){.dash-main{padding:32px 24px;}}
 @media(min-width:1024px){.dash-main{padding:32px;}}
-
-/* Scrollable table wrapper */
 .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
-
-/* Proposal builder actions bar */
 .builder-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
-
-/* Two-column form grid collapses to single col on mobile */
 .form-grid-2{display:grid;grid-template-columns:1fr;gap:16px;}
 @media(min-width:540px){.form-grid-2{grid-template-columns:1fr 1fr;}}
-
-/* Document preview padding responsive */
 .doc-header-pad{padding:40px 20px 0;}
 .doc-body-pad{padding:0 20px 40px;}
-@media(min-width:640px){.doc-header-pad{padding:60px 48px 0;}.doc-body-pad{padding:0 48px 60px;}}
-@media(min-width:900px){.doc-header-pad{padding:80px 80px 0;}.doc-body-pad{padding:0 80px 80px;}}
-
-/* Document preview header meta grid */
+@media(min-width:640px){.doc-header-pad{padding:56px 48px 0;}.doc-body-pad{padding:0 48px 56px;}}
+@media(min-width:900px){.doc-header-pad{padding:72px 72px 0;}.doc-body-pad{padding:0 72px 72px;}}
 .doc-meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
 @media(max-width:480px){.doc-meta-grid{grid-template-columns:1fr;gap:12px;}}
-
-/* Document preview title font responsive */
-.doc-title{font-family:'"DM Serif Display",Georgia,serif';font-weight:400;color:#0F1B2D;margin:0 0 8px;line-height:1.1;}
-
-/* Pricing table: on very small screens hide Qty/Rate, show just Description + Amount */
 .price-col-hide{display:table-cell;}
 @media(max-width:480px){.price-col-hide{display:none;}}
-
-/* Invoice/builder action bar */
 .inv-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
-
-/* Settings main padding */
 .settings-main{flex:1;padding:24px 16px;overflow-y:auto;}
 @media(min-width:640px){.settings-main{padding:32px;}}
-
-@media(max-width:767px){
-  /* Hide desktop sidebar */
-  .desktop-sidebar{display:none!important;}
-  /* Show mobile top nav */
-  .mobile-topnav{display:flex;}
-  /* Reduce stats grid min width so 2-col fits on phone */
-  .stats-grid{grid-template-columns:repeat(auto-fit,minmax(140px,1fr))!important;}
-}
-
+/* Builder two-pane: outline rail + editor */
+.builder-grid{display:grid;grid-template-columns:1fr;gap:20px;}
+@media(min-width:1000px){.builder-grid{grid-template-columns:230px 1fr;align-items:start;}}
+.outline-rail{position:sticky;top:16px;}
+@media(max-width:999px){.outline-rail{position:static;}}
+.sec-card{background:#fff;border:1px solid #E8ECF0;border-radius:12px;box-shadow:0 1px 3px rgba(15,27,45,0.08);margin-bottom:14px;overflow:hidden;}
+.sec-head{display:flex;align-items:center;gap:8px;padding:12px 14px;background:#FAFBFC;border-bottom:1px solid #E8ECF0;cursor:pointer;}
+.sec-body{padding:18px;}
+.menu-pop{position:absolute;z-index:60;background:#fff;border:1px solid #E8ECF0;border-radius:12px;box-shadow:0 12px 28px rgba(15,27,45,0.18);padding:8px;width:280px;max-height:380px;overflow-y:auto;}
+.menu-item{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;background:none;border:none;padding:10px;border-radius:8px;cursor:pointer;}
+.menu-item:hover{background:#EEF4F8;}
+@media(max-width:767px){.desktop-sidebar{display:none!important;}.mobile-topnav{display:flex;}.stats-grid{grid-template-columns:repeat(auto-fit,minmax(140px,1fr))!important;}}
 @media print{
   .no-print{display:none!important;}
   body{background:#fff;}
-  .print-doc{box-shadow:none!important;border:none!important;margin:0!important;padding:40px!important;max-width:100%!important;}
+  .print-doc{box-shadow:none!important;border:none!important;margin:0!important;max-width:100%!important;}
+  .doc-section{break-inside:avoid;}
+  .page-break{break-before:page;}
   .mobile-topnav{display:none!important;}
 }
 </style>
@@ -149,1022 +93,807 @@ textarea{resize:vertical;min-height:96px;}
 <body>
 <div id="root"></div>
 <script type="text/babel">
-const {useState,useEffect,useCallback,useRef,useMemo}=React;
+const {useState,useEffect,useRef,useMemo}=React;
 
 // ── STORAGE ──────────────────────────────────────────────────────────────────
-const STORE_KEY='propkit_v1';
-const DEFAULT_SETTINGS={businessName:'Your Studio',currency:'USD',accentColor:'#F5A623'};
+const STORE_KEY='propkit_v2';
+const OLD_KEY='propkit_v1';
+const DEFAULT_PROFILE={businessName:'',tagline:'',logo:'',email:'',phone:'',website:'',address:'',accentColor:'#F5A623'};
+const DEFAULT_SETTINGS={...DEFAULT_PROFILE,currency:'USD'};
 
 function loadStore(){
   try{
     const raw=localStorage.getItem(STORE_KEY);
-    if(raw)return JSON.parse(raw);
+    if(raw)return migrate(JSON.parse(raw));
+    const old=localStorage.getItem(OLD_KEY);
+    if(old)return migrate(migrateV1(JSON.parse(old)));
   }catch(e){}
   return null;
 }
-
-function saveStore(data){
-  try{localStorage.setItem(STORE_KEY,JSON.stringify(data));}catch(e){}
-}
-
+function saveStore(d){try{localStorage.setItem(STORE_KEY,JSON.stringify(d));}catch(e){}}
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
+function fmt(a,c='USD'){try{return new Intl.NumberFormat('en-US',{style:'currency',currency:c}).format(a||0);}catch(e){return (a||0).toFixed(2);}}
 
-function fmt(amount,currency='USD'){
-  return new Intl.NumberFormat('en-US',{style:'currency',currency}).format(amount||0);
+// ── PRICING MATH (aggregates across all pricing sections) ─────────────────────
+function lineAmount(l){return (parseFloat(l.qty)||0)*(parseFloat(l.rate)||0);}
+function calcPricingSection(sec){
+  const lines=(sec.lines||[]).filter(l=>l.optional?l.selected:true);
+  const oneTime=lines.filter(l=>(l.billing||'once')==='once').reduce((s,l)=>s+lineAmount(l),0);
+  const recurring=lines.filter(l=>(l.billing||'once')==='recurring').reduce((s,l)=>s+lineAmount(l),0);
+  const sub=oneTime+recurring;
+  const disc=sec.discountType==='pct'?sub*(parseFloat(sec.discountVal)||0)/100:(parseFloat(sec.discountVal)||0);
+  const afterDisc=Math.max(0,sub-disc);
+  const tax=afterDisc*(parseFloat(sec.taxPct)||0)/100;
+  return {oneTime,recurring,sub,disc,tax,total:afterDisc+tax};
+}
+function calcDoc(sections){
+  // Aggregate one-time, recurring, tax and discount across every pricing table.
+  let gOneTime=0,gRecurringMonthly=0,gTax=0,gDisc=0;
+  (sections||[]).filter(s=>s.type==='pricing').forEach(s=>{
+    const r=calcPricingSection(s);
+    gTax+=r.tax;gDisc+=r.disc;
+    const recShare=r.sub>0?r.recurring/r.sub:0;
+    const discRec=r.disc*recShare;
+    gOneTime+=Math.max(0,r.oneTime-(r.disc-discRec));
+    gRecurringMonthly+=Math.max(0,r.recurring-discRec);
+  });
+  const grand=gOneTime+gTax+gRecurringMonthly;
+  return {oneTime:gOneTime,recurring:gRecurringMonthly,tax:gTax,disc:gDisc,total:gOneTime+gTax,recurringTotal:gRecurringMonthly,hasRecurring:gRecurringMonthly>0,grand};
 }
 
-function calcProposal(items,taxPct){
-  const subtotal=items.reduce((s,i)=>s+(parseFloat(i.qty)||0)*(parseFloat(i.rate)||0),0);
-  const tax=taxPct?subtotal*(parseFloat(taxPct)/100):0;
-  return{subtotal,tax,total:subtotal+tax};
+// ── MIGRATION ─────────────────────────────────────────────────────────────────
+function migrateV1(v1){
+  const profile={...DEFAULT_SETTINGS,...(v1.settings||{}),businessName:(v1.settings&&v1.settings.businessName&&v1.settings.businessName!=='Your Studio')?v1.settings.businessName:''};
+  const proposals=(v1.proposals||[]).map(p=>proposalFromFlat(p));
+  return {proposals,invoices:v1.invoices||[],settings:profile};
+}
+function proposalFromFlat(p){
+  const sections=[];
+  if(p.intro)sections.push(mkSection('richtext',{title:'Introduction',body:p.intro}));
+  if(p.scope)sections.push(mkSection('richtext',{title:'Scope of Work',body:p.scope}));
+  if(p.deliverables&&p.deliverables.length)sections.push(mkSection('list',{title:'Deliverables',items:p.deliverables.filter(Boolean)}));
+  if(p.items&&p.items.length)sections.push(mkSection('pricing',{title:'Investment',taxPct:p.taxPct||0,lines:p.items.map(i=>({id:uid(),description:i.description,qty:i.qty,rate:i.rate,billing:'once',optional:false,selected:true}))}));
+  if(p.notes)sections.push(mkSection('richtext',{title:'Notes & Terms',body:p.notes}));
+  return {id:p.id,title:p.title,clientName:p.clientName,status:p.status||'draft',date:p.date,sections};
+}
+function migrate(s){
+  if(!s)return s;
+  s.settings={...DEFAULT_SETTINGS,...(s.settings||{})};
+  if(s.settings.businessName==='Your Studio')s.settings.businessName='';
+  s.proposals=(s.proposals||[]).map(p=>p.sections?p:proposalFromFlat(p));
+  s.invoices=s.invoices||[];
+  return s;
 }
 
-const SEED_PROPOSAL={
-  id:'seed1',
-  title:'Brand Identity Package',
-  clientName:'Meridian Coffee Co.',
-  intro:'Thank you for considering our studio for your brand identity project. This proposal outlines the scope, deliverables, and investment for a complete brand system that reflects your values and connects with your audience.',
-  scope:'We will develop a comprehensive brand identity system including logo design, color palette, typography selection, and brand guidelines. The process involves three rounds of concepts followed by refinements based on your feedback.',
-  deliverables:['Primary logo (SVG + PNG, all colour variants)','Secondary mark and icon versions','Brand color palette with hex, RGB, and CMYK values','Typography specification sheet','Brand guidelines PDF (20–30 pages)','Social media profile assets'],
-  items:[
-    {id:'i1',description:'Brand Strategy & Discovery',qty:1,rate:1200},
-    {id:'i2',description:'Logo Design (3 concepts, 2 revisions)',qty:1,rate:2800},
-    {id:'i3',description:'Brand Guidelines Document',qty:1,rate:900},
-    {id:'i4',description:'Asset Production & Delivery',qty:1,rate:600},
-  ],
-  taxPct:10,
-  status:'sent',
-  date: new Date().toISOString().slice(0,10),
-  notes:'Payment terms: 50% deposit due before work begins; 50% upon final delivery. Valid for 30 days.',
-};
-
-const SEED_INVOICE={
-  id:'sinv1',
-  proposalId:'seed1',
-  title:'Invoice #001 — Brand Identity Package',
-  clientName:'Meridian Coffee Co.',
-  items:[...SEED_PROPOSAL.items],
-  taxPct:10,
-  status:'unpaid',
-  date:new Date().toISOString().slice(0,10),
-  dueDate:new Date(Date.now()+30*864e5).toISOString().slice(0,10),
-  notes:'Bank transfer or PayPal accepted. Reference: INV-001.',
-};
-
-function seedStore(){
-  return{
-    proposals:[SEED_PROPOSAL],
-    invoices:[SEED_INVOICE],
-    settings:DEFAULT_SETTINGS,
+// ── SECTION FACTORY ─────────────────────────────────────────────────────────
+function mkSection(type,extra={}){
+  const base={id:uid(),type,collapsed:false};
+  const d={
+    richtext:{title:'Section',body:''},
+    list:{title:'Deliverables',items:['']},
+    scope:{title:'Scope of Work',phases:[{id:uid(),name:'Phase 1',summary:'',deliverables:['']}]},
+    timeline:{title:'Timeline & Milestones',milestones:[{id:uid(),name:'Kickoff',date:'',detail:''}]},
+    team:{title:'Our Team',members:[{id:uid(),name:'',role:'',bio:''}]},
+    casestudies:{title:'Case Studies',cases:[{id:uid(),client:'',result:'',body:''}]},
+    pricing:{title:'Investment',taxPct:0,discountType:'pct',discountVal:0,recurringPeriod:'month',lines:[{id:uid(),description:'',qty:1,rate:0,billing:'once',optional:false,selected:true}]},
+    terms:{title:'Terms & Conditions',body:''},
+    signature:{title:'Acceptance',clientLabel:'Client signature',byLabel:'Authorized by',note:'By signing below, both parties agree to the scope, timeline, and pricing set out in this proposal.'},
   };
+  return {...base,...(d[type]||d.richtext),...extra};
 }
+
+const SECTION_TYPES=[
+  {type:'richtext',label:'Text block',desc:'Cover letter, executive summary, problem, objectives — any writing.',icon:'text'},
+  {type:'scope',label:'Scope (phases & deliverables)',desc:'Break the work into phases, each with its own deliverables.',icon:'layers'},
+  {type:'list',label:'Bullet list',desc:'A simple checklist of deliverables or inclusions.',icon:'check'},
+  {type:'timeline',label:'Timeline & milestones',desc:'Dated milestones from kickoff to delivery.',icon:'clock'},
+  {type:'team',label:'Team & bios',desc:'Introduce the people on the project.',icon:'users'},
+  {type:'casestudies',label:'Case studies',desc:'Show past results that build trust.',icon:'star'},
+  {type:'pricing',label:'Pricing table',desc:'Add as many as you like — one-time, recurring, optional add-ons, tax & discount.',icon:'money'},
+  {type:'terms',label:'Terms & conditions',desc:'Legal terms, assumptions, payment policy.',icon:'doc'},
+  {type:'signature',label:'Acceptance / signature',desc:'A sign-off block to close the deal.',icon:'pen'},
+];
 
 // ── TEMPLATES ────────────────────────────────────────────────────────────────
+function tProp(title,sections){return {id:uid(),title,clientName:'',status:'draft',date:new Date().toISOString().slice(0,10),sections};}
 const TEMPLATES={
-  webdev:{
-    title:'Web Development Project',
-    clientName:'',
-    intro:'This proposal outlines a complete web development engagement — from architecture through launch — built around your goals and your users.',
-    scope:'We will design and develop a responsive website using modern web technologies. The project includes information architecture, UX wireframes, visual design, front-end development, CMS integration, and launch support.',
-    deliverables:['Sitemap and IA document','Wireframes (up to 8 pages)','Visual design mockups','Responsive front-end build','CMS integration and training','30-day post-launch support'],
-    items:[
-      {id:uid(),description:'Discovery & Architecture',qty:1,rate:1500},
-      {id:uid(),description:'UX Design & Wireframes',qty:1,rate:2200},
-      {id:uid(),description:'Visual Design',qty:1,rate:2800},
-      {id:uid(),description:'Front-End Development',qty:1,rate:4500},
-      {id:uid(),description:'CMS Integration',qty:1,rate:1200},
-      {id:uid(),description:'QA & Launch',qty:1,rate:800},
-    ],
-    taxPct:0,
-    notes:'Payment terms: 40% upfront, 30% at design sign-off, 30% at launch.',
-  },
-  branddesign:{
-    title:'Brand Design System',
-    clientName:'',
-    intro:"Your brand is more than a logo — it's the sum of every impression you make. This proposal covers a complete brand design system built to scale with your business.",
-    scope:'Full brand identity development: strategy, visual identity, and a comprehensive brand guidelines document that your team can use independently.',
-    deliverables:['Brand positioning brief','Logo suite (primary, secondary, icon)','Color system','Typography selection','Brand guidelines PDF','Stationery and digital asset templates'],
-    items:[
-      {id:uid(),description:'Brand Strategy Workshop',qty:1,rate:1800},
-      {id:uid(),description:'Logo Design',qty:1,rate:3200},
-      {id:uid(),description:'Brand System Design',qty:1,rate:2400},
-      {id:uid(),description:'Guidelines & Asset Production',qty:1,rate:1200},
-    ],
-    taxPct:0,
-    notes:'50% deposit required to begin. Revisions: two rounds per deliverable.',
-  },
-  copywriting:{
-    title:'Copywriting Engagement',
-    clientName:'',
-    intro:"Words are doing work before you even start the meeting. This proposal covers a focused copywriting engagement — strategy-led, brand-aligned, and written to convert.",
-    scope:'Research, strategy, and copy production for your agreed deliverables. Includes one discovery session, a messaging framework, and two revision rounds per piece.',
-    deliverables:['Messaging framework document','Website copy (up to 6 pages)','Brand voice guide','One revision round per deliverable'],
-    items:[
-      {id:uid(),description:'Discovery & Messaging Strategy',qty:1,rate:900},
-      {id:uid(),description:'Website Copy (per page)',qty:6,rate:350},
-      {id:uid(),description:'Brand Voice Guide',qty:1,rate:700},
-    ],
-    taxPct:0,
-    notes:'Copy is delivered as a Google Doc. Final files transferred upon full payment.',
-  },
-  photography:{
-    title:'Photography Project',
-    clientName:'',
-    intro:'This proposal covers a photography engagement tailored to your brief — from pre-production planning through final image delivery.',
-    scope:'Full-day shoot, post-production editing, and final delivery of high-resolution images licensed for your stated usage.',
-    deliverables:['Pre-production mood board and shot list','Full-day on-location shoot','Up to 60 edited final images (high-res)','Web-optimised versions','Commercial usage licence'],
-    items:[
-      {id:uid(),description:'Creative Direction & Pre-Production',qty:1,rate:600},
-      {id:uid(),description:'Photography (full-day rate)',qty:1,rate:2200},
-      {id:uid(),description:'Post-Production & Retouching',qty:60,rate:18},
-      {id:uid(),description:'Commercial Licence',qty:1,rate:500},
-    ],
-    taxPct:0,
-    notes:'Travel beyond 30km billed at cost. Cancellation within 72 hours: 50% fee applies.',
-  },
+  blank:()=>tProp('Untitled Proposal',[mkSection('richtext',{title:'Introduction',body:''})]),
+  simple:()=>tProp('Simple Proposal',[
+    mkSection('richtext',{title:'Hello',body:'Thanks for the opportunity. Here is a quick proposal for the work we discussed.'}),
+    mkSection('list',{title:"What you'll get",items:['','','']}),
+    mkSection('pricing',{title:'Price'}),
+  ]),
+  service:()=>tProp('Service Proposal',[
+    mkSection('richtext',{title:'Introduction',body:''}),
+    mkSection('richtext',{title:'Scope of Work',body:''}),
+    mkSection('list',{title:'Deliverables',items:['','','']}),
+    mkSection('timeline',{}),
+    mkSection('pricing',{title:'Investment'}),
+    mkSection('terms',{title:'Terms',body:'50% deposit to begin; balance on delivery. Valid for 30 days.'}),
+    mkSection('signature',{}),
+  ]),
+  rfp:()=>tProp('Full RFP Response',[
+    mkSection('richtext',{title:'Cover Letter',body:''}),
+    mkSection('richtext',{title:'Executive Summary',body:''}),
+    mkSection('richtext',{title:'Understanding & Objectives',body:''}),
+    mkSection('scope',{title:'Scope of Work',phases:[
+      {id:uid(),name:'Phase 1 — Discovery',summary:'',deliverables:['']},
+      {id:uid(),name:'Phase 2 — Build',summary:'',deliverables:['']},
+      {id:uid(),name:'Phase 3 — Launch',summary:'',deliverables:['']},
+    ]}),
+    mkSection('timeline',{milestones:[
+      {id:uid(),name:'Kickoff',date:'',detail:''},
+      {id:uid(),name:'Milestone 1',date:'',detail:''},
+      {id:uid(),name:'Delivery',date:'',detail:''},
+    ]}),
+    mkSection('team',{}),
+    mkSection('casestudies',{}),
+    mkSection('pricing',{title:'Professional Services (one-time)'}),
+    mkSection('pricing',{title:'Ongoing Support (recurring)',lines:[{id:uid(),description:'Monthly retainer',qty:1,rate:0,billing:'recurring',optional:false,selected:true}]}),
+    mkSection('richtext',{title:'Assumptions',body:''}),
+    mkSection('terms',{title:'Terms & Conditions',body:''}),
+    mkSection('signature',{}),
+  ]),
+  construction:()=>tProp('Construction / Build Proposal',[
+    mkSection('richtext',{title:'Project Overview',body:''}),
+    mkSection('scope',{title:'Scope & Phasing',phases:[
+      {id:uid(),name:'Site preparation',summary:'',deliverables:['']},
+      {id:uid(),name:'Construction',summary:'',deliverables:['']},
+      {id:uid(),name:'Finishing & handover',summary:'',deliverables:['']},
+    ]}),
+    mkSection('timeline',{}),
+    mkSection('team',{title:'Project Team'}),
+    mkSection('pricing',{title:'Cost Breakdown'}),
+    mkSection('terms',{title:'Terms & Payment Schedule',body:'Payment schedule: 30% upfront, 40% at midpoint, 30% on completion.'}),
+    mkSection('signature',{}),
+  ]),
 };
+const TEMPLATE_META=[
+  {key:'blank',name:'Blank',desc:'Start from scratch.'},
+  {key:'simple',name:'Simple 1-page',desc:'Intro, what you get, one price. Done in minutes.'},
+  {key:'service',name:'Service proposal',desc:'Scope, deliverables, timeline, price, terms, sign-off.'},
+  {key:'rfp',name:'Full RFP response',desc:'Everything: exec summary, phases, team, case studies, two price tables, terms.'},
+  {key:'construction',name:'Construction / build',desc:'Phasing, schedule, cost breakdown, payment schedule.'},
+];
 
 // ── ROUTING ──────────────────────────────────────────────────────────────────
 function getRoute(){
-  const h=window.location.hash||'#/dashboard';
-  const path=h.slice(1);
+  const h=window.location.hash||'#/dashboard';const path=h.slice(1);
   if(path.startsWith('/proposal/'))return{view:'proposal',id:path.split('/')[2]};
   if(path.startsWith('/invoice/'))return{view:'invoice',id:path.split('/')[2]};
   if(path.startsWith('/settings'))return{view:'settings'};
   if(path.startsWith('/view/'))return{view:'client',data:path.slice(6)};
   return{view:'dashboard'};
 }
-
-function navigate(path){window.location.hash='#'+path;}
+function navigate(p){window.location.hash='#'+p;}
 
 // ── ICONS ─────────────────────────────────────────────────────────────────────
-const Icon={
-  doc:()=><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>,
-  invoice:()=><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="4" rx="1"/><path d="M2 7v13a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7"/><line x1="12" y1="12" x2="12" y2="18"/><line x1="9" y1="15" x2="15" y2="15"/></svg>,
-  settings:()=><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>,
-  plus:()=><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>,
-  trash:()=><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>,
-  copy:()=><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>,
-  print:()=><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>,
-  back:()=><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>,
-  check:()=><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>,
-  circle:()=><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10" strokeDasharray="4 2"/></svg>,
-  send:()=><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>,
-  x:()=><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>,
-  download:()=><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>,
-  upload:()=><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>,
+const I={
+  doc:p=><svg viewBox="0 0 24 24" width={p.s||20} height={p.s||20} fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>,
+  settings:p=><svg viewBox="0 0 24 24" width={p.s||20} height={p.s||20} fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>,
+  plus:p=><svg viewBox="0 0 24 24" width={p.s||16} height={p.s||16} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>,
+  trash:p=><svg viewBox="0 0 24 24" width={p.s||16} height={p.s||16} fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>,
+  copy:p=><svg viewBox="0 0 24 24" width={p.s||16} height={p.s||16} fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>,
+  print:p=><svg viewBox="0 0 24 24" width={p.s||16} height={p.s||16} fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>,
+  back:p=><svg viewBox="0 0 24 24" width={p.s||20} height={p.s||20} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>,
+  up:p=><svg viewBox="0 0 24 24" width={p.s||16} height={p.s||16} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>,
+  down:p=><svg viewBox="0 0 24 24" width={p.s||16} height={p.s||16} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>,
+  check:p=><svg viewBox="0 0 24 24" width={p.s||14} height={p.s||14} fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>,
+  chevR:p=><svg viewBox="0 0 24 24" width={p.s||16} height={p.s||16} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>,
+  download:p=><svg viewBox="0 0 24 24" width={p.s||16} height={p.s||16} fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>,
+  upload:p=><svg viewBox="0 0 24 24" width={p.s||16} height={p.s||16} fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>,
 };
 
 // ── LOGOMARK ──────────────────────────────────────────────────────────────────
 function LogoMark({size=32,light=false}){
   const c=light?'#FFFFFF':'#0F1B2D';
-  const s=size/48;
-  return(
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width={size} height={size} fill="none" aria-hidden="true">
-      <path d="M8 6 C8 4.895 8.895 4 10 4 L32 4 L44 16 L44 42 C44 43.105 43.105 44 42 44 L10 44 C8.895 44 8 43.105 8 42 Z" stroke={c} strokeWidth="2.5" strokeLinejoin="round" fill="none"/>
-      <path d="M32 4 L32 16 L44 16" stroke={c} strokeWidth="2.5" strokeLinejoin="round" fill="none"/>
-      <path d="M32 4 L32 16 L44 16 Z" fill="#F5A623" opacity={light?"0.35":"0.18"}/>
-      {size>=32&&<><line x1="15" y1="22" x2="37" y2="22" stroke={c} strokeWidth="2" strokeLinecap="round"/>
-      <line x1="15" y1="29" x2="37" y2="29" stroke={c} strokeWidth="2" strokeLinecap="round"/>
-      <line x1="15" y1="36" x2="28" y2="36" stroke="#F5A623" strokeWidth="2" strokeLinecap="round"/></>}
-    </svg>
-  );
+  return(<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width={size} height={size} fill="none" aria-hidden="true">
+    <path d="M8 6 C8 4.895 8.895 4 10 4 L32 4 L44 16 L44 42 C44 43.105 43.105 44 42 44 L10 44 C8.895 44 8 43.105 8 42 Z" stroke={c} strokeWidth="2.5" strokeLinejoin="round" fill="none"/>
+    <path d="M32 4 L32 16 L44 16 Z" fill="#F5A623" opacity={light?"0.35":"0.18"}/>
+    {size>=32&&<><line x1="15" y1="22" x2="37" y2="22" stroke={c} strokeWidth="2" strokeLinecap="round"/><line x1="15" y1="29" x2="37" y2="29" stroke={c} strokeWidth="2" strokeLinecap="round"/><line x1="15" y1="36" x2="28" y2="36" stroke="#F5A623" strokeWidth="2" strokeLinecap="round"/></>}
+  </svg>);
+}
+function StatusBadge({status}){
+  const map={draft:'DRAFT',sent:'SENT',accepted:'ACCEPTED',declined:'DECLINED',paid:'PAID',unpaid:'UNPAID'};
+  const s=status||'draft';
+  return <span className={'status-'+s} role="status">{map[s]||'DRAFT'}</span>;
 }
 
-// ── STATUS BADGE ──────────────────────────────────────────────────────────────
-function StatusBadge({status}){
-  const map={
-    draft:{cls:'status-draft',icon:<Icon.circle/>,label:'DRAFT'},
-    sent:{cls:'status-sent',icon:<Icon.send/>,label:'SENT'},
-    accepted:{cls:'status-accepted',icon:<Icon.check/>,label:'ACCEPTED'},
-    declined:{cls:'status-declined',icon:<Icon.x/>,label:'DECLINED'},
-    paid:{cls:'status-paid',icon:<Icon.check/>,label:'PAID'},
-    unpaid:{cls:'status-unpaid',icon:<Icon.circle/>,label:'UNPAID'},
-  };
-  const m=map[status]||map.draft;
-  return <span className={m.cls} role="status">{m.icon}{m.label}</span>;
+// ── BRAND HEADER (used in doc + sidebar) ──────────────────────────────────────
+function BrandMark({profile,light=false,size=40}){
+  const name=profile.businessName||'';
+  const initials=(name||'PK').split(/\s+/).map(w=>w[0]).join('').slice(0,2).toUpperCase();
+  if(profile.logo)return <img src={profile.logo} alt={name+' logo'} style={{height:size,width:'auto',maxWidth:size*3,objectFit:'contain',borderRadius:6}}/>;
+  return <div style={{width:size,height:size,borderRadius:'50%',background:light?'rgba(255,255,255,0.15)':'#0F1B2D',display:'flex',alignItems:'center',justifyContent:'center',color:'#fff',fontWeight:600,fontSize:size*0.35,flexShrink:0}}>{initials}</div>;
 }
 
 // ── NAV ───────────────────────────────────────────────────────────────────────
-function Sidebar({route,settings}){
-  const links=[
-    {path:'/dashboard',label:'Dashboard',icon:<Icon.doc/>},
-    {path:'/settings',label:'Settings',icon:<Icon.settings/>},
-  ];
-  const isActive=(path)=>window.location.hash.includes(path)||(!window.location.hash&&path==='/dashboard');
-  return(
-    <>
-      {/* Desktop sidebar */}
-      <nav className="no-print desktop-sidebar" style={{background:'#0F1B2D',width:220,minHeight:'100vh',padding:'0',display:'flex',flexDirection:'column',flexShrink:0}} aria-label="Main navigation">
-        <div style={{padding:'24px 20px 20px',borderBottom:'1px solid rgba(255,255,255,0.08)'}}>
-          <div style={{display:'flex',alignItems:'center',gap:10}}>
-            <LogoMark size={32} light={true}/>
-            <span style={{fontWeight:600,fontSize:18,color:'#fff',letterSpacing:'-0.02em'}}><span style={{fontWeight:600}}>Prop</span><span style={{fontWeight:500}}>Kit</span></span>
-          </div>
-          {settings.businessName&&<div style={{fontSize:12,color:'rgba(255,255,255,0.45)',marginTop:6,paddingLeft:42}}>{settings.businessName}</div>}
-        </div>
-        <ul style={{listStyle:'none',margin:0,padding:'12px 0',flex:1}} role="list">
-          {links.map(l=>{
-            const active=isActive(l.path);
-            return(
-              <li key={l.path}>
-                <a href={'#'+l.path} style={{display:'flex',alignItems:'center',gap:10,padding:'10px 20px',color:active?'#F5A623':'rgba(255,255,255,0.7)',textDecoration:'none',fontSize:14,fontWeight:active?600:400,background:active?'rgba(245,166,35,0.08)':'transparent',borderLeft:active?'2px solid #F5A623':'2px solid transparent',transition:'all 150ms'}}
-                  aria-current={active?'page':undefined}>
-                  {l.icon}{l.label}
-                </a>
-              </li>
-            );
-          })}
-        </ul>
-      </nav>
+function Sidebar({settings}){
+  const brand=settings.accentColor||'#F5A623';
+  const links=[{path:'/dashboard',label:'Dashboard',icon:<I.doc/>},{path:'/settings',label:'Settings',icon:<I.settings/>}];
+  const isActive=p=>window.location.hash.includes(p)||(!window.location.hash&&p==='/dashboard');
+  return(<>
+    <nav className="no-print desktop-sidebar" style={{background:'#0F1B2D',width:220,minHeight:'100vh',display:'flex',flexDirection:'column',flexShrink:0}} aria-label="Main navigation">
+      <div style={{padding:'24px 20px 20px',borderBottom:'1px solid rgba(255,255,255,0.08)'}}>
+        <div style={{display:'flex',alignItems:'center',gap:10}}><LogoMark size={32} light={true}/><span style={{fontWeight:600,fontSize:18,color:'#fff',letterSpacing:'-0.02em'}}>PropKit</span></div>
+        {settings.businessName&&<div style={{fontSize:12,color:'rgba(255,255,255,0.45)',marginTop:6,paddingLeft:42}}>{settings.businessName}</div>}
+      </div>
+      <ul style={{listStyle:'none',margin:0,padding:'12px 0',flex:1}}>
+        {links.map(l=>{const a=isActive(l.path);return(<li key={l.path}><a href={'#'+l.path} aria-current={a?'page':undefined} style={{display:'flex',alignItems:'center',gap:10,padding:'10px 20px',color:a?brand:'rgba(255,255,255,0.7)',textDecoration:'none',fontSize:14,fontWeight:a?600:400,background:a?'rgba(245,166,35,0.08)':'transparent',borderLeft:a?'2px solid '+brand:'2px solid transparent'}}>{l.icon}{l.label}</a></li>);})}
+      </ul>
+    </nav>
+    <nav className="no-print mobile-topnav" aria-label="Main navigation">
+      <div style={{display:'flex',alignItems:'center',gap:8}}><LogoMark size={24} light={true}/><span style={{fontWeight:700,fontSize:16,color:'#fff'}}>PropKit</span></div>
+      <div style={{display:'flex',gap:4}}>{links.map(l=>{const a=isActive(l.path);return <a key={l.path} href={'#'+l.path} aria-current={a?'page':undefined}>{l.icon}{l.label}</a>;})}</div>
+    </nav>
+  </>);
+}
 
-      {/* Mobile top nav */}
-      <nav className="no-print mobile-topnav" aria-label="Main navigation">
-        <div style={{display:'flex',alignItems:'center',gap:8}}>
-          <LogoMark size={24} light={true}/>
-          <span style={{fontWeight:700,fontSize:16,color:'#fff',letterSpacing:'-0.02em'}}>PropKit</span>
-        </div>
-        <div className="mobile-topnav-links" role="list">
-          {links.map(l=>{
-            const active=isActive(l.path);
-            return(
-              <a key={l.path} href={'#'+l.path} aria-current={active?'page':undefined} role="listitem">
-                {l.icon}{l.label}
-              </a>
-            );
-          })}
-        </div>
-      </nav>
-    </>
-  );
+// ── FIRST-RUN PROFILE PROMPT ──────────────────────────────────────────────────
+function ProfileBanner({settings}){
+  if(settings.businessName)return null;
+  return(<div className="no-print" style={{background:'#FEF3DC',border:'1px solid #FAD08A',borderRadius:12,padding:'14px 18px',marginBottom:20,display:'flex',gap:12,alignItems:'center',flexWrap:'wrap'}}>
+    <span style={{fontSize:22}}>👋</span>
+    <div style={{flex:1,minWidth:180}}><div style={{fontWeight:600,fontSize:14,color:'#0F1B2D'}}>Add your business name &amp; logo</div><div style={{fontSize:13,color:'#8A5A00'}}>It will appear on every proposal and invoice. Takes 30 seconds.</div></div>
+    <button className="btn-accent" onClick={()=>navigate('/settings')} style={{flexShrink:0}}>Open Settings</button>
+  </div>);
 }
 
 // ── DASHBOARD ────────────────────────────────────────────────────────────────
 function Dashboard({store,onUpdate}){
   const {proposals,invoices,settings}=store;
   const currency=settings.currency||'USD';
-  const totalPipeline=proposals.filter(p=>p.status!=='declined').reduce((s,p)=>{
-    const{total}=calcProposal(p.items||[],p.taxPct);return s+total;},0);
+  const [picker,setPicker]=useState(false);
+  const pipeline=proposals.filter(p=>p.status!=='declined').reduce((s,p)=>s+calcDoc(p.sections).total,0);
   const accepted=proposals.filter(p=>p.status==='accepted').length;
   const pending=proposals.filter(p=>p.status==='sent').length;
   const unpaid=invoices.filter(i=>i.status==='unpaid').length;
 
-  function newProposal(){
-    const p={id:uid(),title:'Untitled Proposal',clientName:'',intro:'',scope:'',deliverables:[],items:[{id:uid(),description:'',qty:1,rate:0}],taxPct:0,status:'draft',date:new Date().toISOString().slice(0,10),notes:''};
-    const updated={...store,proposals:[...proposals,p]};
-    onUpdate(updated);
-    navigate('/proposal/'+p.id);
+  function create(key){
+    const p=TEMPLATES[key]();onUpdate({...store,proposals:[...proposals,p]});setPicker(false);navigate('/proposal/'+p.id);
   }
+  function del(id){if(confirm('Delete this proposal?'))onUpdate({...store,proposals:proposals.filter(p=>p.id!==id)});}
+  function delInv(id){if(confirm('Delete this invoice?'))onUpdate({...store,invoices:invoices.filter(i=>i.id!==id)});}
 
-  function deleteProposal(id){
-    if(!confirm('Delete this proposal?'))return;
-    onUpdate({...store,proposals:proposals.filter(p=>p.id!==id)});
-  }
-  function deleteInvoice(id){
-    if(!confirm('Delete this invoice?'))return;
-    onUpdate({...store,invoices:invoices.filter(i=>i.id!==id)});
-  }
-
-  return(
-    <main className="dash-main" aria-label="Dashboard">
-      <div style={{maxWidth:960,margin:'0 auto'}}>
-        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:24,gap:12}}>
-          <h1 style={{fontSize:'clamp(20px,5vw,28px)',fontWeight:600,color:'#0F1B2D',letterSpacing:'-0.02em',margin:0}}>Dashboard</h1>
-          <button className="btn-accent" onClick={newProposal} style={{display:'flex',alignItems:'center',gap:6,flexShrink:0}}>
-            <Icon.plus/> New Proposal
-          </button>
-        </div>
-
-        {/* Stats */}
-        <div className="stats-grid" style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(160px,1fr))',gap:16,marginBottom:32}}>
-          {[
-            {label:'Pipeline',value:fmt(totalPipeline,currency),sub:'total value'},
-            {label:'Proposals',value:proposals.length,sub:`${accepted} accepted · ${pending} pending`},
-            {label:'Unpaid',value:unpaid,sub:'invoice'+(unpaid!==1?'s':'')},
-            {label:'Accepted',value:accepted,sub:'proposal'+(accepted!==1?'s':'')},
-          ].map(s=>(
-            <div key={s.label} className="card" style={{padding:'20px 24px'}}>
-              <div style={{fontSize:12,fontWeight:600,color:'#566370',letterSpacing:'0.04em',textTransform:'uppercase',marginBottom:6}}>{s.label}</div>
-              <div style={{fontSize:26,fontWeight:700,color:'#0F1B2D',letterSpacing:'-0.02em',fontFamily:"'JetBrains Mono',monospace"}}>{s.value}</div>
-              <div style={{fontSize:12,color:'#7C8A96',marginTop:4}}>{s.sub}</div>
-            </div>
-          ))}
-        </div>
-
-        {/* Proposals */}
-        <section aria-labelledby="prop-heading" style={{marginBottom:32}}>
-          <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:16}}>
-            <h2 id="prop-heading" style={{fontSize:18,fontWeight:600,margin:0}}>Proposals</h2>
-            <button className="btn-secondary" onClick={newProposal} style={{display:'flex',alignItems:'center',gap:6,padding:'7px 14px',fontSize:13}}>
-              <Icon.plus/> New
-            </button>
-          </div>
-          <div className="card" style={{padding:0,overflow:'hidden'}}>
-            {proposals.length===0?(
-              <div style={{textAlign:'center',padding:'48px 24px',color:'#566370'}}>
-                <div style={{fontSize:40,marginBottom:12,opacity:0.3}}>📄</div>
-                <div style={{fontSize:18,fontWeight:600,color:'#0F1B2D',marginBottom:6}}>No proposals yet</div>
-                <div style={{fontSize:14,color:'#566370',marginBottom:20}}>Create your first proposal and send it to a client.</div>
-                <button className="btn-accent" onClick={newProposal}>New Proposal</button>
-              </div>
-            ):(
-              <div className="table-scroll">
-                <table style={{width:'100%',borderCollapse:'collapse',minWidth:480}} role="table" aria-label="Proposals list">
-                  <thead>
-                    <tr style={{background:'#FAFBFC',borderBottom:'1px solid #E8ECF0'}}>
-                      {['Client','Title','Amount','Status',''].map(h=>(
-                        <th key={h} scope="col" style={{padding:'10px 16px',fontSize:11,fontWeight:600,color:'#566370',letterSpacing:'0.06em',textTransform:'uppercase',textAlign:h===''||h==='Amount'?'right':'left',whiteSpace:'nowrap'}}>{h}</th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {proposals.map((p,i)=>{
-                      const {total}=calcProposal(p.items||[],p.taxPct);
-                      return(
-                        <tr key={p.id} style={{borderBottom:'1px solid #E8ECF0',background:i%2===0?'#fff':'#FAFBFC',cursor:'pointer'}}
-                          onClick={()=>navigate('/proposal/'+p.id)}
-                          onKeyDown={e=>{if(e.key==='Enter'||e.key===' ')navigate('/proposal/'+p.id);}}
-                          tabIndex={0} role="row" aria-label={`${p.clientName} - ${p.title}`}>
-                          <td style={{padding:'12px 16px',fontSize:14,fontWeight:500,color:'#0F1B2D',whiteSpace:'nowrap'}}>{p.clientName||<span style={{color:'#A9B4BF'}}>No client</span>}</td>
-                          <td style={{padding:'12px 16px',fontSize:14,color:'#3D4E5A'}}>{p.title}</td>
-                          <td style={{padding:'12px 16px',fontSize:14,fontFamily:"'JetBrains Mono',monospace",color:'#0F1B2D',textAlign:'right',whiteSpace:'nowrap'}}>{fmt(total,currency)}</td>
-                          <td style={{padding:'12px 16px',whiteSpace:'nowrap'}}><StatusBadge status={p.status}/></td>
-                          <td style={{padding:'12px 16px',textAlign:'right'}}>
-                            <button className="btn-ghost" onClick={e=>{e.stopPropagation();deleteProposal(p.id);}} aria-label={`Delete proposal ${p.title}`} style={{padding:'6px',color:'#991B1B',minHeight:36,minWidth:36}}>
-                              <Icon.trash/>
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </div>
-        </section>
-
-        {/* Invoices */}
-        <section aria-labelledby="inv-heading">
-          <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:16}}>
-            <h2 id="inv-heading" style={{fontSize:18,fontWeight:600,margin:0}}>Invoices</h2>
-          </div>
-          <div className="card" style={{padding:0,overflow:'hidden'}}>
-            {invoices.length===0?(
-              <div style={{textAlign:'center',padding:'48px 24px'}}>
-                <div style={{fontSize:40,marginBottom:12,opacity:0.3}}>🧾</div>
-                <div style={{fontSize:18,fontWeight:600,color:'#0F1B2D',marginBottom:6}}>No invoices yet</div>
-                <div style={{fontSize:14,color:'#566370'}}>Generate an invoice from an accepted proposal.</div>
-              </div>
-            ):(
-              <div className="table-scroll">
-                <table style={{width:'100%',borderCollapse:'collapse',minWidth:520}} role="table" aria-label="Invoices list">
-                  <thead>
-                    <tr style={{background:'#FAFBFC',borderBottom:'1px solid #E8ECF0'}}>
-                      {['Client','Title','Amount','Due','Status',''].map(h=>(
-                        <th key={h} scope="col" style={{padding:'10px 16px',fontSize:11,fontWeight:600,color:'#566370',letterSpacing:'0.06em',textTransform:'uppercase',textAlign:h===''||h==='Amount'?'right':'left',whiteSpace:'nowrap'}}>{h}</th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {invoices.map((inv,i)=>{
-                      const {total}=calcProposal(inv.items||[],inv.taxPct);
-                      return(
-                        <tr key={inv.id} style={{borderBottom:'1px solid #E8ECF0',background:i%2===0?'#fff':'#FAFBFC',cursor:'pointer'}}
-                          onClick={()=>navigate('/invoice/'+inv.id)}
-                          onKeyDown={e=>{if(e.key==='Enter'||e.key===' ')navigate('/invoice/'+inv.id);}}
-                          tabIndex={0} role="row">
-                          <td style={{padding:'12px 16px',fontSize:14,fontWeight:500,color:'#0F1B2D',whiteSpace:'nowrap'}}>{inv.clientName||'—'}</td>
-                          <td style={{padding:'12px 16px',fontSize:14,color:'#3D4E5A'}}>{inv.title}</td>
-                          <td style={{padding:'12px 16px',fontSize:14,fontFamily:"'JetBrains Mono',monospace",color:'#0F1B2D',textAlign:'right',whiteSpace:'nowrap'}}>{fmt(total,currency)}</td>
-                          <td style={{padding:'12px 16px',fontSize:13,color:'#566370',whiteSpace:'nowrap'}}>{inv.dueDate||'—'}</td>
-                          <td style={{padding:'12px 16px',whiteSpace:'nowrap'}}><StatusBadge status={inv.status}/></td>
-                          <td style={{padding:'12px 16px',textAlign:'right'}}>
-                            <button className="btn-ghost" onClick={e=>{e.stopPropagation();deleteInvoice(inv.id);}} aria-label={`Delete invoice ${inv.title}`} style={{padding:'6px',color:'#991B1B',minHeight:36,minWidth:36}}>
-                              <Icon.trash/>
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </div>
-        </section>
+  return(<main className="dash-main" aria-label="Dashboard">
+    <div style={{maxWidth:980,margin:'0 auto'}}>
+      <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:20,gap:12}}>
+        <h1 style={{fontSize:'clamp(20px,5vw,28px)',fontWeight:600,margin:0}}>Dashboard</h1>
+        <button className="btn-accent" onClick={()=>setPicker(true)} style={{display:'flex',alignItems:'center',gap:6,flexShrink:0}}><I.plus/> New Proposal</button>
       </div>
-    </main>
-  );
+      <ProfileBanner settings={settings}/>
+      <div className="stats-grid" style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(160px,1fr))',gap:16,marginBottom:32}}>
+        {[{l:'Pipeline',v:fmt(pipeline,currency),s:'one-time value'},{l:'Proposals',v:proposals.length,s:accepted+' accepted · '+pending+' pending'},{l:'Unpaid',v:unpaid,s:'invoice'+(unpaid!==1?'s':'')},{l:'Accepted',v:accepted,s:'proposal'+(accepted!==1?'s':'')}].map(s=>(
+          <div key={s.l} className="card" style={{padding:'20px 24px'}}>
+            <div style={{fontSize:12,fontWeight:600,color:'#566370',letterSpacing:'0.04em',textTransform:'uppercase',marginBottom:6}}>{s.l}</div>
+            <div style={{fontSize:26,fontWeight:700,letterSpacing:'-0.02em',fontFamily:"'JetBrains Mono',monospace"}}>{s.v}</div>
+            <div style={{fontSize:12,color:'#7C8A96',marginTop:4}}>{s.s}</div>
+          </div>))}
+      </div>
+      <section style={{marginBottom:32}}>
+        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:16}}>
+          <h2 style={{fontSize:18,fontWeight:600,margin:0}}>Proposals</h2>
+          <button className="btn-secondary" onClick={()=>setPicker(true)} style={{display:'flex',alignItems:'center',gap:6,padding:'7px 14px',fontSize:13}}><I.plus/> New</button>
+        </div>
+        <div className="card" style={{padding:0,overflow:'hidden'}}>
+          {proposals.length===0?(
+            <div style={{textAlign:'center',padding:'48px 24px',color:'#566370'}}>
+              <div style={{fontSize:40,marginBottom:12,opacity:0.3}}>📄</div>
+              <div style={{fontSize:18,fontWeight:600,color:'#0F1B2D',marginBottom:6}}>No proposals yet</div>
+              <div style={{fontSize:14,marginBottom:20}}>Pick a template and you'll be writing in seconds.</div>
+              <button className="btn-accent" onClick={()=>setPicker(true)}>New Proposal</button>
+            </div>
+          ):(<div className="table-scroll"><table style={{width:'100%',borderCollapse:'collapse',minWidth:480}}>
+            <thead><tr style={{background:'#FAFBFC',borderBottom:'1px solid #E8ECF0'}}>{['Client','Title','Amount','Status',''].map(h=><th key={h} style={{padding:'10px 16px',fontSize:11,fontWeight:600,color:'#566370',letterSpacing:'0.06em',textTransform:'uppercase',textAlign:h===''||h==='Amount'?'right':'left',whiteSpace:'nowrap'}}>{h}</th>)}</tr></thead>
+            <tbody>{proposals.map((p,i)=>{const t=calcDoc(p.sections);return(
+              <tr key={p.id} onClick={()=>navigate('/proposal/'+p.id)} onKeyDown={e=>{if(e.key==='Enter')navigate('/proposal/'+p.id);}} tabIndex={0} style={{borderBottom:'1px solid #E8ECF0',background:i%2?'#FAFBFC':'#fff',cursor:'pointer'}}>
+                <td style={{padding:'12px 16px',fontSize:14,fontWeight:500,whiteSpace:'nowrap'}}>{p.clientName||<span style={{color:'#A9B4BF'}}>No client</span>}</td>
+                <td style={{padding:'12px 16px',fontSize:14,color:'#3D4E5A'}}>{p.title}</td>
+                <td style={{padding:'12px 16px',fontSize:14,fontFamily:"'JetBrains Mono',monospace",textAlign:'right',whiteSpace:'nowrap'}}>{fmt(t.total,currency)}{t.hasRecurring&&<span style={{color:'#7C8A96'}}> +rec</span>}</td>
+                <td style={{padding:'12px 16px',whiteSpace:'nowrap'}}><StatusBadge status={p.status}/></td>
+                <td style={{padding:'12px 16px',textAlign:'right'}}><button className="btn-ghost" onClick={e=>{e.stopPropagation();del(p.id);}} aria-label="Delete" style={{padding:6,color:'#991B1B',minHeight:36,minWidth:36}}><I.trash/></button></td>
+              </tr>);})}</tbody></table></div>)}
+        </div>
+      </section>
+      <section>
+        <h2 style={{fontSize:18,fontWeight:600,margin:'0 0 16px'}}>Invoices</h2>
+        <div className="card" style={{padding:0,overflow:'hidden'}}>
+          {invoices.length===0?(<div style={{textAlign:'center',padding:'48px 24px'}}><div style={{fontSize:40,marginBottom:12,opacity:0.3}}>🧾</div><div style={{fontSize:18,fontWeight:600,marginBottom:6}}>No invoices yet</div><div style={{fontSize:14,color:'#566370'}}>Generate one from an accepted proposal.</div></div>):(
+          <div className="table-scroll"><table style={{width:'100%',borderCollapse:'collapse',minWidth:520}}>
+            <thead><tr style={{background:'#FAFBFC',borderBottom:'1px solid #E8ECF0'}}>{['Client','Title','Amount','Due','Status',''].map(h=><th key={h} style={{padding:'10px 16px',fontSize:11,fontWeight:600,color:'#566370',letterSpacing:'0.06em',textTransform:'uppercase',textAlign:h===''||h==='Amount'?'right':'left',whiteSpace:'nowrap'}}>{h}</th>)}</tr></thead>
+            <tbody>{invoices.map((inv,i)=>{const t=calcDoc(inv.sections);return(
+              <tr key={inv.id} onClick={()=>navigate('/invoice/'+inv.id)} tabIndex={0} style={{borderBottom:'1px solid #E8ECF0',background:i%2?'#FAFBFC':'#fff',cursor:'pointer'}}>
+                <td style={{padding:'12px 16px',fontSize:14,fontWeight:500,whiteSpace:'nowrap'}}>{inv.clientName||'—'}</td>
+                <td style={{padding:'12px 16px',fontSize:14,color:'#3D4E5A'}}>{inv.title}</td>
+                <td style={{padding:'12px 16px',fontSize:14,fontFamily:"'JetBrains Mono',monospace",textAlign:'right',whiteSpace:'nowrap'}}>{fmt(t.total,currency)}</td>
+                <td style={{padding:'12px 16px',fontSize:13,color:'#566370',whiteSpace:'nowrap'}}>{inv.dueDate||'—'}</td>
+                <td style={{padding:'12px 16px',whiteSpace:'nowrap'}}><StatusBadge status={inv.status}/></td>
+                <td style={{padding:'12px 16px',textAlign:'right'}}><button className="btn-ghost" onClick={e=>{e.stopPropagation();delInv(inv.id);}} aria-label="Delete" style={{padding:6,color:'#991B1B',minHeight:36,minWidth:36}}><I.trash/></button></td>
+              </tr>);})}</tbody></table></div>)}
+        </div>
+      </section>
+    </div>
+    {picker&&<TemplatePicker onPick={create} onClose={()=>setPicker(false)}/>}
+  </main>);
+}
+
+function TemplatePicker({onPick,onClose}){
+  return(<div className="no-print" onClick={onClose} style={{position:'fixed',inset:0,background:'rgba(15,27,45,0.45)',zIndex:100,display:'flex',alignItems:'center',justifyContent:'center',padding:16}}>
+    <div onClick={e=>e.stopPropagation()} className="card" style={{maxWidth:560,width:'100%',padding:24,maxHeight:'90vh',overflowY:'auto'}}>
+      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:6}}><h2 style={{fontSize:20,fontWeight:600,margin:0}}>Choose a starting point</h2><button className="btn-ghost" onClick={onClose} aria-label="Close" style={{fontSize:20,padding:'4px 10px'}}>×</button></div>
+      <p style={{fontSize:14,color:'#566370',marginTop:0,marginBottom:18}}>Pick the closest match — you can add, remove, or reorder any section later.</p>
+      <div style={{display:'grid',gap:10}}>
+        {TEMPLATE_META.map(t=>(<button key={t.key} className="menu-item" onClick={()=>onPick(t.key)} style={{border:'1px solid #E8ECF0',alignItems:'center'}}>
+          <div style={{flex:1}}><div style={{fontWeight:600,fontSize:15}}>{t.name}</div><div style={{fontSize:13,color:'#566370'}}>{t.desc}</div></div>
+          <I.chevR/>
+        </button>))}
+      </div>
+    </div>
+  </div>);
+}
+
+// ── ADD-SECTION MENU ──────────────────────────────────────────────────────────
+function AddSectionMenu({onAdd,label='Add section'}){
+  const [open,setOpen]=useState(false);
+  const ref=useRef(null);
+  useEffect(()=>{function h(e){if(ref.current&&!ref.current.contains(e.target))setOpen(false);}document.addEventListener('mousedown',h);return()=>document.removeEventListener('mousedown',h);},[]);
+  return(<div ref={ref} style={{position:'relative',display:'inline-block'}}>
+    <button className="btn-accent" onClick={()=>setOpen(o=>!o)} style={{display:'flex',alignItems:'center',gap:6}}><I.plus/> {label}</button>
+    {open&&<div className="menu-pop" role="menu">
+      <div style={{fontSize:11,fontWeight:600,color:'#7C8A96',textTransform:'uppercase',letterSpacing:'0.05em',padding:'4px 10px 8px'}}>Pick a section type</div>
+      {SECTION_TYPES.map(t=>(<button key={t.type} className="menu-item" role="menuitem" onClick={()=>{onAdd(t.type);setOpen(false);}}>
+        <div><div style={{fontWeight:600,fontSize:14}}>{t.label}</div><div style={{fontSize:12,color:'#566370',lineHeight:1.4}}>{t.desc}</div></div>
+      </button>))}
+    </div>}
+  </div>);
+}
+
+// ── SECTION EDITORS ─────────────────────────────────────────────────────────
+function arr(setSec,key){return {
+  add:(v)=>setSec(s=>({...s,[key]:[...(s[key]||[]),v]})),
+  upd:(idx,v)=>setSec(s=>({...s,[key]:s[key].map((x,i)=>i===idx?v:x)})),
+  del:(idx)=>setSec(s=>({...s,[key]:s[key].filter((_,i)=>i!==idx)})),
+};}
+
+function SectionEditor({sec,setSec,currency}){
+  const set=(k,v)=>setSec(s=>({...s,[k]:v}));
+  if(sec.type==='richtext'||sec.type==='terms')return(<>
+    <div style={{marginBottom:14}}><label>Heading</label><input value={sec.title} onChange={e=>set('title',e.target.value)} placeholder="e.g. Executive Summary"/></div>
+    <div><label>Body</label><textarea value={sec.body} onChange={e=>set('body',e.target.value)} placeholder="Write here… Press Enter for new paragraphs." style={{minHeight:140}}/></div>
+  </>);
+  if(sec.type==='list'){const a=arr(setSec,'items');return(<>
+    <div style={{marginBottom:14}}><label>Heading</label><input value={sec.title} onChange={e=>set('title',e.target.value)}/></div>
+    <label>Items</label>
+    {(sec.items||[]).map((it,i)=>(<div key={i} style={{display:'flex',gap:8,marginBottom:8}}>
+      <input value={it} onChange={e=>a.upd(i,e.target.value)} placeholder={'Item '+(i+1)}/>
+      <button className="btn-ghost" onClick={()=>a.del(i)} aria-label="Remove" style={{padding:8,color:'#991B1B',flexShrink:0}}><I.trash/></button>
+    </div>))}
+    <button className="btn-secondary" onClick={()=>a.add('')} style={{display:'flex',alignItems:'center',gap:6,padding:'7px 14px',fontSize:13}}><I.plus/> Add item</button>
+  </>);}
+  if(sec.type==='scope'){const a=arr(setSec,'phases');return(<>
+    <div style={{marginBottom:14}}><label>Heading</label><input value={sec.title} onChange={e=>set('title',e.target.value)}/></div>
+    {(sec.phases||[]).map((ph,i)=>(<div key={ph.id} style={{border:'1px solid #E8ECF0',borderRadius:10,padding:14,marginBottom:12,background:'#FAFBFC'}}>
+      <div style={{display:'flex',gap:8,marginBottom:10}}>
+        <input value={ph.name} onChange={e=>a.upd(i,{...ph,name:e.target.value})} placeholder={'Phase '+(i+1)+' name'} style={{fontWeight:600}}/>
+        <button className="btn-ghost" onClick={()=>a.del(i)} aria-label="Remove phase" style={{padding:8,color:'#991B1B',flexShrink:0}}><I.trash/></button>
+      </div>
+      <textarea value={ph.summary} onChange={e=>a.upd(i,{...ph,summary:e.target.value})} placeholder="What happens in this phase…" style={{minHeight:60,marginBottom:10}}/>
+      <label style={{fontSize:11}}>Deliverables in this phase</label>
+      {(ph.deliverables||[]).map((d,j)=>(<div key={j} style={{display:'flex',gap:8,marginBottom:6}}>
+        <input value={d} onChange={e=>a.upd(i,{...ph,deliverables:ph.deliverables.map((x,k)=>k===j?e.target.value:x)})} placeholder={'Deliverable '+(j+1)}/>
+        <button className="btn-ghost" onClick={()=>a.upd(i,{...ph,deliverables:ph.deliverables.filter((_,k)=>k!==j)})} aria-label="Remove" style={{padding:8,color:'#991B1B',flexShrink:0}}><I.trash/></button>
+      </div>))}
+      <button className="btn-ghost" onClick={()=>a.upd(i,{...ph,deliverables:[...(ph.deliverables||[]),'']})} style={{fontSize:12,display:'flex',alignItems:'center',gap:4,padding:'4px 8px'}}><I.plus/> Add deliverable</button>
+    </div>))}
+    <button className="btn-secondary" onClick={()=>a.add({id:uid(),name:'Phase '+((sec.phases||[]).length+1),summary:'',deliverables:['']})} style={{display:'flex',alignItems:'center',gap:6,padding:'7px 14px',fontSize:13}}><I.plus/> Add phase</button>
+  </>);}
+  if(sec.type==='timeline'){const a=arr(setSec,'milestones');return(<>
+    <div style={{marginBottom:14}}><label>Heading</label><input value={sec.title} onChange={e=>set('title',e.target.value)}/></div>
+    {(sec.milestones||[]).map((m,i)=>(<div key={m.id} style={{display:'grid',gridTemplateColumns:'1fr 150px auto',gap:8,marginBottom:8,alignItems:'start'}}>
+      <input value={m.name} onChange={e=>a.upd(i,{...m,name:e.target.value})} placeholder="Milestone"/>
+      <input type="date" value={m.date} onChange={e=>a.upd(i,{...m,date:e.target.value})}/>
+      <button className="btn-ghost" onClick={()=>a.del(i)} aria-label="Remove" style={{padding:8,color:'#991B1B'}}><I.trash/></button>
+      <input value={m.detail} onChange={e=>a.upd(i,{...m,detail:e.target.value})} placeholder="Detail (optional)" style={{gridColumn:'1/-1'}}/>
+    </div>))}
+    <button className="btn-secondary" onClick={()=>a.add({id:uid(),name:'',date:'',detail:''})} style={{display:'flex',alignItems:'center',gap:6,padding:'7px 14px',fontSize:13}}><I.plus/> Add milestone</button>
+  </>);}
+  if(sec.type==='team'){const a=arr(setSec,'members');return(<>
+    <div style={{marginBottom:14}}><label>Heading</label><input value={sec.title} onChange={e=>set('title',e.target.value)}/></div>
+    {(sec.members||[]).map((m,i)=>(<div key={m.id} style={{border:'1px solid #E8ECF0',borderRadius:10,padding:14,marginBottom:12,background:'#FAFBFC'}}>
+      <div className="form-grid-2" style={{marginBottom:10}}>
+        <input value={m.name} onChange={e=>a.upd(i,{...m,name:e.target.value})} placeholder="Name"/>
+        <input value={m.role} onChange={e=>a.upd(i,{...m,role:e.target.value})} placeholder="Role / title"/>
+      </div>
+      <div style={{display:'flex',gap:8}}>
+        <textarea value={m.bio} onChange={e=>a.upd(i,{...m,bio:e.target.value})} placeholder="Short bio…" style={{minHeight:60}}/>
+        <button className="btn-ghost" onClick={()=>a.del(i)} aria-label="Remove" style={{padding:8,color:'#991B1B',flexShrink:0,alignSelf:'flex-start'}}><I.trash/></button>
+      </div>
+    </div>))}
+    <button className="btn-secondary" onClick={()=>a.add({id:uid(),name:'',role:'',bio:''})} style={{display:'flex',alignItems:'center',gap:6,padding:'7px 14px',fontSize:13}}><I.plus/> Add team member</button>
+  </>);}
+  if(sec.type==='casestudies'){const a=arr(setSec,'cases');return(<>
+    <div style={{marginBottom:14}}><label>Heading</label><input value={sec.title} onChange={e=>set('title',e.target.value)}/></div>
+    {(sec.cases||[]).map((c,i)=>(<div key={c.id} style={{border:'1px solid #E8ECF0',borderRadius:10,padding:14,marginBottom:12,background:'#FAFBFC'}}>
+      <div className="form-grid-2" style={{marginBottom:10}}>
+        <input value={c.client} onChange={e=>a.upd(i,{...c,client:e.target.value})} placeholder="Client / project"/>
+        <input value={c.result} onChange={e=>a.upd(i,{...c,result:e.target.value})} placeholder="Headline result (e.g. +40% sales)"/>
+      </div>
+      <div style={{display:'flex',gap:8}}>
+        <textarea value={c.body} onChange={e=>a.upd(i,{...c,body:e.target.value})} placeholder="What you did and the outcome…" style={{minHeight:60}}/>
+        <button className="btn-ghost" onClick={()=>a.del(i)} aria-label="Remove" style={{padding:8,color:'#991B1B',flexShrink:0,alignSelf:'flex-start'}}><I.trash/></button>
+      </div>
+    </div>))}
+    <button className="btn-secondary" onClick={()=>a.add({id:uid(),client:'',result:'',body:''})} style={{display:'flex',alignItems:'center',gap:6,padding:'7px 14px',fontSize:13}}><I.plus/> Add case study</button>
+  </>);}
+  if(sec.type==='signature')return(<>
+    <div style={{marginBottom:14}}><label>Heading</label><input value={sec.title} onChange={e=>set('title',e.target.value)}/></div>
+    <div style={{marginBottom:14}}><label>Note above signatures</label><textarea value={sec.note} onChange={e=>set('note',e.target.value)} style={{minHeight:60}}/></div>
+    <div className="form-grid-2">
+      <div><label>Left label</label><input value={sec.clientLabel} onChange={e=>set('clientLabel',e.target.value)}/></div>
+      <div><label>Right label</label><input value={sec.byLabel} onChange={e=>set('byLabel',e.target.value)}/></div>
+    </div>
+  </>);
+  if(sec.type==='pricing')return <PricingEditor sec={sec} setSec={setSec} currency={currency} set={set}/>;
+  return null;
+}
+
+function PricingEditor({sec,setSec,currency,set}){
+  const a=arr(setSec,'lines');
+  const r=calcPricingSection(sec);
+  const [adv,setAdv]=useState((parseFloat(sec.discountVal)||0)>0||(parseFloat(sec.taxPct)||0)>0);
+  return(<>
+    <div style={{marginBottom:14}}><label>Table heading</label><input value={sec.title} onChange={e=>set('title',e.target.value)} placeholder="e.g. Professional Services"/></div>
+    <div className="table-scroll"><table style={{width:'100%',borderCollapse:'collapse',marginBottom:12,minWidth:560}}>
+      <thead><tr style={{borderBottom:'1.5px solid #0F1B2D'}}>{['Description','Qty','Rate','Billing','Add-on','Amount',''].map(h=><th key={h} style={{padding:'6px 6px',fontSize:11,fontWeight:600,color:'#566370',textAlign:h==='Amount'||h===''?'right':'left',textTransform:'uppercase',whiteSpace:'nowrap'}}>{h}</th>)}</tr></thead>
+      <tbody>{(sec.lines||[]).map((l,i)=>(<tr key={l.id} style={{borderBottom:'1px solid #E8ECF0',opacity:(l.optional&&!l.selected)?0.55:1}}>
+        <td style={{padding:6}}><input value={l.description} onChange={e=>a.upd(i,{...l,description:e.target.value})} placeholder="Description" style={{fontSize:13,minWidth:130}}/></td>
+        <td style={{padding:6,width:64}}><input type="number" min="0" value={l.qty} onChange={e=>a.upd(i,{...l,qty:e.target.value})} style={{fontSize:13,textAlign:'right',padding:'8px'}} aria-label="Qty"/></td>
+        <td style={{padding:6,width:100}}><input type="number" min="0" value={l.rate} onChange={e=>a.upd(i,{...l,rate:e.target.value})} style={{fontSize:13,textAlign:'right',padding:'8px'}} aria-label="Rate"/></td>
+        <td style={{padding:6,width:120}}><select value={l.billing||'once'} onChange={e=>a.upd(i,{...l,billing:e.target.value})} style={{fontSize:13,padding:'8px'}} aria-label="Billing"><option value="once">One-time</option><option value="recurring">Recurring</option></select></td>
+        <td style={{padding:6,textAlign:'center',width:64}}><input type="checkbox" checked={!!l.optional} onChange={e=>a.upd(i,{...l,optional:e.target.checked,selected:e.target.checked?(l.selected!==false):true})} style={{width:'auto'}} aria-label="Optional add-on"/></td>
+        <td style={{padding:6,width:100,textAlign:'right',fontFamily:"'JetBrains Mono',monospace",fontSize:13,fontWeight:500,whiteSpace:'nowrap'}}>{fmt(lineAmount(l),currency)}</td>
+        <td style={{padding:6,width:40,textAlign:'right'}}><button className="btn-ghost" onClick={()=>a.del(i)} aria-label="Remove line" style={{padding:4,color:'#991B1B',minHeight:32,minWidth:32}}><I.trash/></button></td>
+      </tr>))}</tbody>
+    </table></div>
+    <button className="btn-secondary" onClick={()=>a.add({id:uid(),description:'',qty:1,rate:0,billing:'once',optional:false,selected:true})} style={{display:'flex',alignItems:'center',gap:6,padding:'7px 14px',fontSize:13,marginBottom:14}}><I.plus/> Add line item</button>
+    <div style={{fontSize:12,color:'#7C8A96',marginBottom:14}}>Tip: tick “Add-on” to make a line an optional extra. Set Billing to “Recurring” for monthly retainers — recurring totals are tracked separately.</div>
+    {!adv?(<button className="btn-ghost" onClick={()=>setAdv(true)} style={{fontSize:13,padding:'6px 10px',color:'#1547A8'}}>+ Add discount or tax</button>):(
+      <div style={{display:'flex',gap:16,flexWrap:'wrap',alignItems:'flex-end',padding:14,background:'#FAFBFC',borderRadius:10,border:'1px solid #E8ECF0'}}>
+        <div style={{width:140}}><label>Discount</label><div style={{display:'flex',gap:6}}>
+          <input type="number" min="0" value={sec.discountVal} onChange={e=>set('discountVal',e.target.value)} style={{textAlign:'right'}}/>
+          <select value={sec.discountType} onChange={e=>set('discountType',e.target.value)} style={{width:64}}><option value="pct">%</option><option value="flat">{currency}</option></select>
+        </div></div>
+        <div style={{width:90}}><label>Tax %</label><input type="number" min="0" value={sec.taxPct} onChange={e=>set('taxPct',e.target.value)} style={{textAlign:'right'}}/></div>
+      </div>)}
+    <div style={{marginTop:16,padding:'12px 16px',background:'#0F1B2D',color:'#fff',borderRadius:8,display:'flex',justifyContent:'space-between',flexWrap:'wrap',gap:8}}>
+      <span style={{fontWeight:600}}>This table</span>
+      <span style={{fontFamily:"'JetBrains Mono',monospace",fontWeight:500}}>{fmt(r.total,currency)}{r.recurring>0&&' incl. '+fmt(r.recurring,currency)+'/'+(sec.recurringPeriod||'mo')}</span>
+    </div>
+  </>);
 }
 
 // ── PROPOSAL BUILDER ──────────────────────────────────────────────────────────
 function ProposalBuilder({id,store,onUpdate}){
   const existing=store.proposals.find(p=>p.id===id);
-  const [p,setP]=useState(existing||{id,title:'',clientName:'',intro:'',scope:'',deliverables:[],items:[{id:uid(),description:'',qty:1,rate:0}],taxPct:0,status:'draft',date:new Date().toISOString().slice(0,10),notes:''});
+  const [p,setP]=useState(existing||TEMPLATES.blank());
   const [saved,setSaved]=useState(false);
   const [copied,setCopied]=useState(false);
   const [tab,setTab]=useState('edit');
   const currency=store.settings.currency||'USD';
+  const totals=calcDoc(p.sections);
 
+  useEffect(()=>{const t=setTimeout(()=>save(p),600);return()=>clearTimeout(t);},[p]);// autosave
   function save(next=p){
     const proposals=store.proposals.find(x=>x.id===id)?store.proposals.map(x=>x.id===id?next:x):[...store.proposals,next];
-    onUpdate({...store,proposals});
-    setSaved(true);setTimeout(()=>setSaved(false),2000);
+    onUpdate({...store,proposals});setSaved(true);setTimeout(()=>setSaved(false),1500);
   }
-
-  function loadTemplate(key){
-    if(!key)return;
-    const t=TEMPLATES[key];
-    const next={...p,...t,id,status:p.status,date:p.date};
-    setP(next);save(next);
-  }
-
-  function addItem(){setP(x=>({...x,items:[...x.items,{id:uid(),description:'',qty:1,rate:0}]}));}
-  function removeItem(iid){setP(x=>({...x,items:x.items.filter(i=>i.id!==iid)}));}
-  function updateItem(iid,field,val){setP(x=>({...x,items:x.items.map(i=>i.id===iid?{...i,[field]:val}:i)}));}
-  function addDeliverable(){setP(x=>({...x,deliverables:[...x.deliverables,'']}));}
-  function updateDeliverable(idx,val){setP(x=>({...x,deliverables:x.deliverables.map((d,i)=>i===idx?val:d)}));}
-  function removeDeliverable(idx){setP(x=>({...x,deliverables:x.deliverables.filter((_,i)=>i!==idx)}));}
-
-  const {subtotal,tax,total}=calcProposal(p.items,p.taxPct);
+  function setMeta(k,v){setP(x=>({...x,[k]:v}));}
+  function addSection(type){setP(x=>({...x,sections:[...x.sections,mkSection(type)]}));}
+  function setSection(sid,updater){setP(x=>({...x,sections:x.sections.map(s=>s.id===sid?(typeof updater==='function'?updater(s):updater):s)}));}
+  function moveSection(idx,dir){setP(x=>{const a=[...x.sections];const j=idx+dir;if(j<0||j>=a.length)return x;[a[idx],a[j]]=[a[j],a[idx]];return{...x,sections:a};});}
+  function dupSection(idx){setP(x=>{const a=[...x.sections];const c=JSON.parse(JSON.stringify(a[idx]));c.id=uid();a.splice(idx+1,0,c);return{...x,sections:a};});}
+  function delSection(idx){setP(x=>({...x,sections:x.sections.filter((_,i)=>i!==idx)}));}
 
   function generateInvoice(){
-    const inv={id:uid(),proposalId:p.id,title:'Invoice — '+p.title,clientName:p.clientName,items:p.items.map(i=>({...i})),taxPct:p.taxPct,status:'unpaid',date:new Date().toISOString().slice(0,10),dueDate:new Date(Date.now()+30*864e5).toISOString().slice(0,10),notes:p.notes};
+    const inv={id:uid(),proposalId:p.id,title:'Invoice — '+p.title,clientName:p.clientName,sections:JSON.parse(JSON.stringify(p.sections.filter(s=>s.type==='pricing'))),status:'unpaid',date:new Date().toISOString().slice(0,10),dueDate:new Date(Date.now()+30*864e5).toISOString().slice(0,10),notes:'Payment due within 30 days.'};
     onUpdate({...store,proposals:store.proposals.map(x=>x.id===id?p:x),invoices:[...store.invoices,inv]});
     navigate('/invoice/'+inv.id);
   }
-
   function copyClientLink(){
-    const data=btoa(JSON.stringify(p));
+    const payload={...p,_profile:{businessName:store.settings.businessName,tagline:store.settings.tagline,logo:store.settings.logo,email:store.settings.email,phone:store.settings.phone,website:store.settings.website,address:store.settings.address,accentColor:store.settings.accentColor,currency:store.settings.currency}};
+    const data=encodeURIComponent(btoa(unescape(encodeURIComponent(JSON.stringify(payload)))));
     const url=window.location.origin+window.location.pathname+'#/view/'+data;
-    navigator.clipboard.writeText(url).then(()=>{setCopied(true);setTimeout(()=>setCopied(false),2500);}).catch(()=>{
-      const el=document.createElement('textarea');el.value=url;document.body.appendChild(el);el.select();document.execCommand('copy');el.remove();setCopied(true);setTimeout(()=>setCopied(false),2500);
-    });
+    const done=()=>{setCopied(true);setTimeout(()=>setCopied(false),2500);};
+    navigator.clipboard.writeText(url).then(done).catch(()=>{const el=document.createElement('textarea');el.value=url;document.body.appendChild(el);el.select();document.execCommand('copy');el.remove();done();});
   }
 
-  const fieldStyle={marginBottom:16};
-
-  return(
-    <main style={{flex:1,overflowY:'auto',padding:'clamp(16px,4vw,32px)'}} aria-label="Proposal builder">
-      <div style={{maxWidth:1100,margin:'0 auto'}}>
-        <div style={{display:'flex',alignItems:'flex-start',gap:12,marginBottom:24,flexWrap:'wrap'}}>
-          <button className="btn-ghost" onClick={()=>navigate('/dashboard')} aria-label="Back to dashboard" style={{padding:'8px',display:'flex',flexShrink:0}}>
-            <Icon.back/>
-          </button>
-          <h1 style={{fontSize:'clamp(16px,4vw,22px)',fontWeight:600,margin:0,flex:1,color:'#0F1B2D',minWidth:120}}>{p.title||'Untitled Proposal'}</h1>
-          <div className="builder-actions">
-            <select value="" onChange={e=>loadTemplate(e.target.value)} style={{width:'auto',padding:'8px 12px',fontSize:13}} aria-label="Load template">
-              <option value="">Load template…</option>
-              <option value="webdev">Web Development</option>
-              <option value="branddesign">Brand Design</option>
-              <option value="copywriting">Copywriting</option>
-              <option value="photography">Photography</option>
-            </select>
-            <button className="btn-secondary" onClick={copyClientLink} style={{display:'flex',alignItems:'center',gap:6,padding:'8px 14px',fontSize:13}}>
-              <Icon.copy/>{copied?'Copied!':'Share'}
-            </button>
-            <button className="btn-secondary" onClick={generateInvoice} style={{display:'flex',alignItems:'center',gap:6,padding:'8px 14px',fontSize:13}}>
-              <Icon.invoice/>Invoice
-            </button>
-            <button className="btn-primary" onClick={()=>save()} style={{display:'flex',alignItems:'center',gap:6,padding:'8px 16px',fontSize:13}}>
-              {saved?<><Icon.check/> Saved</>:'Save'}
-            </button>
-          </div>
+  return(<main style={{flex:1,overflowY:'auto',padding:'clamp(16px,4vw,32px)'}} aria-label="Proposal builder">
+    <div style={{maxWidth:1180,margin:'0 auto'}}>
+      <div style={{display:'flex',alignItems:'flex-start',gap:12,marginBottom:20,flexWrap:'wrap'}}>
+        <button className="btn-ghost" onClick={()=>navigate('/dashboard')} aria-label="Back" style={{padding:8,display:'flex',flexShrink:0}}><I.back/></button>
+        <h1 style={{fontSize:'clamp(16px,4vw,22px)',fontWeight:600,margin:0,flex:1,minWidth:120}}>{p.title||'Untitled Proposal'}</h1>
+        <div className="builder-actions">
+          <button className="btn-secondary" onClick={copyClientLink} style={{display:'flex',alignItems:'center',gap:6,padding:'8px 14px',fontSize:13}}><I.copy/>{copied?'Copied!':'Share'}</button>
+          <button className="btn-secondary" onClick={generateInvoice} style={{display:'flex',alignItems:'center',gap:6,padding:'8px 14px',fontSize:13}}><I.doc/>Invoice</button>
+          <button className="btn-secondary" onClick={()=>window.print()} style={{display:'flex',alignItems:'center',gap:6,padding:'8px 14px',fontSize:13}}><I.print/>PDF</button>
+          <span style={{fontSize:12,color:saved?'#1A6B3A':'#7C8A96',alignSelf:'center',display:'flex',alignItems:'center',gap:4}}>{saved?<><I.check/> Saved</>:'Auto-saves'}</span>
         </div>
-
-        {/* Tab switcher */}
-        <div style={{display:'flex',gap:0,marginBottom:24,borderBottom:'2px solid #E8ECF0'}} role="tablist">
-          {['edit','preview'].map(t=>(
-            <button key={t} role="tab" aria-selected={tab===t} onClick={()=>setTab(t)}
-              style={{padding:'10px 20px',fontSize:14,fontWeight:600,background:'none',border:'none',cursor:'pointer',color:tab===t?'#0F1B2D':'#566370',borderBottom:tab===t?'2px solid #0F1B2D':'2px solid transparent',marginBottom:'-2px',textTransform:'capitalize'}}>
-              {t==='edit'?'Edit':'Preview'}
-            </button>
-          ))}
-        </div>
-
-        {tab==='edit'?(
-          <div style={{display:'grid',gridTemplateColumns:'1fr',gap:20}}>
-            <div className="card" style={{padding:24}}>
-              <h2 style={{fontSize:16,fontWeight:600,marginBottom:16,marginTop:0}}>Cover</h2>
-              <div className="form-grid-2">
-                <div style={fieldStyle}>
-                  <label htmlFor="p-title">Proposal Title</label>
-                  <input id="p-title" value={p.title} onChange={e=>setP(x=>({...x,title:e.target.value}))} placeholder="e.g. Brand Identity Package"/>
-                </div>
-                <div style={fieldStyle}>
-                  <label htmlFor="p-client">Client Name</label>
-                  <input id="p-client" value={p.clientName} onChange={e=>setP(x=>({...x,clientName:e.target.value}))} placeholder="e.g. Acme Corp"/>
-                </div>
-                <div style={{...fieldStyle,gridColumn:'1/-1'}}>
-                  <label htmlFor="p-intro">Introduction</label>
-                  <textarea id="p-intro" value={p.intro} onChange={e=>setP(x=>({...x,intro:e.target.value}))} placeholder="Opening paragraph…" style={{minHeight:80}}/>
-                </div>
-                <div style={{...fieldStyle,gridColumn:'1/-1'}}>
-                  <label htmlFor="p-scope">Scope of Work</label>
-                  <textarea id="p-scope" value={p.scope} onChange={e=>setP(x=>({...x,scope:e.target.value}))} placeholder="Describe the project scope…"/>
-                </div>
-              </div>
-              <div style={fieldStyle}>
-                <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:8}}>
-                  <label style={{margin:0}}>Deliverables</label>
-                  <button className="btn-ghost" onClick={addDeliverable} style={{padding:'4px 8px',fontSize:12,display:'flex',alignItems:'center',gap:4}}>
-                    <Icon.plus/> Add
-                  </button>
-                </div>
-                {p.deliverables.map((d,i)=>(
-                  <div key={i} style={{display:'flex',gap:8,marginBottom:8}}>
-                    <input value={d} onChange={e=>updateDeliverable(i,e.target.value)} placeholder={`Deliverable ${i+1}`} aria-label={`Deliverable ${i+1}`}/>
-                    <button className="btn-ghost" onClick={()=>removeDeliverable(i)} aria-label={`Remove deliverable ${i+1}`} style={{padding:'8px',flexShrink:0,color:'#991B1B'}}>
-                      <Icon.trash/>
-                    </button>
-                  </div>
-                ))}
-                {p.deliverables.length===0&&<div style={{fontSize:13,color:'#A9B4BF',fontStyle:'italic'}}>No deliverables added yet.</div>}
-              </div>
-              <div className="form-grid-2">
-                <div style={fieldStyle}>
-                  <label htmlFor="p-date">Date</label>
-                  <input id="p-date" type="date" value={p.date} onChange={e=>setP(x=>({...x,date:e.target.value}))}/>
-                </div>
-                <div style={fieldStyle}>
-                  <label htmlFor="p-status">Status</label>
-                  <select id="p-status" value={p.status} onChange={e=>setP(x=>({...x,status:e.target.value}))}>
-                    <option value="draft">Draft</option>
-                    <option value="sent">Sent</option>
-                    <option value="accepted">Accepted</option>
-                    <option value="declined">Declined</option>
-                  </select>
-                </div>
-                <div style={{...fieldStyle,gridColumn:'1/-1'}}>
-                  <label htmlFor="p-notes">Notes / Payment Terms</label>
-                  <textarea id="p-notes" value={p.notes} onChange={e=>setP(x=>({...x,notes:e.target.value}))} style={{minHeight:64}}/>
-                </div>
-              </div>
-            </div>
-
-            {/* Pricing Table */}
-            <div className="card" style={{padding:24}}>
-              <h2 style={{fontSize:16,fontWeight:600,marginBottom:16,marginTop:0}}>Pricing</h2>
-              <div className="table-scroll">
-                <table style={{width:'100%',borderCollapse:'collapse',marginBottom:16,minWidth:400}} aria-label="Line items">
-                  <thead>
-                    <tr style={{borderBottom:'1.5px solid #0F1B2D'}}>
-                      {['Description','Qty','Rate','Total',''].map(h=>(
-                        <th key={h} scope="col" style={{padding:'6px 8px',fontSize:11,fontWeight:600,letterSpacing:'0.06em',color:'#566370',textAlign:h==='Total'||h===''?'right':'left',textTransform:'uppercase'}}>{h}</th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {p.items.map((item,idx)=>(
-                      <tr key={item.id} style={{borderBottom:'1px solid #E8ECF0'}}>
-                        <td style={{padding:'8px'}}>
-                          <input value={item.description} onChange={e=>updateItem(item.id,'description',e.target.value)} placeholder="Description" aria-label={`Item ${idx+1} description`} style={{fontSize:13,minWidth:120}}/>
-                        </td>
-                        <td style={{padding:'8px',width:70}}>
-                          <input type="number" min="0" value={item.qty} onChange={e=>updateItem(item.id,'qty',e.target.value)} aria-label={`Item ${idx+1} quantity`} style={{fontSize:13,textAlign:'right'}}/>
-                        </td>
-                        <td style={{padding:'8px',width:110}}>
-                          <input type="number" min="0" value={item.rate} onChange={e=>updateItem(item.id,'rate',e.target.value)} aria-label={`Item ${idx+1} rate`} style={{fontSize:13,textAlign:'right'}}/>
-                        </td>
-                        <td style={{padding:'8px',width:110,textAlign:'right',fontFamily:"'JetBrains Mono',monospace",fontSize:13,color:'#0F1B2D',fontWeight:500,whiteSpace:'nowrap'}}>
-                          {fmt((parseFloat(item.qty)||0)*(parseFloat(item.rate)||0),currency)}
-                        </td>
-                        <td style={{padding:'8px',width:44,textAlign:'right'}}>
-                          <button className="btn-ghost" onClick={()=>removeItem(item.id)} aria-label={`Remove item ${idx+1}`} style={{padding:'4px',color:'#991B1B',minHeight:36,minWidth:36}}>
-                            <Icon.trash/>
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <button className="btn-secondary" onClick={addItem} style={{display:'flex',alignItems:'center',gap:6,padding:'7px 14px',fontSize:13,marginBottom:16}}>
-                <Icon.plus/> Add line item
-              </button>
-              <div style={{display:'flex',flexDirection:'column',alignItems:'flex-end',gap:6}}>
-                <div style={{display:'flex',gap:32,fontSize:14}}>
-                  <span style={{color:'#566370'}}>Subtotal</span>
-                  <span style={{fontFamily:"'JetBrains Mono',monospace",fontWeight:500}}>{fmt(subtotal,currency)}</span>
-                </div>
-                <div style={{display:'flex',gap:16,alignItems:'center',flexWrap:'wrap',justifyContent:'flex-end'}}>
-                  <label htmlFor="p-tax" style={{margin:0,fontSize:14,color:'#566370'}}>Tax %</label>
-                  <input id="p-tax" type="number" min="0" max="100" value={p.taxPct} onChange={e=>setP(x=>({...x,taxPct:e.target.value}))} style={{width:70,textAlign:'right',padding:'6px 10px'}}/>
-                  <span style={{fontFamily:"'JetBrains Mono',monospace",fontWeight:500,fontSize:14}}>{fmt(tax,currency)}</span>
-                </div>
-                <div style={{background:'#0F1B2D',color:'#fff',padding:'10px 20px',borderRadius:8,display:'flex',gap:32,alignItems:'center',marginTop:4,flexWrap:'wrap',justifyContent:'space-between',minWidth:200}}>
-                  <span style={{fontSize:14,fontWeight:600}}>Total</span>
-                  <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:20,fontWeight:500}}>{fmt(total,currency)}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        ):(
-          <ProposalPreview proposal={p} settings={store.settings}/>
-        )}
       </div>
-    </main>
-  );
+      <ProfileBanner settings={store.settings}/>
+      <div style={{display:'flex',gap:0,marginBottom:24,borderBottom:'2px solid #E8ECF0'}} role="tablist">
+        {['edit','preview'].map(t=>(<button key={t} role="tab" aria-selected={tab===t} onClick={()=>setTab(t)} style={{padding:'10px 20px',fontSize:14,fontWeight:600,background:'none',border:'none',cursor:'pointer',color:tab===t?'#0F1B2D':'#566370',borderBottom:tab===t?'2px solid #0F1B2D':'2px solid transparent',marginBottom:'-2px',textTransform:'capitalize'}}>{t}</button>))}
+      </div>
+
+      {tab==='edit'?(<div className="builder-grid">
+        {/* Outline rail */}
+        <aside className="outline-rail no-print">
+          <div className="card" style={{padding:14}}>
+            <div style={{fontSize:11,fontWeight:600,color:'#7C8A96',textTransform:'uppercase',letterSpacing:'0.05em',marginBottom:10}}>Outline</div>
+            <ol style={{listStyle:'none',margin:0,padding:0,display:'flex',flexDirection:'column',gap:2}}>
+              {p.sections.map((s,i)=>(<li key={s.id}><a href={'#sec-'+s.id} onClick={e=>{e.preventDefault();const el=document.getElementById('sec-'+s.id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}} style={{display:'block',fontSize:13,color:'#3D4E5A',textDecoration:'none',padding:'5px 8px',borderRadius:6,whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis'}}>{i+1}. {s.title||SECTION_TYPES.find(t=>t.type===s.type)?.label}</a></li>))}
+            </ol>
+            <div style={{marginTop:12,paddingTop:12,borderTop:'1px solid #E8ECF0',fontSize:13}}>
+              <div style={{display:'flex',justifyContent:'space-between'}}><span style={{color:'#566370'}}>One-time</span><span style={{fontFamily:"'JetBrains Mono',monospace",fontWeight:600}}>{fmt(totals.total,currency)}</span></div>
+              {totals.hasRecurring&&<div style={{display:'flex',justifyContent:'space-between',marginTop:4}}><span style={{color:'#566370'}}>Recurring</span><span style={{fontFamily:"'JetBrains Mono',monospace",fontWeight:600}}>{fmt(totals.recurring,currency)}</span></div>}
+            </div>
+          </div>
+        </aside>
+
+        {/* Editor column */}
+        <div>
+          <div className="card" style={{padding:20,marginBottom:18}}>
+            <div className="form-grid-2">
+              <div><label htmlFor="pt">Proposal title</label><input id="pt" value={p.title} onChange={e=>setMeta('title',e.target.value)} placeholder="e.g. Website Redesign Proposal"/></div>
+              <div><label htmlFor="pc">Client name</label><input id="pc" value={p.clientName} onChange={e=>setMeta('clientName',e.target.value)} placeholder="e.g. Acme Corp"/></div>
+              <div><label htmlFor="pd">Date</label><input id="pd" type="date" value={p.date} onChange={e=>setMeta('date',e.target.value)}/></div>
+              <div><label htmlFor="ps">Status</label><select id="ps" value={p.status} onChange={e=>setMeta('status',e.target.value)}><option value="draft">Draft</option><option value="sent">Sent</option><option value="accepted">Accepted</option><option value="declined">Declined</option></select></div>
+            </div>
+          </div>
+
+          {p.sections.map((sec,i)=>{
+            const meta=SECTION_TYPES.find(t=>t.type===sec.type);
+            return(<div key={sec.id} id={'sec-'+sec.id} className="sec-card">
+              <div className="sec-head" onClick={()=>setSection(sec.id,s=>({...s,collapsed:!s.collapsed}))}>
+                <span style={{color:'#7C8A96',transform:sec.collapsed?'rotate(0deg)':'rotate(90deg)',transition:'transform 150ms',display:'flex'}}><I.chevR/></span>
+                <span style={{flex:1,fontWeight:600,fontSize:14,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{sec.title||meta?.label}<span style={{color:'#A9B4BF',fontWeight:400,marginLeft:8,fontSize:12}}>{meta?.label}</span></span>
+                <div style={{display:'flex',gap:2}} onClick={e=>e.stopPropagation()}>
+                  <button className="btn-ghost" onClick={()=>moveSection(i,-1)} disabled={i===0} aria-label="Move up" style={{padding:6,minHeight:32,minWidth:32,opacity:i===0?0.3:1}}><I.up/></button>
+                  <button className="btn-ghost" onClick={()=>moveSection(i,1)} disabled={i===p.sections.length-1} aria-label="Move down" style={{padding:6,minHeight:32,minWidth:32,opacity:i===p.sections.length-1?0.3:1}}><I.down/></button>
+                  <button className="btn-ghost" onClick={()=>dupSection(i)} aria-label="Duplicate" style={{padding:6,minHeight:32,minWidth:32}}><I.copy/></button>
+                  <button className="btn-ghost" onClick={()=>{if(confirm('Remove this section?'))delSection(i);}} aria-label="Delete section" style={{padding:6,minHeight:32,minWidth:32,color:'#991B1B'}}><I.trash/></button>
+                </div>
+              </div>
+              {!sec.collapsed&&<div className="sec-body"><SectionEditor sec={sec} setSec={updater=>setSection(sec.id,updater)} currency={currency}/></div>}
+            </div>);
+          })}
+
+          <div style={{marginTop:16,display:'flex',justifyContent:'center'}}><AddSectionMenu onAdd={addSection}/></div>
+        </div>
+      </div>):(
+        <DocPreview doc={p} profile={store.settings}/>
+      )}
+    </div>
+  </main>);
 }
 
-// ── PROPOSAL PREVIEW (branded doc) ───────────────────────────────────────────
-function ProposalPreview({proposal:p,settings,readOnly=false}){
-  const currency=settings?.currency||'USD';
-  const {subtotal,tax,total}=calcProposal(p.items||[],p.taxPct);
-  const initials=(settings?.businessName||'PK').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
-  return(
-    <div style={{background:'#F4F6F8',padding:'clamp(16px,4vw,40px) clamp(12px,3vw,24px)',minHeight:'100vh'}} className={readOnly?'':'print-doc-wrap'}>
-      <article style={{background:'#fff',maxWidth:800,margin:'0 auto',boxShadow:'0 20px 25px -5px rgba(15,27,45,0.15)',borderRadius:4,overflow:'hidden'}} aria-label="Proposal document" className="print-doc">
-        {/* Header */}
-        <div className="doc-header-pad" style={{background:'#fff'}}>
-          <div style={{display:'flex',alignItems:'center',gap:12,marginBottom:32}}>
-            <div style={{width:40,height:40,borderRadius:'50%',background:'#0F1B2D',display:'flex',alignItems:'center',justifyContent:'center',color:'#fff',fontWeight:600,fontSize:14,flexShrink:0}}>{initials}</div>
-            <span style={{fontWeight:600,fontSize:16,color:'#0F1B2D'}}>{settings?.businessName||'Your Studio'}</span>
-          </div>
-          <h1 style={{fontFamily:'"DM Serif Display",Georgia,serif',fontSize:'clamp(28px,6vw,48px)',fontWeight:400,color:'#0F1B2D',margin:'0 0 8px',lineHeight:1.1}}>{p.title||'Proposal'}</h1>
-          {p.clientName&&<div style={{fontSize:15,color:'#566370',marginBottom:32}}>Prepared for {p.clientName}</div>}
-          <hr style={{border:'none',borderTop:'1px solid #E8ECF0',margin:'0 0 32px'}}/>
-          <div className="doc-meta-grid" style={{marginBottom:32}}>
-            <div>
-              <div style={{fontSize:12,fontWeight:600,color:'#7C8A96',letterSpacing:'0.04em',textTransform:'uppercase',marginBottom:4}}>Prepared by</div>
-              <div style={{fontSize:15,color:'#0F1B2D'}}>{settings?.businessName||'Your Studio'}</div>
-            </div>
-            <div>
-              <div style={{fontSize:12,fontWeight:600,color:'#7C8A96',letterSpacing:'0.04em',textTransform:'uppercase',marginBottom:4}}>Prepared for</div>
-              <div style={{fontSize:15,color:'#0F1B2D'}}>{p.clientName||'—'}</div>
-            </div>
-            <div>
-              <div style={{fontSize:12,fontWeight:600,color:'#7C8A96',letterSpacing:'0.04em',textTransform:'uppercase',marginBottom:4}}>Date</div>
-              <div style={{fontSize:15,color:'#0F1B2D'}}>{p.date||new Date().toISOString().slice(0,10)}</div>
-            </div>
-            <div>
-              <div style={{fontSize:12,fontWeight:600,color:'#7C8A96',letterSpacing:'0.04em',textTransform:'uppercase',marginBottom:4}}>Status</div>
-              <div><StatusBadge status={p.status||'draft'}/></div>
-            </div>
-          </div>
-          <hr style={{border:'none',borderTop:'1px solid #E8ECF0',margin:'0 0 0'}}/>
-        </div>
+// ── DOCUMENT PREVIEW (renders any section type; used for proposal + client view) ─
+function H2({children}){return <h2 style={{fontFamily:'"DM Serif Display",Georgia,serif',fontSize:'clamp(22px,5vw,30px)',fontWeight:400,color:'#0F1B2D',margin:'44px 0 16px'}}>{children}</h2>;}
+function Para({text}){return <>{(text||'').split(/\n{2,}/).map((para,i)=><p key={i} style={{fontSize:15,color:'#3D4E5A',lineHeight:1.7,margin:'0 0 14px',whiteSpace:'pre-wrap'}}>{para}</p>)}</>;}
 
-        {/* Body */}
-        <div className="doc-body-pad">
-          {p.intro&&(
-            <>
-              <h2 style={{fontFamily:'"DM Serif Display",Georgia,serif',fontSize:32,fontWeight:400,color:'#0F1B2D',margin:'48px 0 16px'}}>Introduction</h2>
-              <p style={{fontSize:15,color:'#3D4E5A',lineHeight:1.7,margin:0}}>{p.intro}</p>
-            </>
-          )}
-          {p.scope&&(
-            <>
-              <h2 style={{fontFamily:'"DM Serif Display",Georgia,serif',fontSize:32,fontWeight:400,color:'#0F1B2D',margin:'48px 0 16px'}}>Scope of Work</h2>
-              <p style={{fontSize:15,color:'#3D4E5A',lineHeight:1.7,margin:0}}>{p.scope}</p>
-            </>
-          )}
-          {p.deliverables?.length>0&&(
-            <>
-              <h2 style={{fontFamily:'"DM Serif Display",Georgia,serif',fontSize:32,fontWeight:400,color:'#0F1B2D',margin:'48px 0 16px'}}>Deliverables</h2>
-              <ul style={{listStyle:'none',padding:0,margin:0}}>
-                {p.deliverables.filter(Boolean).map((d,i)=>(
-                  <li key={i} style={{display:'flex',alignItems:'flex-start',gap:10,marginBottom:10,fontSize:15,color:'#3D4E5A',lineHeight:1.6}}>
-                    <span style={{width:6,height:6,borderRadius:'50%',background:'#F5A623',marginTop:7,flexShrink:0,display:'block'}}></span>
-                    {d}
-                  </li>
-                ))}
-              </ul>
-            </>
-          )}
-
-          {/* Pricing table */}
-          <h2 style={{fontFamily:'"DM Serif Display",Georgia,serif',fontSize:'clamp(22px,5vw,32px)',fontWeight:400,color:'#0F1B2D',margin:'48px 0 16px'}}>Investment</h2>
-          <div className="table-scroll">
-          <table style={{width:'100%',borderCollapse:'collapse',minWidth:320}} aria-label="Pricing breakdown">
-            <thead>
-              <tr style={{borderBottom:'1.5px solid #0F1B2D'}}>
-                <th scope="col" style={{padding:'8px 0',fontSize:11,fontWeight:600,letterSpacing:'0.06em',color:'#7C8A96',textAlign:'left',textTransform:'uppercase'}}>Description</th>
-                <th scope="col" className="price-col-hide" style={{padding:'8px 0',fontSize:11,fontWeight:600,letterSpacing:'0.06em',color:'#7C8A96',textAlign:'left',textTransform:'uppercase'}}>Qty</th>
-                <th scope="col" className="price-col-hide" style={{padding:'8px 0',fontSize:11,fontWeight:600,letterSpacing:'0.06em',color:'#7C8A96',textAlign:'left',textTransform:'uppercase'}}>Rate</th>
-                <th scope="col" style={{padding:'8px 0',fontSize:11,fontWeight:600,letterSpacing:'0.06em',color:'#7C8A96',textAlign:'right',textTransform:'uppercase'}}>Amount</th>
-              </tr>
-            </thead>
-            <tbody>
-              {(p.items||[]).map((item,i)=>(
-                <tr key={item.id||i} style={{borderBottom:'1px solid #E8ECF0'}}>
-                  <td style={{padding:'14px 0',fontSize:14,color:'#0F1B2D'}}>{item.description}</td>
-                  <td className="price-col-hide" style={{padding:'14px 0',fontSize:14,fontFamily:"'JetBrains Mono',monospace",color:'#566370'}}>{item.qty}</td>
-                  <td className="price-col-hide" style={{padding:'14px 0',fontSize:14,fontFamily:"'JetBrains Mono',monospace",color:'#566370'}}>{fmt(parseFloat(item.rate)||0,currency)}</td>
-                  <td style={{padding:'14px 0',fontSize:14,fontFamily:"'JetBrains Mono',monospace",color:'#0F1B2D',textAlign:'right',fontWeight:500}}>{fmt((parseFloat(item.qty)||0)*(parseFloat(item.rate)||0),currency)}</td>
-                </tr>
-              ))}
-            </tbody>
-            <tfoot>
-              <tr>
-                <td colSpan={3} style={{padding:'12px 0 6px',fontSize:13,fontWeight:600,textAlign:'right',paddingRight:16,color:'#566370'}}>Subtotal</td>
-                <td style={{padding:'12px 0 6px',fontFamily:"'JetBrains Mono',monospace",textAlign:'right',fontSize:14,fontWeight:600}}>{fmt(subtotal,currency)}</td>
-              </tr>
-              {parseFloat(p.taxPct)>0&&<tr>
-                <td colSpan={3} style={{padding:'4px 0',fontSize:13,fontWeight:600,textAlign:'right',paddingRight:16,color:'#566370'}}>Tax ({p.taxPct}%)</td>
-                <td style={{padding:'4px 0',fontFamily:"'JetBrains Mono',monospace",textAlign:'right',fontSize:14,fontWeight:600}}>{fmt(tax,currency)}</td>
-              </tr>}
-              <tr>
-                <td colSpan={4} style={{padding:0}}>
-                  <div style={{background:'#0F1B2D',display:'flex',justifyContent:'space-between',alignItems:'center',padding:'16px 20px',marginTop:8,flexWrap:'wrap',gap:8}}>
-                    <span style={{fontSize:15,fontWeight:600,color:'#fff'}}>Total</span>
-                    <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:'clamp(20px,5vw,28px)',fontWeight:500,color:'#fff'}}>{fmt(total,currency)}</span>
-                  </div>
-                </td>
-              </tr>
-            </tfoot>
-          </table>
-          </div>
-
-          {p.notes&&(
-            <div style={{marginTop:32,padding:24,background:'#EEF4F8',borderRadius:8,border:'1px solid #E8ECF0'}}>
-              <div style={{fontSize:12,fontWeight:600,color:'#566370',letterSpacing:'0.04em',textTransform:'uppercase',marginBottom:8}}>Notes & Terms</div>
-              <p style={{fontSize:14,color:'#3D4E5A',lineHeight:1.7,margin:0}}>{p.notes}</p>
-            </div>
-          )}
-
-          {/* Footer */}
-          <div style={{marginTop:48,paddingTop:20,borderTop:'1px solid #E8ECF0',display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:8}}>
-            <span style={{fontSize:12,color:'#7C8A96'}}>{settings?.businessName||'Your Studio'}</span>
-            <a href="https://propkit.com?ref=powered-by" style={{textDecoration:'none',display:'flex',alignItems:'center',gap:6}} aria-label="Powered by PropKit">
-              <LogoMark size={16}/>
-              <span style={{fontSize:11,color:'#7C8A96'}}>Powered by </span>
-              <span style={{fontSize:11,fontWeight:600,color:'#0F1B2D'}}>PropKit</span>
-            </a>
-          </div>
-        </div>
-      </article>
+function SectionView({sec,profile,currency}){
+  const brand=profile.accentColor||'#F5A623';
+  if((sec.type==='richtext'||sec.type==='terms')&&!sec.body&&!sec.title)return null;
+  if(sec.type==='richtext'||sec.type==='terms')return(<section className="doc-section"><H2>{sec.title}</H2><Para text={sec.body}/></section>);
+  if(sec.type==='list')return(<section className="doc-section"><H2>{sec.title}</H2><ul style={{listStyle:'none',padding:0,margin:0}}>{(sec.items||[]).filter(Boolean).map((d,i)=><li key={i} style={{display:'flex',gap:10,marginBottom:10,fontSize:15,color:'#3D4E5A',lineHeight:1.6}}><span style={{width:6,height:6,borderRadius:'50%',background:brand,marginTop:7,flexShrink:0}}></span>{d}</li>)}</ul></section>);
+  if(sec.type==='scope')return(<section className="doc-section"><H2>{sec.title}</H2>{(sec.phases||[]).map((ph,i)=>(<div key={ph.id} style={{marginBottom:24,paddingLeft:18,borderLeft:'3px solid '+brand}}>
+    <h3 style={{fontSize:17,fontWeight:600,margin:'0 0 6px',color:'#0F1B2D'}}>{ph.name||'Phase '+(i+1)}</h3>
+    {ph.summary&&<p style={{fontSize:14,color:'#3D4E5A',lineHeight:1.6,margin:'0 0 8px',whiteSpace:'pre-wrap'}}>{ph.summary}</p>}
+    <ul style={{listStyle:'none',padding:0,margin:0}}>{(ph.deliverables||[]).filter(Boolean).map((d,j)=><li key={j} style={{display:'flex',gap:8,marginBottom:6,fontSize:14,color:'#3D4E5A'}}><span style={{color:brand,marginTop:1}}><I.check/></span>{d}</li>)}</ul>
+  </div>))}</section>);
+  if(sec.type==='timeline')return(<section className="doc-section"><H2>{sec.title}</H2><div>{(sec.milestones||[]).map((m,i)=>(<div key={m.id} style={{display:'flex',gap:14,marginBottom:16}}>
+    <div style={{flexShrink:0,width:10,height:10,borderRadius:'50%',background:brand,marginTop:5,boxShadow:'0 0 0 4px '+brand+'33'}}></div>
+    <div style={{flex:1}}><div style={{display:'flex',justifyContent:'space-between',gap:12,flexWrap:'wrap'}}><span style={{fontWeight:600,fontSize:15,color:'#0F1B2D'}}>{m.name||'Milestone '+(i+1)}</span>{m.date&&<span style={{fontSize:13,color:'#566370',fontFamily:"'JetBrains Mono',monospace"}}>{m.date}</span>}</div>{m.detail&&<div style={{fontSize:14,color:'#3D4E5A',marginTop:2}}>{m.detail}</div>}</div>
+  </div>))}</div></section>);
+  if(sec.type==='team')return(<section className="doc-section"><H2>{sec.title}</H2><div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(220px,1fr))',gap:18}}>{(sec.members||[]).filter(m=>m.name||m.bio).map(m=>(<div key={m.id}><div style={{fontWeight:600,fontSize:15,color:'#0F1B2D'}}>{m.name}</div>{m.role&&<div style={{fontSize:13,color:brand,fontWeight:600,marginBottom:4}}>{m.role}</div>}<div style={{fontSize:14,color:'#3D4E5A',lineHeight:1.6,whiteSpace:'pre-wrap'}}>{m.bio}</div></div>))}</div></section>);
+  if(sec.type==='casestudies')return(<section className="doc-section"><H2>{sec.title}</H2>{(sec.cases||[]).filter(c=>c.client||c.body).map(c=>(<div key={c.id} style={{marginBottom:20,padding:18,background:'#FAFBFC',borderRadius:10,border:'1px solid #E8ECF0'}}><div style={{display:'flex',justifyContent:'space-between',gap:12,flexWrap:'wrap',marginBottom:6}}><span style={{fontWeight:600,fontSize:15}}>{c.client}</span>{c.result&&<span style={{fontSize:14,fontWeight:600,color:brand}}>{c.result}</span>}</div><p style={{fontSize:14,color:'#3D4E5A',lineHeight:1.6,margin:0,whiteSpace:'pre-wrap'}}>{c.body}</p></div>))}</section>);
+  if(sec.type==='pricing'){const r=calcPricingSection(sec);const lines=(sec.lines||[]);return(<section className="doc-section"><H2>{sec.title}</H2>
+    <div className="table-scroll"><table style={{width:'100%',borderCollapse:'collapse',minWidth:320}}>
+      <thead><tr style={{borderBottom:'1.5px solid #0F1B2D'}}><th style={{padding:'8px 0',fontSize:11,fontWeight:600,color:'#7C8A96',textAlign:'left',textTransform:'uppercase'}}>Description</th><th className="price-col-hide" style={{padding:'8px 0',fontSize:11,fontWeight:600,color:'#7C8A96',textAlign:'left',textTransform:'uppercase'}}>Qty</th><th className="price-col-hide" style={{padding:'8px 0',fontSize:11,fontWeight:600,color:'#7C8A96',textAlign:'left',textTransform:'uppercase'}}>Rate</th><th style={{padding:'8px 0',fontSize:11,fontWeight:600,color:'#7C8A96',textAlign:'right',textTransform:'uppercase'}}>Amount</th></tr></thead>
+      <tbody>{lines.map((l,i)=>{const inc=l.optional?l.selected:true;return(<tr key={l.id||i} style={{borderBottom:'1px solid #E8ECF0',opacity:inc?1:0.55}}>
+        <td style={{padding:'12px 0',fontSize:14,color:'#0F1B2D'}}>{l.description}{l.billing==='recurring'&&<span style={{fontSize:11,color:'#1547A8',background:'#DBEAFE',borderRadius:4,padding:'1px 6px',marginLeft:8}}>recurring</span>}{l.optional&&<span style={{fontSize:11,color:'#8A5A00',background:'#FEF3DC',borderRadius:4,padding:'1px 6px',marginLeft:8}}>{l.selected?'add-on':'optional'}</span>}</td>
+        <td className="price-col-hide" style={{padding:'12px 0',fontSize:14,fontFamily:"'JetBrains Mono',monospace",color:'#566370'}}>{l.qty}</td>
+        <td className="price-col-hide" style={{padding:'12px 0',fontSize:14,fontFamily:"'JetBrains Mono',monospace",color:'#566370'}}>{fmt(parseFloat(l.rate)||0,currency)}</td>
+        <td style={{padding:'12px 0',fontSize:14,fontFamily:"'JetBrains Mono',monospace",color:'#0F1B2D',textAlign:'right',fontWeight:500}}>{inc?fmt(lineAmount(l),currency):'—'}</td>
+      </tr>);})}</tbody>
+      <tfoot>
+        <tr><td colSpan={3} style={{padding:'12px 0 4px',fontSize:13,fontWeight:600,textAlign:'right',paddingRight:16,color:'#566370'}}>Subtotal</td><td style={{padding:'12px 0 4px',fontFamily:"'JetBrains Mono',monospace",textAlign:'right',fontSize:14,fontWeight:600}}>{fmt(r.sub,currency)}</td></tr>
+        {r.disc>0&&<tr><td colSpan={3} style={{padding:'2px 0',fontSize:13,fontWeight:600,textAlign:'right',paddingRight:16,color:'#566370'}}>Discount</td><td style={{padding:'2px 0',fontFamily:"'JetBrains Mono',monospace",textAlign:'right',fontSize:14,fontWeight:600,color:'#1A6B3A'}}>−{fmt(r.disc,currency)}</td></tr>}
+        {r.tax>0&&<tr><td colSpan={3} style={{padding:'2px 0',fontSize:13,fontWeight:600,textAlign:'right',paddingRight:16,color:'#566370'}}>Tax ({sec.taxPct}%)</td><td style={{padding:'2px 0',fontFamily:"'JetBrains Mono',monospace",textAlign:'right',fontSize:14,fontWeight:600}}>{fmt(r.tax,currency)}</td></tr>}
+        <tr><td colSpan={4} style={{padding:0}}><div style={{background:'#0F1B2D',display:'flex',justifyContent:'space-between',alignItems:'center',padding:'14px 18px',marginTop:8,flexWrap:'wrap',gap:8}}><span style={{fontSize:14,fontWeight:600,color:'#fff'}}>Table total</span><span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:'clamp(18px,4vw,24px)',fontWeight:500,color:'#fff'}}>{fmt(r.total,currency)}</span></div></td></tr>
+      </tfoot>
+    </table></div>
+  </section>);}
+  if(sec.type==='signature')return(<section className="doc-section" style={{marginTop:44}}><H2>{sec.title}</H2>{sec.note&&<p style={{fontSize:14,color:'#3D4E5A',lineHeight:1.7,marginBottom:32}}>{sec.note}</p>}
+    <div className="doc-meta-grid" style={{gap:40}}>
+      {[sec.clientLabel,sec.byLabel].map((lab,i)=>(<div key={i}><div style={{borderBottom:'1.5px solid #0F1B2D',height:48,marginBottom:8}}></div><div style={{fontSize:13,color:'#566370'}}>{lab}</div><div style={{fontSize:12,color:'#A9B4BF',marginTop:24,borderBottom:'1px solid #CDD4DB',paddingBottom:4}}>Date</div></div>))}
     </div>
-  );
+  </section>);
+  return null;
+}
+
+function DocPreview({doc,profile,readOnly=false}){
+  const currency=profile.currency||'USD';
+  const totals=calcDoc(doc.sections);
+  const brand=profile.accentColor||'#F5A623';
+  const hasGrand=doc.sections.filter(s=>s.type==='pricing').length>1;
+  return(<div style={{background:'#F4F6F8',padding:'clamp(16px,4vw,40px) clamp(12px,3vw,24px)',minHeight:'100vh'}}>
+    <article style={{background:'#fff',maxWidth:820,margin:'0 auto',boxShadow:'0 20px 25px -5px rgba(15,27,45,0.15)',borderRadius:4,overflow:'hidden'}} className="print-doc" aria-label="Proposal document">
+      <div className="doc-header-pad" style={{borderTop:'5px solid '+brand}}>
+        <div style={{display:'flex',alignItems:'center',gap:12,marginBottom:28,flexWrap:'wrap'}}>
+          <BrandMark profile={profile} size={44}/>
+          <div><div style={{fontWeight:600,fontSize:16,color:'#0F1B2D'}}>{profile.businessName||'Your business name'}</div>{profile.tagline&&<div style={{fontSize:13,color:'#566370'}}>{profile.tagline}</div>}</div>
+        </div>
+        <h1 className="doc-title" style={{fontFamily:'"DM Serif Display",Georgia,serif',fontSize:'clamp(28px,6vw,46px)',fontWeight:400,margin:'0 0 8px',lineHeight:1.1}}>{doc.title||'Proposal'}</h1>
+        {doc.clientName&&<div style={{fontSize:15,color:'#566370',marginBottom:28}}>Prepared for {doc.clientName}</div>}
+        <hr style={{border:'none',borderTop:'1px solid #E8ECF0',margin:'0 0 28px'}}/>
+        <div className="doc-meta-grid" style={{marginBottom:28}}>
+          <div><div style={{fontSize:12,fontWeight:600,color:'#7C8A96',textTransform:'uppercase',marginBottom:4}}>Prepared by</div><div style={{fontSize:15}}>{profile.businessName||'—'}</div>{profile.email&&<div style={{fontSize:13,color:'#566370'}}>{profile.email}</div>}{profile.phone&&<div style={{fontSize:13,color:'#566370'}}>{profile.phone}</div>}</div>
+          <div><div style={{fontSize:12,fontWeight:600,color:'#7C8A96',textTransform:'uppercase',marginBottom:4}}>Prepared for</div><div style={{fontSize:15}}>{doc.clientName||'—'}</div></div>
+          <div><div style={{fontSize:12,fontWeight:600,color:'#7C8A96',textTransform:'uppercase',marginBottom:4}}>Date</div><div style={{fontSize:15}}>{doc.date||new Date().toISOString().slice(0,10)}</div></div>
+          <div><div style={{fontSize:12,fontWeight:600,color:'#7C8A96',textTransform:'uppercase',marginBottom:4}}>Status</div><div><StatusBadge status={doc.status||'draft'}/></div></div>
+        </div>
+        <hr style={{border:'none',borderTop:'1px solid #E8ECF0',margin:0}}/>
+      </div>
+      <div className="doc-body-pad">
+        {doc.sections.map(sec=><SectionView key={sec.id} sec={sec} profile={profile} currency={currency}/>)}
+        {hasGrand&&(<div className="doc-section" style={{marginTop:24,background:brand+'18',border:'1px solid '+brand+'55',borderRadius:12,padding:'18px 22px'}}>
+          <div style={{fontSize:12,fontWeight:600,color:'#8A5A00',textTransform:'uppercase',letterSpacing:'0.04em',marginBottom:10}}>Grand total (all tables)</div>
+          <div style={{display:'flex',justifyContent:'space-between',fontSize:15,marginBottom:6}}><span style={{color:'#3D4E5A'}}>One-time total</span><span style={{fontFamily:"'JetBrains Mono',monospace",fontWeight:600}}>{fmt(totals.total,currency)}</span></div>
+          {totals.hasRecurring&&<div style={{display:'flex',justifyContent:'space-between',fontSize:15}}><span style={{color:'#3D4E5A'}}>Recurring total</span><span style={{fontFamily:"'JetBrains Mono',monospace",fontWeight:600}}>{fmt(totals.recurring,currency)}/period</span></div>}
+        </div>)}
+        <div style={{marginTop:48,paddingTop:20,borderTop:'1px solid #E8ECF0',display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:8}}>
+          <span style={{fontSize:12,color:'#7C8A96'}}>{profile.businessName||''}{profile.website?' · '+profile.website:''}</span>
+          <a href="https://propkit.com?ref=powered-by" style={{textDecoration:'none',display:'flex',alignItems:'center',gap:6}}><LogoMark size={16}/><span style={{fontSize:11,color:'#7C8A96'}}>Powered by </span><span style={{fontSize:11,fontWeight:600,color:'#0F1B2D'}}>PropKit</span></a>
+        </div>
+      </div>
+    </article>
+  </div>);
 }
 
 // ── INVOICE VIEW ──────────────────────────────────────────────────────────────
 function InvoiceView({id,store,onUpdate}){
   const existing=store.invoices.find(i=>i.id===id);
   const [inv,setInv]=useState(existing);
-  if(!inv)return(
-    <main style={{flex:1,padding:32}} aria-label="Invoice not found">
-      <div style={{maxWidth:800,margin:'0 auto',textAlign:'center',paddingTop:64}}>
-        <div style={{fontSize:40,marginBottom:12}}>🔍</div>
-        <h1 style={{fontSize:22,fontWeight:600}}>Invoice not found</h1>
-        <button className="btn-primary" onClick={()=>navigate('/dashboard')} style={{marginTop:16}}>Back to dashboard</button>
+  if(!inv)return(<main style={{flex:1,padding:32}}><div style={{maxWidth:800,margin:'0 auto',textAlign:'center',paddingTop:64}}><div style={{fontSize:40,marginBottom:12}}>🔍</div><h1 style={{fontSize:22,fontWeight:600}}>Invoice not found</h1><button className="btn-primary" onClick={()=>navigate('/dashboard')} style={{marginTop:16}}>Back to dashboard</button></div></main>);
+  const profile=store.settings;const currency=profile.currency||'USD';
+  const totals=calcDoc(inv.sections);const brand=profile.accentColor||'#F5A623';
+  function saveInv(next){setInv(next);onUpdate({...store,invoices:store.invoices.map(i=>i.id===id?next:i)});}
+  function togglePaid(){saveInv({...inv,status:inv.status==='paid'?'unpaid':'paid'});}
+  return(<main style={{flex:1,overflowY:'auto',padding:'clamp(16px,4vw,32px)'}} aria-label="Invoice">
+    <div style={{maxWidth:960,margin:'0 auto'}}>
+      <div className="inv-actions no-print" style={{marginBottom:24}}>
+        <button className="btn-ghost" onClick={()=>navigate('/dashboard')} aria-label="Back" style={{padding:8,display:'flex'}}><I.back/></button>
+        <h1 style={{fontSize:'clamp(15px,4vw,22px)',fontWeight:600,margin:0,flex:1,minWidth:80}}>{inv.title}</h1>
+        <button className="btn-secondary" onClick={togglePaid} style={{padding:'8px 14px',fontSize:13}}>{inv.status==='paid'?'Mark Unpaid':'Mark Paid'}</button>
+        <button className="btn-secondary" onClick={()=>window.print()} style={{display:'flex',alignItems:'center',gap:6,padding:'8px 14px',fontSize:13}}><I.print/> Print</button>
       </div>
-    </main>
-  );
-  const currency=store.settings?.currency||'USD';
-  const {subtotal,tax,total}=calcProposal(inv.items||[],inv.taxPct);
-  const initials=(store.settings?.businessName||'PK').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
-
-  function saveInv(next=inv){
-    setInv(next);
-    onUpdate({...store,invoices:store.invoices.map(i=>i.id===id?next:i)});
-  }
-  function togglePaid(){
-    const next={...inv,status:inv.status==='paid'?'unpaid':'paid'};
-    saveInv(next);
-  }
-
-  return(
-    <main style={{flex:1,overflowY:'auto',padding:'clamp(16px,4vw,32px)'}} aria-label="Invoice">
-      <div style={{maxWidth:960,margin:'0 auto'}}>
-        <div className="inv-actions no-print" style={{marginBottom:24}}>
-          <button className="btn-ghost" onClick={()=>navigate('/dashboard')} aria-label="Back" style={{padding:8,display:'flex',flexShrink:0}}><Icon.back/></button>
-          <h1 style={{fontSize:'clamp(15px,4vw,22px)',fontWeight:600,margin:0,flex:1,minWidth:80}}>{inv.title}</h1>
-          <button className="btn-secondary" onClick={togglePaid} style={{padding:'8px 14px',fontSize:13,flexShrink:0}}>
-            {inv.status==='paid'?'Mark Unpaid':'Mark Paid'}
-          </button>
-          <button className="btn-secondary" onClick={()=>window.print()} style={{display:'flex',alignItems:'center',gap:6,padding:'8px 14px',fontSize:13,flexShrink:0}}>
-            <Icon.print/> Print
-          </button>
+      <article style={{background:'#fff',boxShadow:'0 20px 25px -5px rgba(15,27,45,0.15)',overflow:'hidden'}} className="print-doc">
+        <div className="doc-header-pad" style={{borderTop:'5px solid '+brand}}>
+          <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:28,gap:16,flexWrap:'wrap'}}>
+            <div style={{display:'flex',alignItems:'center',gap:10}}><BrandMark profile={profile} size={44}/><div><div style={{fontWeight:600,fontSize:16}}>{profile.businessName||'Your business'}</div>{profile.email&&<div style={{fontSize:13,color:'#566370'}}>{profile.email}</div>}</div></div>
+            <div style={{textAlign:'right'}}><div style={{fontFamily:'"DM Serif Display",Georgia,serif',fontSize:'clamp(24px,5vw,36px)',lineHeight:1}}>Invoice</div><div style={{marginTop:6}}><StatusBadge status={inv.status}/></div></div>
+          </div>
+          <div className="doc-meta-grid" style={{marginBottom:28}}>
+            <div><div style={{fontSize:12,fontWeight:600,color:'#7C8A96',textTransform:'uppercase',marginBottom:4}}>Bill to</div><div style={{fontSize:15,fontWeight:500}}>{inv.clientName||'—'}</div></div>
+            <div><div style={{fontSize:12,fontWeight:600,color:'#7C8A96',textTransform:'uppercase',marginBottom:4}}>Invoice date</div><div style={{fontSize:15}}>{inv.date}</div></div>
+            <div><div style={{fontSize:12,fontWeight:600,color:'#7C8A96',textTransform:'uppercase',marginBottom:4}}>Due date</div><div style={{fontSize:15,fontWeight:600,fontFamily:"'JetBrains Mono',monospace"}}>{inv.dueDate||'—'}</div></div>
+            <div><div style={{fontSize:12,fontWeight:600,color:'#7C8A96',textTransform:'uppercase',marginBottom:4}}>Ref</div><div style={{fontSize:15}}>{inv.id.slice(0,8).toUpperCase()}</div></div>
+          </div>
+          <hr style={{border:'none',borderTop:'1px solid #E8ECF0',margin:0}}/>
         </div>
-
-        <article style={{background:'#fff',boxShadow:'0 20px 25px -5px rgba(15,27,45,0.15)',overflow:'hidden'}} className="print-doc" aria-label="Invoice document">
-          <div className="doc-header-pad">
-            <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:32,gap:16,flexWrap:'wrap'}}>
-              <div style={{display:'flex',alignItems:'center',gap:10}}>
-                <div style={{width:40,height:40,borderRadius:'50%',background:'#0F1B2D',display:'flex',alignItems:'center',justifyContent:'center',color:'#fff',fontWeight:600,fontSize:14,flexShrink:0}}>{initials}</div>
-                <span style={{fontWeight:600,fontSize:16}}>{store.settings?.businessName||'Your Studio'}</span>
-              </div>
-              <div style={{textAlign:'right'}}>
-                <div style={{fontFamily:'"DM Serif Display",Georgia,serif',fontSize:'clamp(24px,5vw,36px)',color:'#0F1B2D',lineHeight:1}}>Invoice</div>
-                <div style={{fontSize:13,color:'#566370',marginTop:6}}><StatusBadge status={inv.status}/></div>
-              </div>
-            </div>
-            <div className="doc-meta-grid" style={{marginBottom:32}}>
-              <div>
-                <div style={{fontSize:12,fontWeight:600,color:'#7C8A96',letterSpacing:'0.04em',textTransform:'uppercase',marginBottom:4}}>Bill to</div>
-                <div style={{fontSize:15,color:'#0F1B2D',fontWeight:500}}>{inv.clientName||'—'}</div>
-              </div>
-              <div>
-                <div style={{fontSize:12,fontWeight:600,color:'#7C8A96',letterSpacing:'0.04em',textTransform:'uppercase',marginBottom:4}}>Invoice date</div>
-                <div style={{fontSize:15,color:'#0F1B2D'}}>{inv.date}</div>
-              </div>
-              <div>
-                <div style={{fontSize:12,fontWeight:600,color:'#7C8A96',letterSpacing:'0.04em',textTransform:'uppercase',marginBottom:4}}>Due date</div>
-                <div style={{fontSize:15,fontWeight:600,color:'#0F1B2D',fontFamily:"'JetBrains Mono',monospace"}}>{inv.dueDate||'—'}</div>
-              </div>
-              <div>
-                <div style={{fontSize:12,fontWeight:600,color:'#7C8A96',letterSpacing:'0.04em',textTransform:'uppercase',marginBottom:4}}>Ref</div>
-                <div style={{fontSize:15,color:'#0F1B2D'}}>{inv.id.slice(0,8).toUpperCase()}</div>
-              </div>
-            </div>
-            <hr style={{border:'none',borderTop:'1px solid #E8ECF0',margin:'0 0 0'}}/>
+        <div className="doc-body-pad">
+          {(inv.sections||[]).map(sec=><SectionView key={sec.id} sec={sec} profile={profile} currency={currency}/>)}
+          <div style={{marginTop:8,padding:'14px 18px',background:'#0F1B2D',display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:8,borderRadius:8}}>
+            <span style={{fontSize:15,fontWeight:600,color:'#fff'}}>Total Due</span>
+            <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:'clamp(20px,5vw,28px)',fontWeight:500,color:'#fff'}}>{fmt(totals.total,currency)}</span>
           </div>
-          <div className="doc-body-pad">
-            <div className="table-scroll">
-            <table style={{width:'100%',borderCollapse:'collapse',marginTop:32,minWidth:320}} aria-label="Invoice line items">
-              <thead>
-                <tr style={{borderBottom:'1.5px solid #0F1B2D'}}>
-                  <th scope="col" style={{padding:'8px 0',fontSize:11,fontWeight:600,letterSpacing:'0.06em',color:'#7C8A96',textAlign:'left',textTransform:'uppercase'}}>Description</th>
-                  <th scope="col" className="price-col-hide" style={{padding:'8px 0',fontSize:11,fontWeight:600,letterSpacing:'0.06em',color:'#7C8A96',textAlign:'left',textTransform:'uppercase'}}>Qty</th>
-                  <th scope="col" className="price-col-hide" style={{padding:'8px 0',fontSize:11,fontWeight:600,letterSpacing:'0.06em',color:'#7C8A96',textAlign:'left',textTransform:'uppercase'}}>Rate</th>
-                  <th scope="col" style={{padding:'8px 0',fontSize:11,fontWeight:600,letterSpacing:'0.06em',color:'#7C8A96',textAlign:'right',textTransform:'uppercase'}}>Amount</th>
-                </tr>
-              </thead>
-              <tbody>
-                {(inv.items||[]).map((item,i)=>(
-                  <tr key={item.id||i} style={{borderBottom:'1px solid #E8ECF0'}}>
-                    <td style={{padding:'14px 0',fontSize:14,color:'#0F1B2D'}}>{item.description}</td>
-                    <td className="price-col-hide" style={{padding:'14px 0',fontSize:14,fontFamily:"'JetBrains Mono',monospace",color:'#566370'}}>{item.qty}</td>
-                    <td className="price-col-hide" style={{padding:'14px 0',fontSize:14,fontFamily:"'JetBrains Mono',monospace",color:'#566370'}}>{fmt(parseFloat(item.rate)||0,currency)}</td>
-                    <td style={{padding:'14px 0',fontSize:14,fontFamily:"'JetBrains Mono',monospace",color:'#0F1B2D',textAlign:'right',fontWeight:500}}>{fmt((parseFloat(item.qty)||0)*(parseFloat(item.rate)||0),currency)}</td>
-                  </tr>
-                ))}
-              </tbody>
-              <tfoot>
-                <tr>
-                  <td colSpan={3} style={{padding:'12px 0 6px',fontSize:13,fontWeight:600,textAlign:'right',paddingRight:16,color:'#566370'}}>Subtotal</td>
-                  <td style={{padding:'12px 0 6px',fontFamily:"'JetBrains Mono',monospace",textAlign:'right',fontSize:14,fontWeight:600}}>{fmt(subtotal,currency)}</td>
-                </tr>
-                {parseFloat(inv.taxPct)>0&&<tr>
-                  <td colSpan={3} style={{padding:'4px 0',fontSize:13,fontWeight:600,textAlign:'right',paddingRight:16,color:'#566370'}}>Tax ({inv.taxPct}%)</td>
-                  <td style={{padding:'4px 0',fontFamily:"'JetBrains Mono',monospace",textAlign:'right',fontSize:14,fontWeight:600}}>{fmt(tax,currency)}</td>
-                </tr>}
-                <tr>
-                  <td colSpan={4} style={{padding:0}}>
-                    <div style={{background:'#0F1B2D',display:'flex',justifyContent:'space-between',alignItems:'center',padding:'16px 20px',marginTop:8,flexWrap:'wrap',gap:8}}>
-                      <span style={{fontSize:15,fontWeight:600,color:'#fff'}}>Total Due</span>
-                      <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:'clamp(20px,5vw,28px)',fontWeight:500,color:'#fff'}}>{fmt(total,currency)}</span>
-                    </div>
-                  </td>
-                </tr>
-              </tfoot>
-            </table>
-            </div>
-            {inv.notes&&(
-              <div style={{marginTop:32,padding:24,background:'#FEF3DC',borderRadius:8,border:'1px solid #FAD08A'}}>
-                <div style={{fontSize:12,fontWeight:600,color:'#8A5A00',letterSpacing:'0.04em',textTransform:'uppercase',marginBottom:6}}>Payment</div>
-                <p style={{fontSize:14,color:'#0F1B2D',lineHeight:1.7,margin:0}}>{inv.notes}</p>
-              </div>
-            )}
-            <div style={{marginTop:48,paddingTop:20,borderTop:'1px solid #E8ECF0',display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:8}}>
-              <span style={{fontSize:12,color:'#7C8A96'}}>{store.settings?.businessName||'Your Studio'}</span>
-              <a href="https://propkit.com?ref=powered-by" style={{textDecoration:'none',display:'flex',alignItems:'center',gap:6}} aria-label="Powered by PropKit">
-                <LogoMark size={16}/>
-                <span style={{fontSize:11,color:'#7C8A96'}}>Powered by </span>
-                <span style={{fontSize:11,fontWeight:600,color:'#0F1B2D'}}>PropKit</span>
-              </a>
-            </div>
+          {inv.notes&&<div style={{marginTop:24,padding:20,background:'#FEF3DC',borderRadius:8,border:'1px solid #FAD08A'}}><div style={{fontSize:12,fontWeight:600,color:'#8A5A00',textTransform:'uppercase',marginBottom:6}}>Payment</div><p style={{fontSize:14,lineHeight:1.7,margin:0}}>{inv.notes}</p></div>}
+          <div style={{marginTop:40,paddingTop:20,borderTop:'1px solid #E8ECF0',display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:8}}>
+            <span style={{fontSize:12,color:'#7C8A96'}}>{profile.businessName||''}</span>
+            <a href="https://propkit.com?ref=powered-by" style={{textDecoration:'none',display:'flex',alignItems:'center',gap:6}}><LogoMark size={16}/><span style={{fontSize:11,color:'#7C8A96'}}>Powered by </span><span style={{fontSize:11,fontWeight:600}}>PropKit</span></a>
           </div>
-        </article>
-      </div>
-    </main>
-  );
+        </div>
+      </article>
+    </div>
+  </main>);
 }
 
-// ── CLIENT VIEW (read-only, no sidebar) ──────────────────────────────────────
+// ── CLIENT VIEW ──────────────────────────────────────────────────────────────
 function ClientView({data}){
-  let proposal=null;
-  try{proposal=JSON.parse(atob(data));}catch(e){
-    return(
-      <div style={{minHeight:'100vh',display:'flex',alignItems:'center',justifyContent:'center',background:'#F4F6F8'}}>
-        <div style={{textAlign:'center'}}>
-          <h1 style={{fontSize:22,color:'#991B1B'}}>Invalid proposal link</h1>
-          <p style={{color:'#566370'}}>This link may be corrupted or expired.</p>
-        </div>
-      </div>
-    );
+  let doc=null,profile={...DEFAULT_SETTINGS};
+  try{
+    const json=decodeURIComponent(escape(atob(decodeURIComponent(data))));
+    doc=JSON.parse(json);
+    if(doc._profile)profile={...profile,...doc._profile};
+  }catch(e){
+    try{doc=JSON.parse(atob(data));if(doc.businessName)profile.businessName=doc.businessName;}catch(e2){
+      return(<div style={{minHeight:'100vh',display:'flex',alignItems:'center',justifyContent:'center',background:'#F4F6F8'}}><div style={{textAlign:'center'}}><h1 style={{fontSize:22,color:'#991B1B'}}>Invalid proposal link</h1><p style={{color:'#566370'}}>This link may be corrupted or expired.</p></div></div>);
+    }
   }
-  return <ProposalPreview proposal={proposal} settings={{businessName:proposal.businessName||''}} readOnly={true}/>;
+  if(!doc.sections)doc=proposalFromFlat(doc);
+  return <DocPreview doc={doc} profile={profile} readOnly={true}/>;
 }
 
-// ── SETTINGS ──────────────────────────────────────────────────────────────────
+// ── SETTINGS (Business Profile) ───────────────────────────────────────────────
 function Settings({store,onUpdate}){
   const [s,setS]=useState({...DEFAULT_SETTINGS,...store.settings});
   const [saved,setSaved]=useState(false);
-  const fileRef=useRef(null);
-
-  function save(){
-    onUpdate({...store,settings:s});
-    setSaved(true);setTimeout(()=>setSaved(false),2000);
-  }
-
-  function exportData(){
-    const blob=new Blob([JSON.stringify(store,null,2)],{type:'application/json'});
-    const url=URL.createObjectURL(blob);
-    const a=document.createElement('a');a.href=url;a.download='propkit-workspace.json';a.click();URL.revokeObjectURL(url);
-  }
-
-  function importData(e){
-    const file=e.target.files[0];if(!file)return;
-    const reader=new FileReader();
-    reader.onload=ev=>{
-      try{
-        const data=JSON.parse(ev.target.result);
-        if(data.proposals&&data.invoices&&data.settings){
-          onUpdate(data);alert('Workspace imported successfully.');
-        }else{alert('Invalid workspace file.');}
-      }catch{alert('Could not parse file.');}
-    };
-    reader.readAsText(file);
-  }
-
-  return(
-    <main className="settings-main" aria-label="Settings">
-      <div style={{maxWidth:600,margin:'0 auto'}}>
-        <h1 style={{fontSize:28,fontWeight:600,marginBottom:24,color:'#0F1B2D'}}>Settings</h1>
-        <div className="card" style={{padding:24,marginBottom:24}}>
-          <h2 style={{fontSize:16,fontWeight:600,marginBottom:16,marginTop:0}}>Business</h2>
-          <div style={{marginBottom:16}}>
-            <label htmlFor="s-name">Business Name</label>
-            <input id="s-name" value={s.businessName} onChange={e=>setS(x=>({...x,businessName:e.target.value}))} placeholder="Your Studio"/>
+  const fileRef=useRef(null),logoRef=useRef(null);
+  function set(k,v){setS(x=>({...x,[k]:v}));}
+  function save(){onUpdate({...store,settings:s});setSaved(true);setTimeout(()=>setSaved(false),2000);}
+  function onLogo(e){const f=e.target.files[0];if(!f)return;if(f.size>500000){alert('Please use a logo under 500 KB (or paste a URL instead).');return;}const r=new FileReader();r.onload=ev=>set('logo',ev.target.result);r.readAsDataURL(f);}
+  function exportData(){const blob=new Blob([JSON.stringify(store,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='propkit-workspace.json';a.click();URL.revokeObjectURL(url);}
+  function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{const d=migrate(JSON.parse(ev.target.result));if(d.proposals&&d.settings){onUpdate(d);alert('Workspace imported.');}else alert('Invalid file.');}catch{alert('Could not parse file.');}};r.readAsText(f);}
+  return(<main className="settings-main" aria-label="Settings">
+    <div style={{maxWidth:640,margin:'0 auto'}}>
+      <h1 style={{fontSize:28,fontWeight:600,marginBottom:6}}>Settings</h1>
+      <p style={{fontSize:14,color:'#566370',marginTop:0,marginBottom:24}}>This is your identity. Everything here shows up on every proposal and invoice you create.</p>
+      <div className="card" style={{padding:24,marginBottom:24}}>
+        <h2 style={{fontSize:16,fontWeight:600,marginTop:0,marginBottom:16}}>Business profile</h2>
+        <div style={{marginBottom:16}}><label htmlFor="bn">Business / studio name</label><input id="bn" value={s.businessName} onChange={e=>set('businessName',e.target.value)} placeholder="e.g. Northwind Studio"/></div>
+        <div style={{marginBottom:16}}><label htmlFor="tg">Tagline (optional)</label><input id="tg" value={s.tagline} onChange={e=>set('tagline',e.target.value)} placeholder="e.g. Design that works"/></div>
+        <div style={{marginBottom:16}}>
+          <label>Logo</label>
+          <div style={{display:'flex',gap:12,alignItems:'center',flexWrap:'wrap'}}>
+            {s.logo&&<img src={s.logo} alt="Logo preview" style={{height:48,maxWidth:160,objectFit:'contain',border:'1px solid #E8ECF0',borderRadius:8,padding:4,background:'#fff'}}/>}
+            <button className="btn-secondary" onClick={()=>logoRef.current.click()} style={{display:'flex',alignItems:'center',gap:6}}><I.upload/> Upload</button>
+            {s.logo&&<button className="btn-ghost" onClick={()=>set('logo','')} style={{color:'#991B1B'}}>Remove</button>}
+            <input ref={logoRef} type="file" accept="image/*" onChange={onLogo} style={{display:'none'}}/>
           </div>
-          <div style={{marginBottom:16}}>
-            <label htmlFor="s-currency">Currency</label>
-            <select id="s-currency" value={s.currency} onChange={e=>setS(x=>({...x,currency:e.target.value}))}>
-              <option value="USD">USD — US Dollar</option>
-              <option value="EUR">EUR — Euro</option>
-              <option value="GBP">GBP — British Pound</option>
-              <option value="CAD">CAD — Canadian Dollar</option>
-              <option value="AUD">AUD — Australian Dollar</option>
-              <option value="SAR">SAR — Saudi Riyal</option>
-              <option value="AED">AED — UAE Dirham</option>
-            </select>
-          </div>
-          <button className="btn-primary" onClick={save}>{saved?<><Icon.check/> Saved</>:'Save settings'}</button>
+          <input value={s.logo&&s.logo.startsWith('data:')?'':s.logo} onChange={e=>set('logo',e.target.value)} placeholder="…or paste an image URL" style={{marginTop:8}}/>
         </div>
-        <div className="card" style={{padding:24}}>
-          <h2 style={{fontSize:16,fontWeight:600,marginBottom:16,marginTop:0}}>Workspace</h2>
-          <div style={{display:'flex',gap:12,flexWrap:'wrap'}}>
-            <button className="btn-secondary" onClick={exportData} style={{display:'flex',alignItems:'center',gap:6}}>
-              <Icon.download/> Export JSON
-            </button>
-            <button className="btn-secondary" onClick={()=>fileRef.current.click()} style={{display:'flex',alignItems:'center',gap:6}}>
-              <Icon.upload/> Import JSON
-            </button>
-          </div>
-          <input ref={fileRef} type="file" accept=".json" onChange={importData} style={{display:'none'}} aria-label="Import workspace file"/>
-          <p style={{fontSize:13,color:'#566370',marginTop:12,marginBottom:0}}>Export backs up all proposals, invoices, and settings. Import restores from a previously exported file.</p>
+        <div className="form-grid-2">
+          <div><label htmlFor="em">Email</label><input id="em" value={s.email} onChange={e=>set('email',e.target.value)} placeholder="hello@studio.com"/></div>
+          <div><label htmlFor="ph">Phone</label><input id="ph" value={s.phone} onChange={e=>set('phone',e.target.value)} placeholder="+1 555 000 0000"/></div>
+          <div><label htmlFor="wb">Website</label><input id="wb" value={s.website} onChange={e=>set('website',e.target.value)} placeholder="studio.com"/></div>
+          <div><label htmlFor="ad">Address</label><input id="ad" value={s.address} onChange={e=>set('address',e.target.value)} placeholder="City, Country"/></div>
         </div>
+        <div className="form-grid-2" style={{marginTop:16}}>
+          <div><label htmlFor="cur">Currency</label><select id="cur" value={s.currency} onChange={e=>set('currency',e.target.value)}>{[['USD','US Dollar'],['EUR','Euro'],['GBP','British Pound'],['CAD','Canadian Dollar'],['AUD','Australian Dollar'],['SAR','Saudi Riyal'],['AED','UAE Dirham'],['INR','Indian Rupee'],['JPY','Japanese Yen']].map(([c,n])=><option key={c} value={c}>{c} — {n}</option>)}</select></div>
+          <div><label htmlFor="bc">Brand colour</label><div style={{display:'flex',gap:8,alignItems:'center'}}><input id="bc" type="color" value={s.accentColor} onChange={e=>set('accentColor',e.target.value)} style={{width:52,height:44,padding:4}}/><input value={s.accentColor} onChange={e=>set('accentColor',e.target.value)} style={{fontFamily:"'JetBrains Mono',monospace"}}/></div></div>
+        </div>
+        <button className="btn-primary" onClick={save} style={{marginTop:20}}>{saved?<><I.check/> Saved</>:'Save settings'}</button>
       </div>
-    </main>
-  );
+      <div className="card" style={{padding:24}}>
+        <h2 style={{fontSize:16,fontWeight:600,marginTop:0,marginBottom:16}}>Workspace backup</h2>
+        <div style={{display:'flex',gap:12,flexWrap:'wrap'}}>
+          <button className="btn-secondary" onClick={exportData} style={{display:'flex',alignItems:'center',gap:6}}><I.download/> Export JSON</button>
+          <button className="btn-secondary" onClick={()=>fileRef.current.click()} style={{display:'flex',alignItems:'center',gap:6}}><I.upload/> Import JSON</button>
+        </div>
+        <input ref={fileRef} type="file" accept=".json" onChange={importData} style={{display:'none'}}/>
+        <p style={{fontSize:13,color:'#566370',marginTop:12,marginBottom:0}}>Everything is saved on this device. Export to back up or move to another computer.</p>
+      </div>
+    </div>
+  </main>);
 }
 
 // ── APP ROOT ──────────────────────────────────────────────────────────────────
 function App(){
-  const [store,setStore]=useState(()=>{
-    const raw=loadStore();
-    return raw||seedStore();
-  });
+  const [store,setStore]=useState(()=>loadStore()||{proposals:[],invoices:[],settings:{...DEFAULT_SETTINGS}});
   const [route,setRoute]=useState(getRoute);
-
-  useEffect(()=>{
-    saveStore(store);
-  },[store]);
-
-  useEffect(()=>{
-    function onHash(){setRoute(getRoute());}
-    window.addEventListener('hashchange',onHash);
-    return()=>window.removeEventListener('hashchange',onHash);
-  },[]);
-
-  if(route.view==='client'){
-    return <ClientView data={route.data}/>;
-  }
-
-  const mainContent=()=>{
-    switch(route.view){
-      case 'proposal':return <ProposalBuilder id={route.id} store={store} onUpdate={setStore}/>;
-      case 'invoice':return <InvoiceView id={route.id} store={store} onUpdate={setStore}/>;
-      case 'settings':return <Settings store={store} onUpdate={setStore}/>;
-      default:return <Dashboard store={store} onUpdate={setStore}/>;
-    }
-  };
-
-  return(
-    <div className="app-shell">
-      <Sidebar route={route} settings={store.settings}/>
-      <div className="app-main">
-        {mainContent()}
-      </div>
-    </div>
-  );
+  useEffect(()=>{saveStore(store);},[store]);
+  useEffect(()=>{document.documentElement.style.setProperty('--brand',store.settings.accentColor||'#F5A623');},[store.settings.accentColor]);
+  useEffect(()=>{function onHash(){setRoute(getRoute());}window.addEventListener('hashchange',onHash);return()=>window.removeEventListener('hashchange',onHash);},[]);
+  if(route.view==='client')return <ClientView data={route.data}/>;
+  const main=()=>{switch(route.view){
+    case 'proposal':return <ProposalBuilder key={route.id} id={route.id} store={store} onUpdate={setStore}/>;
+    case 'invoice':return <InvoiceView key={route.id} id={route.id} store={store} onUpdate={setStore}/>;
+    case 'settings':return <Settings store={store} onUpdate={setStore}/>;
+    default:return <Dashboard store={store} onUpdate={setStore}/>;
+  }};
+  return(<div className="app-shell"><Sidebar settings={store.settings}/><div className="app-main">{main()}</div></div>);
 }
-
-const root=ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App/>);
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
 </script>
 </body>
 </html>
