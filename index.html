@@ -48,17 +48,17 @@ tailwind.config = {
 *{box-sizing:border-box;}
 body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:#F4F6F8;color:#0F1B2D;margin:0;}
 :focus-visible{outline:2px solid #F5A623;outline-offset:2px;box-shadow:0 0 0 3px rgba(245,166,35,0.40);}
-.btn-primary{background:#0F1B2D;color:#fff;border:none;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;transition:background 150ms;}
+.btn-primary{background:#0F1B2D;color:#fff;border:none;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;transition:background 150ms;min-height:44px;}
 .btn-primary:hover{background:#162338;}
 .btn-primary:active{background:#1D2E47;}
 .btn-primary:disabled{background:#CDD4DB;color:#7C8A96;cursor:not-allowed;}
-.btn-accent{background:#F5A623;color:#0F1B2D;border:none;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;transition:background 150ms;}
+.btn-accent{background:#F5A623;color:#0F1B2D;border:none;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;transition:background 150ms;min-height:44px;}
 .btn-accent:hover{background:#D48E0F;}
-.btn-secondary{background:transparent;color:#0F1B2D;border:1.5px solid #CDD4DB;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;transition:all 150ms;}
+.btn-secondary{background:transparent;color:#0F1B2D;border:1.5px solid #CDD4DB;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;transition:all 150ms;min-height:44px;}
 .btn-secondary:hover{background:#EEF4F8;border-color:#A8BDD4;}
-.btn-ghost{background:transparent;color:#0F1B2D;border:none;border-radius:8px;padding:8px 12px;font-size:14px;cursor:pointer;transition:background 150ms;}
+.btn-ghost{background:transparent;color:#0F1B2D;border:none;border-radius:8px;padding:8px 12px;font-size:14px;cursor:pointer;transition:background 150ms;min-height:44px;min-width:44px;}
 .btn-ghost:hover{background:#EEF4F8;}
-.btn-danger{background:#991B1B;color:#fff;border:none;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;}
+.btn-danger{background:#991B1B;color:#fff;border:none;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;min-height:44px;}
 .btn-danger:hover{background:#7A1515;}
 input,textarea,select{font-family:'Inter',-apple-system,sans-serif;font-size:14px;color:#0F1B2D;background:#fff;border:1.5px solid #CDD4DB;border-radius:8px;padding:10px 16px;box-shadow:0 1px 2px 0 rgba(15,27,45,0.06);width:100%;transition:border-color 150ms,box-shadow 150ms;}
 input:focus,textarea:focus,select:focus{outline:none;border-color:#F5A623;box-shadow:0 0 0 3px rgba(245,166,35,0.40);}
@@ -71,10 +71,78 @@ textarea{resize:vertical;min-height:96px;}
 .status-declined{background:#FEE2E2;color:#991B1B;border:1px solid rgba(153,27,27,0.3);border-radius:4px;padding:2px 8px;font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:4px;}
 .status-paid{background:#D4F5E2;color:#1A6B3A;border:1px solid rgba(26,107,58,0.3);border-radius:4px;padding:2px 8px;font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:4px;}
 .status-unpaid{background:#FEF0CC;color:#8A5A00;border:1px solid rgba(138,90,0,0.3);border-radius:4px;padding:2px 8px;font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:4px;}
+
+/* ── RESPONSIVE ──────────────────────────────────────────────────────────── */
+
+/* App shell: sidebar beside content on desktop */
+.app-shell{display:flex;min-height:100vh;}
+.app-main{flex:1;min-width:0;overflow-y:auto;}
+
+/* On mobile, the shell stacks: topnav on top, then content below */
+@media(max-width:767px){
+  .app-shell{flex-direction:column;}
+  .app-main{flex:1;}
+}
+
+/* Mobile top-nav (replaces sidebar on small screens) */
+.mobile-topnav{display:none;background:#0F1B2D;padding:0 16px;height:56px;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+.mobile-topnav-links{display:flex;gap:4px;}
+.mobile-topnav a{color:rgba(255,255,255,0.75);text-decoration:none;font-size:13px;font-weight:500;padding:8px 12px;border-radius:6px;display:flex;align-items:center;gap:6px;}
+.mobile-topnav a[aria-current="page"]{color:#F5A623;background:rgba(245,166,35,0.12);}
+
+/* Dashboard main padding */
+.dash-main{flex:1;padding:24px 16px;overflow-y:auto;}
+@media(min-width:640px){.dash-main{padding:32px 24px;}}
+@media(min-width:1024px){.dash-main{padding:32px;}}
+
+/* Scrollable table wrapper */
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+
+/* Proposal builder actions bar */
+.builder-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+
+/* Two-column form grid collapses to single col on mobile */
+.form-grid-2{display:grid;grid-template-columns:1fr;gap:16px;}
+@media(min-width:540px){.form-grid-2{grid-template-columns:1fr 1fr;}}
+
+/* Document preview padding responsive */
+.doc-header-pad{padding:40px 20px 0;}
+.doc-body-pad{padding:0 20px 40px;}
+@media(min-width:640px){.doc-header-pad{padding:60px 48px 0;}.doc-body-pad{padding:0 48px 60px;}}
+@media(min-width:900px){.doc-header-pad{padding:80px 80px 0;}.doc-body-pad{padding:0 80px 80px;}}
+
+/* Document preview header meta grid */
+.doc-meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:480px){.doc-meta-grid{grid-template-columns:1fr;gap:12px;}}
+
+/* Document preview title font responsive */
+.doc-title{font-family:'"DM Serif Display",Georgia,serif';font-weight:400;color:#0F1B2D;margin:0 0 8px;line-height:1.1;}
+
+/* Pricing table: on very small screens hide Qty/Rate, show just Description + Amount */
+.price-col-hide{display:table-cell;}
+@media(max-width:480px){.price-col-hide{display:none;}}
+
+/* Invoice/builder action bar */
+.inv-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+
+/* Settings main padding */
+.settings-main{flex:1;padding:24px 16px;overflow-y:auto;}
+@media(min-width:640px){.settings-main{padding:32px;}}
+
+@media(max-width:767px){
+  /* Hide desktop sidebar */
+  .desktop-sidebar{display:none!important;}
+  /* Show mobile top nav */
+  .mobile-topnav{display:flex;}
+  /* Reduce stats grid min width so 2-col fits on phone */
+  .stats-grid{grid-template-columns:repeat(auto-fit,minmax(140px,1fr))!important;}
+}
+
 @media print{
   .no-print{display:none!important;}
   body{background:#fff;}
   .print-doc{box-shadow:none!important;border:none!important;margin:0!important;padding:40px!important;max-width:100%!important;}
+  .mobile-topnav{display:none!important;}
 }
 </style>
 </head>
@@ -283,29 +351,51 @@ function Sidebar({route,settings}){
     {path:'/dashboard',label:'Dashboard',icon:<Icon.doc/>},
     {path:'/settings',label:'Settings',icon:<Icon.settings/>},
   ];
+  const isActive=(path)=>window.location.hash.includes(path)||(!window.location.hash&&path==='/dashboard');
   return(
-    <nav className="no-print" style={{background:'#0F1B2D',width:220,minHeight:'100vh',padding:'0',display:'flex',flexDirection:'column',flexShrink:0}} aria-label="Main navigation">
-      <div style={{padding:'24px 20px 20px',borderBottom:'1px solid rgba(255,255,255,0.08)'}}>
-        <div style={{display:'flex',alignItems:'center',gap:10}}>
-          <LogoMark size={32} light={true}/>
-          <span style={{fontWeight:600,fontSize:18,color:'#fff',letterSpacing:'-0.02em'}}><span style={{fontWeight:600}}>Prop</span><span style={{fontWeight:500}}>Kit</span></span>
+    <>
+      {/* Desktop sidebar */}
+      <nav className="no-print desktop-sidebar" style={{background:'#0F1B2D',width:220,minHeight:'100vh',padding:'0',display:'flex',flexDirection:'column',flexShrink:0}} aria-label="Main navigation">
+        <div style={{padding:'24px 20px 20px',borderBottom:'1px solid rgba(255,255,255,0.08)'}}>
+          <div style={{display:'flex',alignItems:'center',gap:10}}>
+            <LogoMark size={32} light={true}/>
+            <span style={{fontWeight:600,fontSize:18,color:'#fff',letterSpacing:'-0.02em'}}><span style={{fontWeight:600}}>Prop</span><span style={{fontWeight:500}}>Kit</span></span>
+          </div>
+          {settings.businessName&&<div style={{fontSize:12,color:'rgba(255,255,255,0.45)',marginTop:6,paddingLeft:42}}>{settings.businessName}</div>}
         </div>
-        {settings.businessName&&<div style={{fontSize:12,color:'rgba(255,255,255,0.45)',marginTop:6,paddingLeft:42}}>{settings.businessName}</div>}
-      </div>
-      <ul style={{listStyle:'none',margin:0,padding:'12px 0',flex:1}} role="list">
-        {links.map(l=>{
-          const active=window.location.hash.includes(l.path)||(!window.location.hash&&l.path==='/dashboard');
-          return(
-            <li key={l.path}>
-              <a href={'#'+l.path} style={{display:'flex',alignItems:'center',gap:10,padding:'10px 20px',color:active?'#F5A623':'rgba(255,255,255,0.7)',textDecoration:'none',fontSize:14,fontWeight:active?600:400,background:active?'rgba(245,166,35,0.08)':'transparent',borderLeft:active?'2px solid #F5A623':'2px solid transparent',transition:'all 150ms'}}
-                aria-current={active?'page':undefined}>
+        <ul style={{listStyle:'none',margin:0,padding:'12px 0',flex:1}} role="list">
+          {links.map(l=>{
+            const active=isActive(l.path);
+            return(
+              <li key={l.path}>
+                <a href={'#'+l.path} style={{display:'flex',alignItems:'center',gap:10,padding:'10px 20px',color:active?'#F5A623':'rgba(255,255,255,0.7)',textDecoration:'none',fontSize:14,fontWeight:active?600:400,background:active?'rgba(245,166,35,0.08)':'transparent',borderLeft:active?'2px solid #F5A623':'2px solid transparent',transition:'all 150ms'}}
+                  aria-current={active?'page':undefined}>
+                  {l.icon}{l.label}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+
+      {/* Mobile top nav */}
+      <nav className="no-print mobile-topnav" aria-label="Main navigation">
+        <div style={{display:'flex',alignItems:'center',gap:8}}>
+          <LogoMark size={24} light={true}/>
+          <span style={{fontWeight:700,fontSize:16,color:'#fff',letterSpacing:'-0.02em'}}>PropKit</span>
+        </div>
+        <div className="mobile-topnav-links" role="list">
+          {links.map(l=>{
+            const active=isActive(l.path);
+            return(
+              <a key={l.path} href={'#'+l.path} aria-current={active?'page':undefined} role="listitem">
                 {l.icon}{l.label}
               </a>
-            </li>
-          );
-        })}
-      </ul>
-    </nav>
+            );
+          })}
+        </div>
+      </nav>
+    </>
   );
 }
 
@@ -336,17 +426,17 @@ function Dashboard({store,onUpdate}){
   }
 
   return(
-    <main style={{flex:1,padding:'32px',overflowY:'auto'}} aria-label="Dashboard">
+    <main className="dash-main" aria-label="Dashboard">
       <div style={{maxWidth:960,margin:'0 auto'}}>
-        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:24}}>
-          <h1 style={{fontSize:28,fontWeight:600,color:'#0F1B2D',letterSpacing:'-0.02em',margin:0}}>Dashboard</h1>
-          <button className="btn-accent" onClick={newProposal} style={{display:'flex',alignItems:'center',gap:6}}>
+        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:24,gap:12}}>
+          <h1 style={{fontSize:'clamp(20px,5vw,28px)',fontWeight:600,color:'#0F1B2D',letterSpacing:'-0.02em',margin:0}}>Dashboard</h1>
+          <button className="btn-accent" onClick={newProposal} style={{display:'flex',alignItems:'center',gap:6,flexShrink:0}}>
             <Icon.plus/> New Proposal
           </button>
         </div>
 
         {/* Stats */}
-        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(180px,1fr))',gap:16,marginBottom:32}}>
+        <div className="stats-grid" style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(160px,1fr))',gap:16,marginBottom:32}}>
           {[
             {label:'Pipeline',value:fmt(totalPipeline,currency),sub:'total value'},
             {label:'Proposals',value:proposals.length,sub:`${accepted} accepted · ${pending} pending`},
@@ -371,43 +461,45 @@ function Dashboard({store,onUpdate}){
           </div>
           <div className="card" style={{padding:0,overflow:'hidden'}}>
             {proposals.length===0?(
-              <div style={{textAlign:'center',padding:'64px 24px',color:'#566370'}}>
+              <div style={{textAlign:'center',padding:'48px 24px',color:'#566370'}}>
                 <div style={{fontSize:40,marginBottom:12,opacity:0.3}}>📄</div>
                 <div style={{fontSize:18,fontWeight:600,color:'#0F1B2D',marginBottom:6}}>No proposals yet</div>
                 <div style={{fontSize:14,color:'#566370',marginBottom:20}}>Create your first proposal and send it to a client.</div>
                 <button className="btn-accent" onClick={newProposal}>New Proposal</button>
               </div>
             ):(
-              <table style={{width:'100%',borderCollapse:'collapse'}} role="table" aria-label="Proposals list">
-                <thead>
-                  <tr style={{background:'#FAFBFC',borderBottom:'1px solid #E8ECF0'}}>
-                    {['Client','Title','Amount','Status',''].map(h=>(
-                      <th key={h} scope="col" style={{padding:'10px 16px',fontSize:11,fontWeight:600,color:'#566370',letterSpacing:'0.06em',textTransform:'uppercase',textAlign:h===''||h==='Amount'?'right':'left'}}>{h}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {proposals.map((p,i)=>{
-                    const {total}=calcProposal(p.items||[],p.taxPct);
-                    return(
-                      <tr key={p.id} style={{borderBottom:'1px solid #E8ECF0',background:i%2===0?'#fff':'#FAFBFC',cursor:'pointer'}}
-                        onClick={()=>navigate('/proposal/'+p.id)}
-                        onKeyDown={e=>{if(e.key==='Enter'||e.key===' ')navigate('/proposal/'+p.id);}}
-                        tabIndex={0} role="row" aria-label={`${p.clientName} - ${p.title}`}>
-                        <td style={{padding:'14px 16px',fontSize:14,fontWeight:500,color:'#0F1B2D'}}>{p.clientName||<span style={{color:'#A9B4BF'}}>No client</span>}</td>
-                        <td style={{padding:'14px 16px',fontSize:14,color:'#3D4E5A'}}>{p.title}</td>
-                        <td style={{padding:'14px 16px',fontSize:14,fontFamily:"'JetBrains Mono',monospace",color:'#0F1B2D',textAlign:'right'}}>{fmt(total,currency)}</td>
-                        <td style={{padding:'14px 16px'}}><StatusBadge status={p.status}/></td>
-                        <td style={{padding:'14px 16px',textAlign:'right'}}>
-                          <button className="btn-ghost" onClick={e=>{e.stopPropagation();deleteProposal(p.id);}} aria-label={`Delete proposal ${p.title}`} style={{padding:'6px',color:'#991B1B'}}>
-                            <Icon.trash/>
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+              <div className="table-scroll">
+                <table style={{width:'100%',borderCollapse:'collapse',minWidth:480}} role="table" aria-label="Proposals list">
+                  <thead>
+                    <tr style={{background:'#FAFBFC',borderBottom:'1px solid #E8ECF0'}}>
+                      {['Client','Title','Amount','Status',''].map(h=>(
+                        <th key={h} scope="col" style={{padding:'10px 16px',fontSize:11,fontWeight:600,color:'#566370',letterSpacing:'0.06em',textTransform:'uppercase',textAlign:h===''||h==='Amount'?'right':'left',whiteSpace:'nowrap'}}>{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {proposals.map((p,i)=>{
+                      const {total}=calcProposal(p.items||[],p.taxPct);
+                      return(
+                        <tr key={p.id} style={{borderBottom:'1px solid #E8ECF0',background:i%2===0?'#fff':'#FAFBFC',cursor:'pointer'}}
+                          onClick={()=>navigate('/proposal/'+p.id)}
+                          onKeyDown={e=>{if(e.key==='Enter'||e.key===' ')navigate('/proposal/'+p.id);}}
+                          tabIndex={0} role="row" aria-label={`${p.clientName} - ${p.title}`}>
+                          <td style={{padding:'12px 16px',fontSize:14,fontWeight:500,color:'#0F1B2D',whiteSpace:'nowrap'}}>{p.clientName||<span style={{color:'#A9B4BF'}}>No client</span>}</td>
+                          <td style={{padding:'12px 16px',fontSize:14,color:'#3D4E5A'}}>{p.title}</td>
+                          <td style={{padding:'12px 16px',fontSize:14,fontFamily:"'JetBrains Mono',monospace",color:'#0F1B2D',textAlign:'right',whiteSpace:'nowrap'}}>{fmt(total,currency)}</td>
+                          <td style={{padding:'12px 16px',whiteSpace:'nowrap'}}><StatusBadge status={p.status}/></td>
+                          <td style={{padding:'12px 16px',textAlign:'right'}}>
+                            <button className="btn-ghost" onClick={e=>{e.stopPropagation();deleteProposal(p.id);}} aria-label={`Delete proposal ${p.title}`} style={{padding:'6px',color:'#991B1B',minHeight:36,minWidth:36}}>
+                              <Icon.trash/>
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
             )}
           </div>
         </section>
@@ -419,43 +511,45 @@ function Dashboard({store,onUpdate}){
           </div>
           <div className="card" style={{padding:0,overflow:'hidden'}}>
             {invoices.length===0?(
-              <div style={{textAlign:'center',padding:'64px 24px'}}>
+              <div style={{textAlign:'center',padding:'48px 24px'}}>
                 <div style={{fontSize:40,marginBottom:12,opacity:0.3}}>🧾</div>
                 <div style={{fontSize:18,fontWeight:600,color:'#0F1B2D',marginBottom:6}}>No invoices yet</div>
                 <div style={{fontSize:14,color:'#566370'}}>Generate an invoice from an accepted proposal.</div>
               </div>
             ):(
-              <table style={{width:'100%',borderCollapse:'collapse'}} role="table" aria-label="Invoices list">
-                <thead>
-                  <tr style={{background:'#FAFBFC',borderBottom:'1px solid #E8ECF0'}}>
-                    {['Client','Title','Amount','Due','Status',''].map(h=>(
-                      <th key={h} scope="col" style={{padding:'10px 16px',fontSize:11,fontWeight:600,color:'#566370',letterSpacing:'0.06em',textTransform:'uppercase',textAlign:h===''||h==='Amount'?'right':'left'}}>{h}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {invoices.map((inv,i)=>{
-                    const {total}=calcProposal(inv.items||[],inv.taxPct);
-                    return(
-                      <tr key={inv.id} style={{borderBottom:'1px solid #E8ECF0',background:i%2===0?'#fff':'#FAFBFC',cursor:'pointer'}}
-                        onClick={()=>navigate('/invoice/'+inv.id)}
-                        onKeyDown={e=>{if(e.key==='Enter'||e.key===' ')navigate('/invoice/'+inv.id);}}
-                        tabIndex={0} role="row">
-                        <td style={{padding:'14px 16px',fontSize:14,fontWeight:500,color:'#0F1B2D'}}>{inv.clientName||'—'}</td>
-                        <td style={{padding:'14px 16px',fontSize:14,color:'#3D4E5A'}}>{inv.title}</td>
-                        <td style={{padding:'14px 16px',fontSize:14,fontFamily:"'JetBrains Mono',monospace",color:'#0F1B2D',textAlign:'right'}}>{fmt(total,currency)}</td>
-                        <td style={{padding:'14px 16px',fontSize:13,color:'#566370'}}>{inv.dueDate||'—'}</td>
-                        <td style={{padding:'14px 16px'}}><StatusBadge status={inv.status}/></td>
-                        <td style={{padding:'14px 16px',textAlign:'right'}}>
-                          <button className="btn-ghost" onClick={e=>{e.stopPropagation();deleteInvoice(inv.id);}} aria-label={`Delete invoice ${inv.title}`} style={{padding:'6px',color:'#991B1B'}}>
-                            <Icon.trash/>
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+              <div className="table-scroll">
+                <table style={{width:'100%',borderCollapse:'collapse',minWidth:520}} role="table" aria-label="Invoices list">
+                  <thead>
+                    <tr style={{background:'#FAFBFC',borderBottom:'1px solid #E8ECF0'}}>
+                      {['Client','Title','Amount','Due','Status',''].map(h=>(
+                        <th key={h} scope="col" style={{padding:'10px 16px',fontSize:11,fontWeight:600,color:'#566370',letterSpacing:'0.06em',textTransform:'uppercase',textAlign:h===''||h==='Amount'?'right':'left',whiteSpace:'nowrap'}}>{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {invoices.map((inv,i)=>{
+                      const {total}=calcProposal(inv.items||[],inv.taxPct);
+                      return(
+                        <tr key={inv.id} style={{borderBottom:'1px solid #E8ECF0',background:i%2===0?'#fff':'#FAFBFC',cursor:'pointer'}}
+                          onClick={()=>navigate('/invoice/'+inv.id)}
+                          onKeyDown={e=>{if(e.key==='Enter'||e.key===' ')navigate('/invoice/'+inv.id);}}
+                          tabIndex={0} role="row">
+                          <td style={{padding:'12px 16px',fontSize:14,fontWeight:500,color:'#0F1B2D',whiteSpace:'nowrap'}}>{inv.clientName||'—'}</td>
+                          <td style={{padding:'12px 16px',fontSize:14,color:'#3D4E5A'}}>{inv.title}</td>
+                          <td style={{padding:'12px 16px',fontSize:14,fontFamily:"'JetBrains Mono',monospace",color:'#0F1B2D',textAlign:'right',whiteSpace:'nowrap'}}>{fmt(total,currency)}</td>
+                          <td style={{padding:'12px 16px',fontSize:13,color:'#566370',whiteSpace:'nowrap'}}>{inv.dueDate||'—'}</td>
+                          <td style={{padding:'12px 16px',whiteSpace:'nowrap'}}><StatusBadge status={inv.status}/></td>
+                          <td style={{padding:'12px 16px',textAlign:'right'}}>
+                            <button className="btn-ghost" onClick={e=>{e.stopPropagation();deleteInvoice(inv.id);}} aria-label={`Delete invoice ${inv.title}`} style={{padding:'6px',color:'#991B1B',minHeight:36,minWidth:36}}>
+                              <Icon.trash/>
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
             )}
           </div>
         </section>
@@ -512,14 +606,14 @@ function ProposalBuilder({id,store,onUpdate}){
   const fieldStyle={marginBottom:16};
 
   return(
-    <main style={{flex:1,overflowY:'auto',padding:'32px'}} aria-label="Proposal builder">
+    <main style={{flex:1,overflowY:'auto',padding:'clamp(16px,4vw,32px)'}} aria-label="Proposal builder">
       <div style={{maxWidth:1100,margin:'0 auto'}}>
-        <div style={{display:'flex',alignItems:'center',gap:12,marginBottom:24}}>
-          <button className="btn-ghost" onClick={()=>navigate('/dashboard')} aria-label="Back to dashboard" style={{padding:'8px',display:'flex'}}>
+        <div style={{display:'flex',alignItems:'flex-start',gap:12,marginBottom:24,flexWrap:'wrap'}}>
+          <button className="btn-ghost" onClick={()=>navigate('/dashboard')} aria-label="Back to dashboard" style={{padding:'8px',display:'flex',flexShrink:0}}>
             <Icon.back/>
           </button>
-          <h1 style={{fontSize:22,fontWeight:600,margin:0,flex:1,color:'#0F1B2D'}}>{p.title||'Untitled Proposal'}</h1>
-          <div style={{display:'flex',gap:8,flexWrap:'wrap'}}>
+          <h1 style={{fontSize:'clamp(16px,4vw,22px)',fontWeight:600,margin:0,flex:1,color:'#0F1B2D',minWidth:120}}>{p.title||'Untitled Proposal'}</h1>
+          <div className="builder-actions">
             <select value="" onChange={e=>loadTemplate(e.target.value)} style={{width:'auto',padding:'8px 12px',fontSize:13}} aria-label="Load template">
               <option value="">Load template…</option>
               <option value="webdev">Web Development</option>
@@ -528,10 +622,10 @@ function ProposalBuilder({id,store,onUpdate}){
               <option value="photography">Photography</option>
             </select>
             <button className="btn-secondary" onClick={copyClientLink} style={{display:'flex',alignItems:'center',gap:6,padding:'8px 14px',fontSize:13}}>
-              <Icon.copy/>{copied?'Copied!':'Copy client link'}
+              <Icon.copy/>{copied?'Copied!':'Share'}
             </button>
             <button className="btn-secondary" onClick={generateInvoice} style={{display:'flex',alignItems:'center',gap:6,padding:'8px 14px',fontSize:13}}>
-              <Icon.invoice/>Create Invoice
+              <Icon.invoice/>Invoice
             </button>
             <button className="btn-primary" onClick={()=>save()} style={{display:'flex',alignItems:'center',gap:6,padding:'8px 16px',fontSize:13}}>
               {saved?<><Icon.check/> Saved</>:'Save'}
@@ -553,7 +647,7 @@ function ProposalBuilder({id,store,onUpdate}){
           <div style={{display:'grid',gridTemplateColumns:'1fr',gap:20}}>
             <div className="card" style={{padding:24}}>
               <h2 style={{fontSize:16,fontWeight:600,marginBottom:16,marginTop:0}}>Cover</h2>
-              <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:16}}>
+              <div className="form-grid-2">
                 <div style={fieldStyle}>
                   <label htmlFor="p-title">Proposal Title</label>
                   <input id="p-title" value={p.title} onChange={e=>setP(x=>({...x,title:e.target.value}))} placeholder="e.g. Brand Identity Package"/>
@@ -588,7 +682,7 @@ function ProposalBuilder({id,store,onUpdate}){
                 ))}
                 {p.deliverables.length===0&&<div style={{fontSize:13,color:'#A9B4BF',fontStyle:'italic'}}>No deliverables added yet.</div>}
               </div>
-              <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:16}}>
+              <div className="form-grid-2">
                 <div style={fieldStyle}>
                   <label htmlFor="p-date">Date</label>
                   <input id="p-date" type="date" value={p.date} onChange={e=>setP(x=>({...x,date:e.target.value}))}/>
@@ -612,38 +706,40 @@ function ProposalBuilder({id,store,onUpdate}){
             {/* Pricing Table */}
             <div className="card" style={{padding:24}}>
               <h2 style={{fontSize:16,fontWeight:600,marginBottom:16,marginTop:0}}>Pricing</h2>
-              <table style={{width:'100%',borderCollapse:'collapse',marginBottom:16}} aria-label="Line items">
-                <thead>
-                  <tr style={{borderBottom:'1.5px solid #0F1B2D'}}>
-                    {['Description','Qty','Rate','Total',''].map(h=>(
-                      <th key={h} scope="col" style={{padding:'6px 8px',fontSize:11,fontWeight:600,letterSpacing:'0.06em',color:'#566370',textAlign:h==='Total'||h===''?'right':'left',textTransform:'uppercase'}}>{h}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {p.items.map((item,idx)=>(
-                    <tr key={item.id} style={{borderBottom:'1px solid #E8ECF0'}}>
-                      <td style={{padding:'8px'}}>
-                        <input value={item.description} onChange={e=>updateItem(item.id,'description',e.target.value)} placeholder="Description" aria-label={`Item ${idx+1} description`} style={{fontSize:13}}/>
-                      </td>
-                      <td style={{padding:'8px',width:70}}>
-                        <input type="number" min="0" value={item.qty} onChange={e=>updateItem(item.id,'qty',e.target.value)} aria-label={`Item ${idx+1} quantity`} style={{fontSize:13,textAlign:'right'}}/>
-                      </td>
-                      <td style={{padding:'8px',width:110}}>
-                        <input type="number" min="0" value={item.rate} onChange={e=>updateItem(item.id,'rate',e.target.value)} aria-label={`Item ${idx+1} rate`} style={{fontSize:13,textAlign:'right'}}/>
-                      </td>
-                      <td style={{padding:'8px',width:110,textAlign:'right',fontFamily:"'JetBrains Mono',monospace",fontSize:13,color:'#0F1B2D',fontWeight:500}}>
-                        {fmt((parseFloat(item.qty)||0)*(parseFloat(item.rate)||0),currency)}
-                      </td>
-                      <td style={{padding:'8px',width:36,textAlign:'right'}}>
-                        <button className="btn-ghost" onClick={()=>removeItem(item.id)} aria-label={`Remove item ${idx+1}`} style={{padding:'4px',color:'#991B1B'}}>
-                          <Icon.trash/>
-                        </button>
-                      </td>
+              <div className="table-scroll">
+                <table style={{width:'100%',borderCollapse:'collapse',marginBottom:16,minWidth:400}} aria-label="Line items">
+                  <thead>
+                    <tr style={{borderBottom:'1.5px solid #0F1B2D'}}>
+                      {['Description','Qty','Rate','Total',''].map(h=>(
+                        <th key={h} scope="col" style={{padding:'6px 8px',fontSize:11,fontWeight:600,letterSpacing:'0.06em',color:'#566370',textAlign:h==='Total'||h===''?'right':'left',textTransform:'uppercase'}}>{h}</th>
+                      ))}
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {p.items.map((item,idx)=>(
+                      <tr key={item.id} style={{borderBottom:'1px solid #E8ECF0'}}>
+                        <td style={{padding:'8px'}}>
+                          <input value={item.description} onChange={e=>updateItem(item.id,'description',e.target.value)} placeholder="Description" aria-label={`Item ${idx+1} description`} style={{fontSize:13,minWidth:120}}/>
+                        </td>
+                        <td style={{padding:'8px',width:70}}>
+                          <input type="number" min="0" value={item.qty} onChange={e=>updateItem(item.id,'qty',e.target.value)} aria-label={`Item ${idx+1} quantity`} style={{fontSize:13,textAlign:'right'}}/>
+                        </td>
+                        <td style={{padding:'8px',width:110}}>
+                          <input type="number" min="0" value={item.rate} onChange={e=>updateItem(item.id,'rate',e.target.value)} aria-label={`Item ${idx+1} rate`} style={{fontSize:13,textAlign:'right'}}/>
+                        </td>
+                        <td style={{padding:'8px',width:110,textAlign:'right',fontFamily:"'JetBrains Mono',monospace",fontSize:13,color:'#0F1B2D',fontWeight:500,whiteSpace:'nowrap'}}>
+                          {fmt((parseFloat(item.qty)||0)*(parseFloat(item.rate)||0),currency)}
+                        </td>
+                        <td style={{padding:'8px',width:44,textAlign:'right'}}>
+                          <button className="btn-ghost" onClick={()=>removeItem(item.id)} aria-label={`Remove item ${idx+1}`} style={{padding:'4px',color:'#991B1B',minHeight:36,minWidth:36}}>
+                            <Icon.trash/>
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
               <button className="btn-secondary" onClick={addItem} style={{display:'flex',alignItems:'center',gap:6,padding:'7px 14px',fontSize:13,marginBottom:16}}>
                 <Icon.plus/> Add line item
               </button>
@@ -652,12 +748,12 @@ function ProposalBuilder({id,store,onUpdate}){
                   <span style={{color:'#566370'}}>Subtotal</span>
                   <span style={{fontFamily:"'JetBrains Mono',monospace",fontWeight:500}}>{fmt(subtotal,currency)}</span>
                 </div>
-                <div style={{display:'flex',gap:16,alignItems:'center'}}>
+                <div style={{display:'flex',gap:16,alignItems:'center',flexWrap:'wrap',justifyContent:'flex-end'}}>
                   <label htmlFor="p-tax" style={{margin:0,fontSize:14,color:'#566370'}}>Tax %</label>
                   <input id="p-tax" type="number" min="0" max="100" value={p.taxPct} onChange={e=>setP(x=>({...x,taxPct:e.target.value}))} style={{width:70,textAlign:'right',padding:'6px 10px'}}/>
                   <span style={{fontFamily:"'JetBrains Mono',monospace",fontWeight:500,fontSize:14}}>{fmt(tax,currency)}</span>
                 </div>
-                <div style={{background:'#0F1B2D',color:'#fff',padding:'10px 20px',borderRadius:8,display:'flex',gap:32,alignItems:'center',marginTop:4}}>
+                <div style={{background:'#0F1B2D',color:'#fff',padding:'10px 20px',borderRadius:8,display:'flex',gap:32,alignItems:'center',marginTop:4,flexWrap:'wrap',justifyContent:'space-between',minWidth:200}}>
                   <span style={{fontSize:14,fontWeight:600}}>Total</span>
                   <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:20,fontWeight:500}}>{fmt(total,currency)}</span>
                 </div>
@@ -678,18 +774,18 @@ function ProposalPreview({proposal:p,settings,readOnly=false}){
   const {subtotal,tax,total}=calcProposal(p.items||[],p.taxPct);
   const initials=(settings?.businessName||'PK').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
   return(
-    <div style={{background:'#F4F6F8',padding:'40px 24px',minHeight:'100vh'}} className={readOnly?'':'print-doc-wrap'}>
+    <div style={{background:'#F4F6F8',padding:'clamp(16px,4vw,40px) clamp(12px,3vw,24px)',minHeight:'100vh'}} className={readOnly?'':'print-doc-wrap'}>
       <article style={{background:'#fff',maxWidth:800,margin:'0 auto',boxShadow:'0 20px 25px -5px rgba(15,27,45,0.15)',borderRadius:4,overflow:'hidden'}} aria-label="Proposal document" className="print-doc">
         {/* Header */}
-        <div style={{padding:'80px 80px 0',background:'#fff'}}>
+        <div className="doc-header-pad" style={{background:'#fff'}}>
           <div style={{display:'flex',alignItems:'center',gap:12,marginBottom:32}}>
             <div style={{width:40,height:40,borderRadius:'50%',background:'#0F1B2D',display:'flex',alignItems:'center',justifyContent:'center',color:'#fff',fontWeight:600,fontSize:14,flexShrink:0}}>{initials}</div>
             <span style={{fontWeight:600,fontSize:16,color:'#0F1B2D'}}>{settings?.businessName||'Your Studio'}</span>
           </div>
-          <h1 style={{fontFamily:'"DM Serif Display",Georgia,serif',fontSize:48,fontWeight:400,color:'#0F1B2D',margin:'0 0 8px',lineHeight:1.1}}>{p.title||'Proposal'}</h1>
+          <h1 style={{fontFamily:'"DM Serif Display",Georgia,serif',fontSize:'clamp(28px,6vw,48px)',fontWeight:400,color:'#0F1B2D',margin:'0 0 8px',lineHeight:1.1}}>{p.title||'Proposal'}</h1>
           {p.clientName&&<div style={{fontSize:15,color:'#566370',marginBottom:32}}>Prepared for {p.clientName}</div>}
           <hr style={{border:'none',borderTop:'1px solid #E8ECF0',margin:'0 0 32px'}}/>
-          <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:24,marginBottom:32}}>
+          <div className="doc-meta-grid" style={{marginBottom:32}}>
             <div>
               <div style={{fontSize:12,fontWeight:600,color:'#7C8A96',letterSpacing:'0.04em',textTransform:'uppercase',marginBottom:4}}>Prepared by</div>
               <div style={{fontSize:15,color:'#0F1B2D'}}>{settings?.businessName||'Your Studio'}</div>
@@ -711,7 +807,7 @@ function ProposalPreview({proposal:p,settings,readOnly=false}){
         </div>
 
         {/* Body */}
-        <div style={{padding:'0 80px 80px'}}>
+        <div className="doc-body-pad">
           {p.intro&&(
             <>
               <h2 style={{fontFamily:'"DM Serif Display",Georgia,serif',fontSize:32,fontWeight:400,color:'#0F1B2D',margin:'48px 0 16px'}}>Introduction</h2>
@@ -739,21 +835,23 @@ function ProposalPreview({proposal:p,settings,readOnly=false}){
           )}
 
           {/* Pricing table */}
-          <h2 style={{fontFamily:'"DM Serif Display",Georgia,serif',fontSize:32,fontWeight:400,color:'#0F1B2D',margin:'48px 0 16px'}}>Investment</h2>
-          <table style={{width:'100%',borderCollapse:'collapse'}} aria-label="Pricing breakdown">
+          <h2 style={{fontFamily:'"DM Serif Display",Georgia,serif',fontSize:'clamp(22px,5vw,32px)',fontWeight:400,color:'#0F1B2D',margin:'48px 0 16px'}}>Investment</h2>
+          <div className="table-scroll">
+          <table style={{width:'100%',borderCollapse:'collapse',minWidth:320}} aria-label="Pricing breakdown">
             <thead>
               <tr style={{borderBottom:'1.5px solid #0F1B2D'}}>
-                {['Description','Qty','Rate','Amount'].map(h=>(
-                  <th key={h} scope="col" style={{padding:'8px 0',fontSize:11,fontWeight:600,letterSpacing:'0.06em',color:'#7C8A96',textAlign:h==='Amount'?'right':'left',textTransform:'uppercase'}}>{h}</th>
-                ))}
+                <th scope="col" style={{padding:'8px 0',fontSize:11,fontWeight:600,letterSpacing:'0.06em',color:'#7C8A96',textAlign:'left',textTransform:'uppercase'}}>Description</th>
+                <th scope="col" className="price-col-hide" style={{padding:'8px 0',fontSize:11,fontWeight:600,letterSpacing:'0.06em',color:'#7C8A96',textAlign:'left',textTransform:'uppercase'}}>Qty</th>
+                <th scope="col" className="price-col-hide" style={{padding:'8px 0',fontSize:11,fontWeight:600,letterSpacing:'0.06em',color:'#7C8A96',textAlign:'left',textTransform:'uppercase'}}>Rate</th>
+                <th scope="col" style={{padding:'8px 0',fontSize:11,fontWeight:600,letterSpacing:'0.06em',color:'#7C8A96',textAlign:'right',textTransform:'uppercase'}}>Amount</th>
               </tr>
             </thead>
             <tbody>
               {(p.items||[]).map((item,i)=>(
                 <tr key={item.id||i} style={{borderBottom:'1px solid #E8ECF0'}}>
                   <td style={{padding:'14px 0',fontSize:14,color:'#0F1B2D'}}>{item.description}</td>
-                  <td style={{padding:'14px 0',fontSize:14,fontFamily:"'JetBrains Mono',monospace",color:'#566370'}}>{item.qty}</td>
-                  <td style={{padding:'14px 0',fontSize:14,fontFamily:"'JetBrains Mono',monospace",color:'#566370'}}>{fmt(parseFloat(item.rate)||0,currency)}</td>
+                  <td className="price-col-hide" style={{padding:'14px 0',fontSize:14,fontFamily:"'JetBrains Mono',monospace",color:'#566370'}}>{item.qty}</td>
+                  <td className="price-col-hide" style={{padding:'14px 0',fontSize:14,fontFamily:"'JetBrains Mono',monospace",color:'#566370'}}>{fmt(parseFloat(item.rate)||0,currency)}</td>
                   <td style={{padding:'14px 0',fontSize:14,fontFamily:"'JetBrains Mono',monospace",color:'#0F1B2D',textAlign:'right',fontWeight:500}}>{fmt((parseFloat(item.qty)||0)*(parseFloat(item.rate)||0),currency)}</td>
                 </tr>
               ))}
@@ -769,14 +867,15 @@ function ProposalPreview({proposal:p,settings,readOnly=false}){
               </tr>}
               <tr>
                 <td colSpan={4} style={{padding:0}}>
-                  <div style={{background:'#0F1B2D',display:'flex',justifyContent:'space-between',alignItems:'center',padding:'16px 20px',marginTop:8}}>
+                  <div style={{background:'#0F1B2D',display:'flex',justifyContent:'space-between',alignItems:'center',padding:'16px 20px',marginTop:8,flexWrap:'wrap',gap:8}}>
                     <span style={{fontSize:15,fontWeight:600,color:'#fff'}}>Total</span>
-                    <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:28,fontWeight:500,color:'#fff'}}>{fmt(total,currency)}</span>
+                    <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:'clamp(20px,5vw,28px)',fontWeight:500,color:'#fff'}}>{fmt(total,currency)}</span>
                   </div>
                 </td>
               </tr>
             </tfoot>
           </table>
+          </div>
 
           {p.notes&&(
             <div style={{marginTop:32,padding:24,background:'#EEF4F8',borderRadius:8,border:'1px solid #E8ECF0'}}>
@@ -786,7 +885,7 @@ function ProposalPreview({proposal:p,settings,readOnly=false}){
           )}
 
           {/* Footer */}
-          <div style={{marginTop:48,paddingTop:20,borderTop:'1px solid #E8ECF0',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+          <div style={{marginTop:48,paddingTop:20,borderTop:'1px solid #E8ECF0',display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:8}}>
             <span style={{fontSize:12,color:'#7C8A96'}}>{settings?.businessName||'Your Studio'}</span>
             <a href="https://propkit.com?ref=powered-by" style={{textDecoration:'none',display:'flex',alignItems:'center',gap:6}} aria-label="Powered by PropKit">
               <LogoMark size={16}/>
@@ -827,32 +926,32 @@ function InvoiceView({id,store,onUpdate}){
   }
 
   return(
-    <main style={{flex:1,overflowY:'auto',padding:'32px'}} aria-label="Invoice">
+    <main style={{flex:1,overflowY:'auto',padding:'clamp(16px,4vw,32px)'}} aria-label="Invoice">
       <div style={{maxWidth:960,margin:'0 auto'}}>
-        <div style={{display:'flex',alignItems:'center',gap:12,marginBottom:24}} className="no-print">
-          <button className="btn-ghost" onClick={()=>navigate('/dashboard')} aria-label="Back" style={{padding:8,display:'flex'}}><Icon.back/></button>
-          <h1 style={{fontSize:22,fontWeight:600,margin:0,flex:1}}>{inv.title}</h1>
-          <button className="btn-secondary" onClick={togglePaid} style={{padding:'8px 14px',fontSize:13}}>
-            Mark as {inv.status==='paid'?'Unpaid':'Paid'}
+        <div className="inv-actions no-print" style={{marginBottom:24}}>
+          <button className="btn-ghost" onClick={()=>navigate('/dashboard')} aria-label="Back" style={{padding:8,display:'flex',flexShrink:0}}><Icon.back/></button>
+          <h1 style={{fontSize:'clamp(15px,4vw,22px)',fontWeight:600,margin:0,flex:1,minWidth:80}}>{inv.title}</h1>
+          <button className="btn-secondary" onClick={togglePaid} style={{padding:'8px 14px',fontSize:13,flexShrink:0}}>
+            {inv.status==='paid'?'Mark Unpaid':'Mark Paid'}
           </button>
-          <button className="btn-secondary" onClick={()=>window.print()} style={{display:'flex',alignItems:'center',gap:6,padding:'8px 14px',fontSize:13}}>
-            <Icon.print/> Print / PDF
+          <button className="btn-secondary" onClick={()=>window.print()} style={{display:'flex',alignItems:'center',gap:6,padding:'8px 14px',fontSize:13,flexShrink:0}}>
+            <Icon.print/> Print
           </button>
         </div>
 
         <article style={{background:'#fff',boxShadow:'0 20px 25px -5px rgba(15,27,45,0.15)',overflow:'hidden'}} className="print-doc" aria-label="Invoice document">
-          <div style={{padding:'80px 80px 0'}}>
-            <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:32}}>
+          <div className="doc-header-pad">
+            <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:32,gap:16,flexWrap:'wrap'}}>
               <div style={{display:'flex',alignItems:'center',gap:10}}>
-                <div style={{width:40,height:40,borderRadius:'50%',background:'#0F1B2D',display:'flex',alignItems:'center',justifyContent:'center',color:'#fff',fontWeight:600,fontSize:14}}>{initials}</div>
+                <div style={{width:40,height:40,borderRadius:'50%',background:'#0F1B2D',display:'flex',alignItems:'center',justifyContent:'center',color:'#fff',fontWeight:600,fontSize:14,flexShrink:0}}>{initials}</div>
                 <span style={{fontWeight:600,fontSize:16}}>{store.settings?.businessName||'Your Studio'}</span>
               </div>
               <div style={{textAlign:'right'}}>
-                <div style={{fontFamily:'"DM Serif Display",Georgia,serif',fontSize:36,color:'#0F1B2D',lineHeight:1}}>Invoice</div>
+                <div style={{fontFamily:'"DM Serif Display",Georgia,serif',fontSize:'clamp(24px,5vw,36px)',color:'#0F1B2D',lineHeight:1}}>Invoice</div>
                 <div style={{fontSize:13,color:'#566370',marginTop:6}}><StatusBadge status={inv.status}/></div>
               </div>
             </div>
-            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:24,marginBottom:32}}>
+            <div className="doc-meta-grid" style={{marginBottom:32}}>
               <div>
                 <div style={{fontSize:12,fontWeight:600,color:'#7C8A96',letterSpacing:'0.04em',textTransform:'uppercase',marginBottom:4}}>Bill to</div>
                 <div style={{fontSize:15,color:'#0F1B2D',fontWeight:500}}>{inv.clientName||'—'}</div>
@@ -872,21 +971,23 @@ function InvoiceView({id,store,onUpdate}){
             </div>
             <hr style={{border:'none',borderTop:'1px solid #E8ECF0',margin:'0 0 0'}}/>
           </div>
-          <div style={{padding:'0 80px 80px'}}>
-            <table style={{width:'100%',borderCollapse:'collapse',marginTop:32}} aria-label="Invoice line items">
+          <div className="doc-body-pad">
+            <div className="table-scroll">
+            <table style={{width:'100%',borderCollapse:'collapse',marginTop:32,minWidth:320}} aria-label="Invoice line items">
               <thead>
                 <tr style={{borderBottom:'1.5px solid #0F1B2D'}}>
-                  {['Description','Qty','Rate','Amount'].map(h=>(
-                    <th key={h} scope="col" style={{padding:'8px 0',fontSize:11,fontWeight:600,letterSpacing:'0.06em',color:'#7C8A96',textAlign:h==='Amount'?'right':'left',textTransform:'uppercase'}}>{h}</th>
-                  ))}
+                  <th scope="col" style={{padding:'8px 0',fontSize:11,fontWeight:600,letterSpacing:'0.06em',color:'#7C8A96',textAlign:'left',textTransform:'uppercase'}}>Description</th>
+                  <th scope="col" className="price-col-hide" style={{padding:'8px 0',fontSize:11,fontWeight:600,letterSpacing:'0.06em',color:'#7C8A96',textAlign:'left',textTransform:'uppercase'}}>Qty</th>
+                  <th scope="col" className="price-col-hide" style={{padding:'8px 0',fontSize:11,fontWeight:600,letterSpacing:'0.06em',color:'#7C8A96',textAlign:'left',textTransform:'uppercase'}}>Rate</th>
+                  <th scope="col" style={{padding:'8px 0',fontSize:11,fontWeight:600,letterSpacing:'0.06em',color:'#7C8A96',textAlign:'right',textTransform:'uppercase'}}>Amount</th>
                 </tr>
               </thead>
               <tbody>
                 {(inv.items||[]).map((item,i)=>(
                   <tr key={item.id||i} style={{borderBottom:'1px solid #E8ECF0'}}>
                     <td style={{padding:'14px 0',fontSize:14,color:'#0F1B2D'}}>{item.description}</td>
-                    <td style={{padding:'14px 0',fontSize:14,fontFamily:"'JetBrains Mono',monospace",color:'#566370'}}>{item.qty}</td>
-                    <td style={{padding:'14px 0',fontSize:14,fontFamily:"'JetBrains Mono',monospace",color:'#566370'}}>{fmt(parseFloat(item.rate)||0,currency)}</td>
+                    <td className="price-col-hide" style={{padding:'14px 0',fontSize:14,fontFamily:"'JetBrains Mono',monospace",color:'#566370'}}>{item.qty}</td>
+                    <td className="price-col-hide" style={{padding:'14px 0',fontSize:14,fontFamily:"'JetBrains Mono',monospace",color:'#566370'}}>{fmt(parseFloat(item.rate)||0,currency)}</td>
                     <td style={{padding:'14px 0',fontSize:14,fontFamily:"'JetBrains Mono',monospace",color:'#0F1B2D',textAlign:'right',fontWeight:500}}>{fmt((parseFloat(item.qty)||0)*(parseFloat(item.rate)||0),currency)}</td>
                   </tr>
                 ))}
@@ -902,21 +1003,22 @@ function InvoiceView({id,store,onUpdate}){
                 </tr>}
                 <tr>
                   <td colSpan={4} style={{padding:0}}>
-                    <div style={{background:'#0F1B2D',display:'flex',justifyContent:'space-between',alignItems:'center',padding:'20px 20px',marginTop:8}}>
+                    <div style={{background:'#0F1B2D',display:'flex',justifyContent:'space-between',alignItems:'center',padding:'16px 20px',marginTop:8,flexWrap:'wrap',gap:8}}>
                       <span style={{fontSize:15,fontWeight:600,color:'#fff'}}>Total Due</span>
-                      <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:28,fontWeight:500,color:'#fff'}}>{fmt(total,currency)}</span>
+                      <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:'clamp(20px,5vw,28px)',fontWeight:500,color:'#fff'}}>{fmt(total,currency)}</span>
                     </div>
                   </td>
                 </tr>
               </tfoot>
             </table>
+            </div>
             {inv.notes&&(
               <div style={{marginTop:32,padding:24,background:'#FEF3DC',borderRadius:8,border:'1px solid #FAD08A'}}>
                 <div style={{fontSize:12,fontWeight:600,color:'#8A5A00',letterSpacing:'0.04em',textTransform:'uppercase',marginBottom:6}}>Payment</div>
                 <p style={{fontSize:14,color:'#0F1B2D',lineHeight:1.7,margin:0}}>{inv.notes}</p>
               </div>
             )}
-            <div style={{marginTop:48,paddingTop:20,borderTop:'1px solid #E8ECF0',display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+            <div style={{marginTop:48,paddingTop:20,borderTop:'1px solid #E8ECF0',display:'flex',justifyContent:'space-between',alignItems:'center',flexWrap:'wrap',gap:8}}>
               <span style={{fontSize:12,color:'#7C8A96'}}>{store.settings?.businessName||'Your Studio'}</span>
               <a href="https://propkit.com?ref=powered-by" style={{textDecoration:'none',display:'flex',alignItems:'center',gap:6}} aria-label="Powered by PropKit">
                 <LogoMark size={16}/>
@@ -979,7 +1081,7 @@ function Settings({store,onUpdate}){
   }
 
   return(
-    <main style={{flex:1,padding:32,overflowY:'auto'}} aria-label="Settings">
+    <main className="settings-main" aria-label="Settings">
       <div style={{maxWidth:600,margin:'0 auto'}}>
         <h1 style={{fontSize:28,fontWeight:600,marginBottom:24,color:'#0F1B2D'}}>Settings</h1>
         <div className="card" style={{padding:24,marginBottom:24}}>
@@ -1052,9 +1154,11 @@ function App(){
   };
 
   return(
-    <div style={{display:'flex',minHeight:'100vh'}}>
+    <div className="app-shell">
       <Sidebar route={route} settings={store.settings}/>
-      {mainContent()}
+      <div className="app-main">
+        {mainContent()}
+      </div>
     </div>
   );
 }
